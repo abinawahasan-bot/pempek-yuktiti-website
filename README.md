@@ -227,7 +227,13 @@ Situs ini murni statis — **semua opsi di bawah hanya butuh mengunggah file**, 
 2. Di repo: **Settings → Pages**.
 3. *Source*: **Deploy from a branch** → branch **`main`**, folder **`/ (root)`** → **Save**.
 4. Tunggu 1–2 menit; situs live di `https://USERNAME.github.io/NAMA-REPO/`.
-5. Opsional: tambahkan file `.gitignore` berisi `.opencode/` agar catatan internal tidak ikut terpublikasi.
+5. **Penting — jangan publikasikan catatan internal:** GitHub Pages menyajikan **seluruh isi branch**. Folder `.opencode/` (Project Brain + telemetry) **sengaja dilacak git**, jadi cara paling andal agar tidak ikut terbit adalah menambahkan berkas `_config.yml` di root berisi:
+   ```yaml
+   exclude:
+     - .opencode
+     - deploy
+   ```
+   Jangan andalkan `.gitignore` — berkas yang sudah terlacak **tetap** akan dipublikasikan. Alternatif: sumberkan Pages dari folder/branch yang hanya berisi berkas situs.
 
 ### C. cPanel shared hosting
 

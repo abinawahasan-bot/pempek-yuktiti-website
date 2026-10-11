@@ -20,7 +20,7 @@ PROJECT*              identitas, tujuan, data bisnis Pempek Yuk Titi
 ├── REQUIREMENTS*     fitur FR-1..FR-7 + menu & harga 2026
 ├── DECISIONS*        #1 statis · #2 satu halaman · #3 harga 2026+disclaimer · #4 hosting
 ├── CURRENT_STATE*    7+ fitur HADIR (termasuk chip kategori + kartu menu kompak), QA PASS; deploy & git belum
-└── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG (OPEN) · ISSUE-005 rating/badge (VERIFIED pemilik); ISSUE-004 favicon 404 FIXED; RV-01..07 FIXED
+└── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG (OPEN) · ISSUE-005 rating/badge (VERIFIED pemilik) · ISSUE-006 publikasi .opencode (OPEN, gate deploy); ISSUE-004 favicon 404 FIXED; RV-01..07 FIXED
 ├── TECHNICAL_DEBT*    TD-PERF-01..06; 01/02/04/05 ADDRESSED (WebP+font self-host, 2026-10-11); 03/06 OPEN (deploy-time)
 ├── SECURITY           (template — statis, tanpa kredensial)
 ├── TESTING            (template — belum ada automated tooling; QA manual via laporan)

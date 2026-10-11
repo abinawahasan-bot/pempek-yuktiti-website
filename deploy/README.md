@@ -44,7 +44,21 @@ pertama (lihat `docs/PERFORMANCE_AUDIT.md` §8 dan `TECHNICAL_DEBT` TD-PERF-03).
 - **CSP** penuh: situs memakai skrip/gaya inline; CSP yang benar butuh nonce/hash.
 - **Preload/push** HTTP: tidak diperlukan untuk situs sekecil ini.
 
-## Verifikasi setelah deploy
+## Jangan publikasikan catatan internal
 
+Folder `.opencode/` (Project Brain + telemetry, 48 berkas) **sengaja dilacak git** — memori proyek. Hati-hati agar tidak ikut terbit:
+
+- **Netlify Drop / cPanel:** cukup jangan unggah folder `.opencode/` (unggah hanya berkas situs: `index.html`, `css/`, `js/`, `assets/`, `favicon.svg`, `deploy/<config yang dipakai>`).
+- **GitHub Pages:** Pages menyajikan **seluruh isi branch**. Tambahkan `_config.yml` di root:
+  ```yaml
+  exclude:
+    - .opencode
+    - deploy
+  ```
+  `.gitignore` **tidak** menolong untuk berkas yang sudah terlacak.
+
+Tidak ada rahasia di `.opencode/` (secret scan bersih), tetapi isinya catatan internal — sebaiknya tidak publik.
+
+## Verifikasi setelah deploy
 - Cek header: `curl -sI https://DOMAIN/css/style.css` → cari `content-encoding: br|gzip`.
 - Ukur ulang dengan harness: `docs/PERFORMANCE_AUDIT.md` §6 (metode) / `/tmp/opencode/yk_measure.py`.

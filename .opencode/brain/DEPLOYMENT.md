@@ -50,7 +50,7 @@ Sesuai DECISIONS #4, tiga kandidat (pilihan final UNKNOWN): **Netlify** / **GitH
 
 1. Salin `deploy/<config>` yang relevan ke root situs (`_headers` → root Netlify/CF; `.htaccess` → `public_html/`).
 2. Pastikan `index.html` ada di tingkat teratas root yang di-deploy.
-3. Kecualikan folder `.opencode/` dari unggahan publik.
+3. Kecualikan folder `.opencode/` dari unggahan publik (Netlify Drop/cPanel: jangan unggah; GitHub Pages: tambah `_config.yml` `exclude:` — `.gitignore` tidak menolong untuk berkas terlacak). Tidak ada rahasia di `.opencode/`, tetapi isinya catatan internal.
 4. Isi canonical/OG/JSON-LD `url` dengan domain final (ISSUE-003) sebelum/segera setelah live.
 5. Verifikasi: `curl -sI https://DOMAIN/css/style.css` → cari `content-encoding: br|gzip`; muat sekali di HP.
 

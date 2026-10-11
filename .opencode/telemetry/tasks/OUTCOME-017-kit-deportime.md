@@ -24,7 +24,11 @@ orchestration, performance, deployment, project-brain, telemetry, changelog.
 
 - `deploy/.htaccess` (BARU) — Apache/cPanel: brotli/gzip + MIME `.woff2`/`.webp` + caching + header keamanan (dibungkus `<IfModule>`).
 - `deploy/_headers` (BARU) — Netlify/Cloudflare Pages: caching + header keamanan.
-- `deploy/README.md` (BARU) — panduan per host + angka kompresi + catatan sengaja-belum.
+- `deploy/README.md` (BARU) — panduan per host + angka kompresi + catatan sengaja-belum + bagian "Jangan publikasikan catatan internal".
+
+## Safety Finding
+
+- **ISSUE-006 (LOW)** dibuat: `.opencode/` (48 berkas, memori internal, tanpa rahasia) tidak boleh terbit saat deploy; GH Pages perlu `_config.yml` `exclude:`, `.gitignore` tidak efektif untuk berkas terlacak. Panduan di `deploy/README.md` + README §B.
 - `README.md` §Deploy — bagian **D. Kompresi & caching**.
 - Brain: `DEPLOYMENT.md` (diisi dari template), `CURRENT_STATE.md`, `CHANGE_HISTORY.md`, `TECHNICAL_DEBT.md`, `INDEX.md`.
 - `CHANGELOG.md` — Added kit deportime.

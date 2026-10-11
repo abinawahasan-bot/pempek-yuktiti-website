@@ -68,6 +68,15 @@
 - **Fix:** Mitigasi sudah dipasang: (1) tautan rating & tombol testimoni mengarah ke pencarian Google Maps live (angka/kutipan tampil boleh basi, tautan selalu benar); (2) komentar HTML di kode menandai angka + kutipan sebagai verifikasi-wajib; (3) badge/kutipan mudah diganti (satu `<span>`/`<li>` per item). Rating + badge terverifikasi pemilik 2026-10-10; kutipan testimoni BELUM → issue tetap OPEN.
 - **Regression test:** Cek berkala angka rating vs Maps; pastikan tautan Maps hidup.
 
+### ID: ISSUE-006
+- **Title:** Risiko publikasi catatan internal `.opencode/` saat deploy
+- **Severity:** LOW
+- **Status:** OPEN (deploy-time gate)
+- **Description:** Folder `.opencode/` (Project Brain + telemetry, 48 berkas terlacak git) **sengaja** ada di version control, tetapi tidak boleh tersaji publik. Pada **GitHub Pages**, seluruh isi branch disajikan → `.opencode/` akan dapat diakses tanpa pengecualian. (CONFIRMED — `.gitignore` menyatakan .opencode sengaja dilacak; `git ls-files .opencode` = 48)
+- **Root cause:** Deploy berbagi tree yang sama dengan memori proyek; GH Pages tidak punya mekanisme exclude selain Jekyll `_config.yml`. (CONFIRMED)
+- **Fix:** Netlify Drop/cPanel → jangan unggah `.opencode/`; GitHub Pages → tambahkan `_config.yml` `exclude: [.opencode, deploy]`. **Jangan** andalkan `.gitignore` (berkas terlacak tetap terbit). Panduan: `deploy/README.md` §"Jangan publikasikan catatan internal". Tidak ada rahasia di `.opencode/` (secret scan bersih) → severity LOW.
+- **Regression test:** Setelah deploy, `curl -sI https://DOMAIN/.opencode/brain/INDEX.md` harus **404**; pastikan tidak ada berkas `.opencode/**` yang dapat diakses.
+
 ## Fixed / Verified
 
 ### ID: RV-01..07 (temuan code review — diperbaiki 2026-10-08)

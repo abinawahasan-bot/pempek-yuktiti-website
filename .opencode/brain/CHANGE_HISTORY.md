@@ -14,6 +14,9 @@
 #### Changed
 - `README.md` §Deploy: tambah bagian **D. Kompresi & caching** (Netlify/CF → `_headers`; cPanel → `.htaccess`; GitHub Pages → otomatis).
 - Brain: `DEPLOYMENT.md` diisi (template → nyata; hosting tetap UNKNOWN) + CURRENT_STATE + TECHNICAL_DEBT (TD-PERF-03 → PARTIALLY ADDRESSED, TD-PERF-06 → catatan build) + INDEX.
+- Brain: `KNOWN_ISSUES.md` + **ISSUE-006** (risiko publikasi `.opencode/` saat deploy — LOW, gate deploy) + INDEX sinkron.
+- `README.md` §Deploy B (GitHub Pages): perbaiki saran keliru (`.gitignore` **tidak** menyembunyikan berkas yang sudah terlacak) → panduan `_config.yml` `exclude:`.
+- `deploy/README.md`: tambah bagian "Jangan publikasikan catatan internal".
 - `CHANGELOG.md` [Unreleased] Added: kit deportime.
 
 #### Tests
