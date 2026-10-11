@@ -4,6 +4,34 @@
 
 ## Changelog
 
+### 2026-10-11 (optimasi performa: WebP + font self-host)
+
+#### Added
+- **69 varian gambar WebP**: hero `assets/img/hero-pempek-{400,800,1600}.webp` (crop 16:9, 13,0/32,4/80,1 KB) + `assets/img/menu/<slug>-{200,400,800}.webp` (23 item, via `magick -quality 80 -define webp:method=6`).
+- **Font self-host**: `assets/fonts/{inter-latin.woff2 (48 256 B, variable 400–500), poppins-latin-600.woff2 (8 000 B), poppins-latin-700.woff2 (7 816 B), OFL-INTER.txt, OFL-POPPINS.txt}`.
+- **`css/fonts.css`** — 3 `@font-face` (`font-display: swap`, `unicode-range` Latin), path `../assets/fonts/`.
+
+#### Changed
+- **`index.html`**: 3 `<link>` Google Fonts → `preload` 2 `woff2` kritis (Inter, Poppins 700) + `<link rel="stylesheet" href="css/fonts.css">`; hero `16/9` `<picture>` (WebP + JPEG fallback; `width`/`height` 1600×1063 → **1600×900**); **23 kartu menu** → `<picture>` (WebP `srcset`/`sizes`, JPEG fallback). Total **24 `<picture>`**, 0 tautan Google Fonts.
+- **`css/style.css`**: tambah `.hero__media picture { display:block; width:100% }` dan `.card-menu__media picture { display:block; width:100%; height:100% }`; **fix performa terkait** — `html.anim .hero__media img` kini `transform: perspective(900px) rotateX(...) rotateY(...)` (temuan code review HIGH: propeerti `perspective` di `.hero__media` tak lagi mengenai `<img>` setelah dibungkus `<picture>`; pola sama seperti kartu menu/testimoni).
+- **`README.md`**: struktur folder (`css/fonts.css`, `assets/fonts/`, varian WebP), klaim font (self-host, bukan CDN), catatan varian WebP, jumlah galeri 5 → 4.
+- **`docs/PERFORMANCE_AUDIT.md`**: bagian 8 baru — hasil before/after terukur.
+- **`CHANGELOG.md`**: Added (aset WebP, font self-host) + Changed (optimasi performa) di `[Unreleased]`.
+- **Brain**: CURRENT_STATE, TECHNICAL_DEBT (TD-PERF-01/02/04/05 → ADDRESSED; 03/06 → OPEN deploy-time), PROJECT_HEALTH (Performance YELLOW → GREEN), INDEX.
+
+#### Tests
+- Harness **Python + aiohttp via CDP** (Playwright tak tersedia; Node global `WebSocket` gagal handshake) — `/tmp/opencode/yk_measure.py` + `run.sh`, viewport 390×844, cache off, `slow4g` (latency 150 ms / 200 000 B/s / CPU 4×), baseline diukur ulang agar apple-to-apple.
+  - **Slow-4G**: LCP 2356–3456 → **1856–2056 ms**; CLS 0,0013 → **0**; elemen LCP `hero-pempek.jpg` (192 KB) → `hero-pempek-400.webp` (13 KB).
+  - **Muat awal**: 576 073 B/13 req → **222 634 B/16 req** (−61%). **Muat penuh**: 2 707 179 B/38 req/29 img → **698 426 B/41 req/29 img** (−74%).
+  - Font self-host termuat (inter 48,5 KB; poppins700 8,1 KB; poppins600 8,3 KB).
+- **QA independen (subagent qa-engineer): PASS semua (A–H), tanpa regresi** — 113 URL aset (112×200), 0 request gagal/error konsol, WebP terpilih (`currentSrc` `.webp`), 24 fallback JPEG ada, galeri/lightbox utuh, layout 390/768/1230 OK, dark mode + stepper keranjang OK, font self-host dipakai.
+- **Code review (subagent code-reviewer): APPROVE / APPROVE-WITH-NITS** — 1 temuan **HIGH** (perspective tilt hero) **DIPERBAIKI** & diukur ulang (no regression: LCP 1856 ms, CLS 0, 222 634 B); 1 **MEDIUM** (`sizes` 350px untuk grid `--dense`) ditindaklanjuti → **INFO** (tidak mengubah varian terpilih pada langkah 200/400/800).
+- Secret scan pra-commit → bersih.
+
+#### Terkait
+- TD-PERF-01/02/04/05 → **ADDRESSED**; TD-PERF-03/06 tetap OPEN (deploy-time). Monitoring: `docs/PERFORMANCE_AUDIT.md` §8.
+- Telemetry: OUTCOME-016-optimasi-performa.md + event `2026-10-11-optimasi-performa-webp-font.md`.
+
 ### 2026-10-11 (github init + CHANGELOG + audit performa)
 
 #### Added
@@ -22,7 +50,7 @@
 - Secret scan repo (sebelum commit): bersih (hanya placeholder `ENV_VAR_NAME`).
 
 #### Terkait
-- Temuan ditambahkan ke `TECHNICAL_DEBT.md` (TD-PERF-01..07). Rekomendasi menunggu approval user.
+- Temuan ditambahkan ke `TECHNICAL_DEBT.md` (TD-PERF-01..06). Rekomendasi menunggu approval user.
 
 ### 2026-10-11 (a11y: target sentuh tombol stepper 38→44px)
 

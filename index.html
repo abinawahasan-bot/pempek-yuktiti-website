@@ -31,9 +31,13 @@
   <meta name="twitter:title" content="Pempek Yuk Titi - UII Jakal">
   <meta name="twitter:description" content="Pempek Palembang di Kaliurang KM 14 Sleman. Pesan via WhatsApp.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Font self-host (subset latin, lihat css/fonts.css) — menghapus
+       permintaan lintas-origin ke Google Fonts yang memblokir render.
+       Preload hanya dua berkas yang dipakai di lipatan atas; sisanya
+       dimuat normal lewat fonts.css agar tidak menyaingi LCP gambar. -->
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/poppins-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
 
   <script>
     /* Tema: hidrasi sebelum render pertama (anti flash). Tanpa nilai → ikut sistem. */
@@ -176,11 +180,16 @@
           </a>
         </p>
         <figure class="hero__media">
-          <img
-            src="assets/img/hero-pempek.jpg"
-            alt="Pempek disajikan dengan cuko kental khas Palembang di atas meja kayu"
-            width="1600" height="1063"
-            fetchpriority="high" decoding="async">
+          <picture>
+            <source type="image/webp"
+              srcset="assets/img/hero-pempek-400.webp 400w, assets/img/hero-pempek-800.webp 800w, assets/img/hero-pempek-1600.webp 1600w"
+              sizes="(min-width: 1223px) 1100px, 90vw">
+            <img
+              src="assets/img/hero-pempek.jpg"
+              alt="Pempek disajikan dengan cuko kental khas Palembang di atas meja kayu"
+              width="1600" height="900"
+              fetchpriority="high" decoding="async">
+          </picture>
           <figcaption class="hero__media-caption">Foto ilustrasi — foto asli warung akan menyusul.</figcaption>
         </figure>
       </div>
@@ -238,7 +247,10 @@
           <div class="menu-grid">
             <article class="card-menu" data-item-id="sikoan" data-item-name="Pempek Sikoan">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/sikoan.jpg" alt="Pempek Sikoan goreng berwarna keemasan" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/sikoan-200.webp 200w, assets/img/menu/sikoan-400.webp 400w, assets/img/menu/sikoan-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/sikoan.jpg" alt="Pempek Sikoan goreng berwarna keemasan" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <span class="badge">Terlaris</span>
@@ -264,7 +276,10 @@
           <div class="menu-grid">
             <article class="card-menu" data-item-id="kapal-selam" data-item-name="Kapal Selam Besar">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/kapal-selam.jpg" alt="Pempek Kapal Selam Besar berisi telur" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/kapal-selam-200.webp 200w, assets/img/menu/kapal-selam-400.webp 400w, assets/img/menu/kapal-selam-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/kapal-selam.jpg" alt="Pempek Kapal Selam Besar berisi telur" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <span class="badge">Terlaris</span>
@@ -284,7 +299,10 @@
             </article>
             <article class="card-menu" data-item-id="lenggang" data-item-name="Lenggang">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/lenggang.jpg" alt="Pempek Lenggang goreng dengan saus cuko" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/lenggang-200.webp 200w, assets/img/menu/lenggang-400.webp 400w, assets/img/menu/lenggang-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/lenggang.jpg" alt="Pempek Lenggang goreng dengan saus cuko" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Lenggang</h4>
@@ -303,7 +321,10 @@
             </article>
             <article class="card-menu" data-item-id="rujak-mie" data-item-name="Rujak Mie">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/rujak-mie.jpg" alt="Pempek Rujak Mie dengan saus cuko" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/rujak-mie-200.webp 200w, assets/img/menu/rujak-mie-400.webp 400w, assets/img/menu/rujak-mie-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/rujak-mie.jpg" alt="Pempek Rujak Mie dengan saus cuko" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Rujak Mie</h4>
@@ -322,7 +343,10 @@
             </article>
             <article class="card-menu" data-item-id="tekwan" data-item-name="Tekwan">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/tekwan.jpg" alt="Pempek Tekwan berkuah kaldu ikan" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/tekwan-200.webp 200w, assets/img/menu/tekwan-400.webp 400w, assets/img/menu/tekwan-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/tekwan.jpg" alt="Pempek Tekwan berkuah kaldu ikan" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Tekwan</h4>
@@ -341,7 +365,10 @@
             </article>
             <article class="card-menu" data-item-id="model-tahu" data-item-name="Model Tahu">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/model-tahu.jpg" alt="Pempek Model Tahu dengan cuko" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/model-tahu-200.webp 200w, assets/img/menu/model-tahu-400.webp 400w, assets/img/menu/model-tahu-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/model-tahu.jpg" alt="Pempek Model Tahu dengan cuko" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Model Tahu</h4>
@@ -360,7 +387,10 @@
             </article>
             <article class="card-menu" data-item-id="paket-otentik" data-item-name="Paket Otentik">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/paket-otentik.jpg" alt="Paket Otentik aneka pempek" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/paket-otentik-200.webp 200w, assets/img/menu/paket-otentik-400.webp 400w, assets/img/menu/paket-otentik-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/paket-otentik.jpg" alt="Paket Otentik aneka pempek" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <div class="card-menu__badges">
@@ -389,7 +419,10 @@
           <div class="menu-grid menu-grid--dense">
             <article class="card-menu" data-item-id="mie-kuning" data-item-name="Mie Kuning">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/mie-kuning.jpg" alt="Mie Kuning dengan telur" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/mie-kuning-200.webp 200w, assets/img/menu/mie-kuning-400.webp 400w, assets/img/menu/mie-kuning-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/mie-kuning.jpg" alt="Mie Kuning dengan telur" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Mie Kuning</h4>
@@ -408,7 +441,10 @@
             </article>
             <article class="card-menu" data-item-id="bihun" data-item-name="Bihun">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/bihun.jpg" alt="Bihun kuah dengan telur dadar" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/bihun-200.webp 200w, assets/img/menu/bihun-400.webp 400w, assets/img/menu/bihun-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/bihun.jpg" alt="Bihun kuah dengan telur dadar" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Bihun</h4>
@@ -427,7 +463,10 @@
             </article>
             <article class="card-menu" data-item-id="ekstra-cuko" data-item-name="Ekstra Cuko 50ml">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/ekstra-cuko.jpg" alt="Ekstra Cuko 50ml saus sambal" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/ekstra-cuko-200.webp 200w, assets/img/menu/ekstra-cuko-400.webp 400w, assets/img/menu/ekstra-cuko-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/ekstra-cuko.jpg" alt="Ekstra Cuko 50ml saus sambal" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Ekstra Cuko 50ml</h4>
@@ -446,7 +485,10 @@
             </article>
             <article class="card-menu" data-item-id="cuko-250ml" data-item-name="Cuko 250ml">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/cuko-250ml.jpg" alt="Cuko 250ml dalam toples" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/cuko-250ml-200.webp 200w, assets/img/menu/cuko-250ml-400.webp 400w, assets/img/menu/cuko-250ml-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/cuko-250ml.jpg" alt="Cuko 250ml dalam toples" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Cuko 250ml</h4>
@@ -465,7 +507,10 @@
             </article>
             <article class="card-menu" data-item-id="ebi" data-item-name="Ebi">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/ebi.jpg" alt="Ebi udang kering" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/ebi-200.webp 200w, assets/img/menu/ebi-400.webp 400w, assets/img/menu/ebi-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/ebi.jpg" alt="Ebi udang kering" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Ebi</h4>
@@ -484,7 +529,10 @@
             </article>
             <article class="card-menu" data-item-id="sambel" data-item-name="Sambel ekstra pedas">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/sambel.jpg" alt="Sambel ekstra pedas" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/sambel-200.webp 200w, assets/img/menu/sambel-400.webp 400w, assets/img/menu/sambel-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/sambel.jpg" alt="Sambel ekstra pedas" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Sambel ekstra pedas</h4>
@@ -509,7 +557,10 @@
           <div class="menu-grid menu-grid--dense">
             <article class="card-menu" data-item-id="teh-manis" data-item-name="Teh Manis">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/teh-manis.jpg" alt="Teh Manis es teh cokelat" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/teh-manis-200.webp 200w, assets/img/menu/teh-manis-400.webp 400w, assets/img/menu/teh-manis-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/teh-manis.jpg" alt="Teh Manis es teh cokelat" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Teh Manis</h4>
@@ -528,7 +579,10 @@
             </article>
             <article class="card-menu" data-item-id="teh-tawar" data-item-name="Teh Tawar">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/teh-tawar.jpg" alt="Teh Tawar es teh" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/teh-tawar-200.webp 200w, assets/img/menu/teh-tawar-400.webp 400w, assets/img/menu/teh-tawar-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/teh-tawar.jpg" alt="Teh Tawar es teh" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Teh Tawar</h4>
@@ -547,7 +601,10 @@
             </article>
             <article class="card-menu" data-item-id="fresh-orange" data-item-name="Fresh Orange">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/fresh-orange.jpg" alt="Fresh Orange jus jeruk segar" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/fresh-orange-200.webp 200w, assets/img/menu/fresh-orange-400.webp 400w, assets/img/menu/fresh-orange-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/fresh-orange.jpg" alt="Fresh Orange jus jeruk segar" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Fresh Orange</h4>
@@ -566,7 +623,10 @@
             </article>
             <article class="card-menu" data-item-id="lemon-tea" data-item-name="Lemon Tea">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/lemon-tea.jpg" alt="Lemon Tea es teh lemon" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/lemon-tea-200.webp 200w, assets/img/menu/lemon-tea-400.webp 400w, assets/img/menu/lemon-tea-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/lemon-tea.jpg" alt="Lemon Tea es teh lemon" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Lemon Tea</h4>
@@ -585,7 +645,10 @@
             </article>
             <article class="card-menu" data-item-id="fresh-lime" data-item-name="Fresh Lime">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/fresh-lime.jpg" alt="Fresh Lime jus jeruk nipis" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/fresh-lime-200.webp 200w, assets/img/menu/fresh-lime-400.webp 400w, assets/img/menu/fresh-lime-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/fresh-lime.jpg" alt="Fresh Lime jus jeruk nipis" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Fresh Lime</h4>
@@ -604,7 +667,10 @@
             </article>
             <article class="card-menu" data-item-id="lychee-tea" data-item-name="Lychee Tea">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/lychee-tea.jpg" alt="Lychee Tea es teh dengan leci" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/lychee-tea-200.webp 200w, assets/img/menu/lychee-tea-400.webp 400w, assets/img/menu/lychee-tea-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/lychee-tea.jpg" alt="Lychee Tea es teh dengan leci" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Lychee Tea</h4>
@@ -623,7 +689,10 @@
             </article>
             <article class="card-menu" data-item-id="tebs-teh-soda" data-item-name="Tebs Teh Soda">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/tebs-teh-soda.jpg" alt="Tebs Teh Soda minuman bersoda" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/tebs-teh-soda-200.webp 200w, assets/img/menu/tebs-teh-soda-400.webp 400w, assets/img/menu/tebs-teh-soda-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/tebs-teh-soda.jpg" alt="Tebs Teh Soda minuman bersoda" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Tebs Teh Soda</h4>
@@ -642,7 +711,10 @@
             </article>
             <article class="card-menu" data-item-id="fruit-tea" data-item-name="Fruit Tea">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/fruit-tea.jpg" alt="Fruit Tea minuman buah dingin" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/fruit-tea-200.webp 200w, assets/img/menu/fruit-tea-400.webp 400w, assets/img/menu/fruit-tea-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/fruit-tea.jpg" alt="Fruit Tea minuman buah dingin" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Fruit Tea</h4>
@@ -661,7 +733,10 @@
             </article>
             <article class="card-menu" data-item-id="air-mineral" data-item-name="Air Mineral">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/air-mineral.jpg" alt="Air Mineral botol" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/air-mineral-200.webp 200w, assets/img/menu/air-mineral-400.webp 400w, assets/img/menu/air-mineral-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/air-mineral.jpg" alt="Air Mineral botol" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Air Mineral</h4>
@@ -680,7 +755,10 @@
             </article>
             <article class="card-menu" data-item-id="kopi-lampung" data-item-name="Kopi Lampung Tubruk">
                 <div class="card-menu__media">
-                  <img src="assets/img/menu/kopi-lampung.jpg" alt="Kopi Lampung Tubruk dituang dari teko" width="800" height="600" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" srcset="assets/img/menu/kopi-lampung-200.webp 200w, assets/img/menu/kopi-lampung-400.webp 400w, assets/img/menu/kopi-lampung-800.webp 800w" sizes="(min-width: 768px) 350px, 92px">
+                    <img src="assets/img/menu/kopi-lampung.jpg" alt="Kopi Lampung Tubruk dituang dari teko" width="800" height="600" loading="lazy" decoding="async">
+                  </picture>
                 </div>
 
               <h4 class="card-menu__name">Kopi Lampung Tubruk</h4>

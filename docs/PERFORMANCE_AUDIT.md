@@ -91,3 +91,36 @@ Empat pembebanan terbesar: `hero-pempek.jpg` (188 KB), `lenggang.jpg` (108 KB),
 
 > Semua perubahan gambar bersifat optimasi non-visual (kualitas dipertahankan) dan dapat diuji
 > ulang dengan harness yang sama untuk membandingkan sebelum/sesudah.
+
+---
+
+## 8. Update 2026-10-11 — Optimasi diimplementasikan (before/after)
+
+Rekomendasi #1, #2, #5 **diterapkan** (WebP + `srcset`/`sizes` untuk hero & 23 thumbnail menu;
+font Google dikirim ulang sebagai **self-host** `woff2` Latin + preload). Diukur ulang dengan
+harness **sama** (viewport 390×844, cache off, Slow‑4G + CPU 4×). Metode harness: Python + aiohttp
+via CDP (menggantikan Playwright yang tidak tersedia di environment ini); angka baseline di bawah
+diambil ulang dengan harness yang sama agar apple‑to‑apple.
+
+| Metrik (Slow‑4G + CPU 4×) | Sebelum | Sesudah | Δ |
+|---|---|---|---|
+| **LCP** | 2356–3456 ms (3 sampel) | **1856–2056 ms** | **−≈900 ms** ✅ < 2500 |
+| **CLS** | 0,0013 | **0** | pergeseran font hilang ✅ |
+| Muat awal — transfer | 576 KB | **222 KB** | **−61 %** |
+| Muat awal — permintaan | 13 | 16 | +3 (satu berkas font kritis + varian) |
+| Muat penuh — transfer | 2 707 179 B | **698 426 B** | **−74 %** |
+| Elemen LCP | `IMG` hero JPEG 192 KB | `IMG` hero **WebP 400w** | — |
+
+Catatan:
+
+- LCP kini dipenuhi gambar WebP **hero 400w** (13 KB), bukan JPEG 1600 px (192 KB).
+- CLS = 0: `@font-face` lokal (bukan CSS `fonts.googleapis.com` yang memicu reflow setelah swap) +
+  preload 2 `woff2` kritis.
+- **Tidak** diubah: JPEG asli tetap sebagai fallback `<picture>` (kompatibilitas), gambar galeri
+  tetap JPEG penuh (dipakai lightbox via `src` mentah), `loading="lazy"` tetap.
+- Temuan code review **HIGH** (efek 3D tilt hero kehilangan `perspective` karena `<img>` kini di
+  dalam `<picture>`) **diperbaiki**: `perspective(900px)` dipindah ke fungsi `transform` gambar
+  (pola sama seperti kartu menu/testimoni). Temuan **MEDIUM** (`sizes` 350px untuk grid `--dense`)
+  ditindaklanjuti: tidak mengubah varian terpilih pada langkah 200/400/800, dicatat sebagai INFO.
+- Rekomendasi #3 (gzip/minify) & #6 (CSS kritis) tetap **deploy-time** (butuh hosting + langkah build) —
+  lihat `TECHNICAL_DEBT.md` TD‑PERF‑03/06.

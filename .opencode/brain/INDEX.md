@@ -1,13 +1,13 @@
 # INDEX
 
 > Project Brain file · Map of all Project Brain knowledge. Keep this up to date — it is the entry point for retrieval.
-> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (git init + CHANGELOG + audit performa TD-PERF-01..06).
+> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (optimasi performa WebP + font self-host; TD-PERF-01/02/04/05 ADDRESSED).
 
 ## Project snapshot (CONFIRMED kecuali ditandai)
 
 - **Apa ini:** Landing page statis satu halaman untuk UMKM "Pempek Yuk Titi - UII Jakal" (Sleman, DIY).
 - **Stack:** HTML/CSS/JS murni — no framework, no database, no build step.
-- **Status:** Implementasi v1 SELESAI + QA + review; **dark mode + P0 konversi + P1 keranjang + foto galeri + polish A/B/C + social proof (TERVERIFIKASI pemilik) SELESAI** (terverifikasi render); **belum di-deploy**, belum ada git repo.
+- **Status:** Implementasi v1 SELESAI + QA + review; **dark mode + P0 konversi + P1 keranjang + foto galeri + polish A/B/C + social proof (TERVERIFIKASI pemilik) + optimasi performa (WebP + font self-host) SELESAI** (terverifikasi render; LCP <2500, CLS 0); **belum di-deploy**; git repo ada (branch `master`, commit `2c07bb3`), tanpa remote.
 - **Lokasi:** /home/corvusjet/pempek-yuktiti-website
 
 ## Brain map
@@ -21,7 +21,7 @@ PROJECT*              identitas, tujuan, data bisnis Pempek Yuk Titi
 ├── DECISIONS*        #1 statis · #2 satu halaman · #3 harga 2026+disclaimer · #4 hosting
 ├── CURRENT_STATE*    7+ fitur HADIR (termasuk chip kategori + kartu menu kompak), QA PASS; deploy & git belum
 └── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG (OPEN) · ISSUE-005 rating/badge (VERIFIED pemilik); ISSUE-004 favicon 404 FIXED; RV-01..07 FIXED
-├── TECHNICAL_DEBT     (template — belum diisi)
+├── TECHNICAL_DEBT*    TD-PERF-01..06; 01/02/04/05 ADDRESSED (WebP+font self-host, 2026-10-11); 03/06 OPEN (deploy-time)
 ├── SECURITY           (template — statis, tanpa kredensial)
 ├── TESTING            (template — belum ada automated tooling; QA manual via laporan)
 ├── DEPLOYMENT         (template — hosting belum dipilih)
@@ -29,7 +29,7 @@ PROJECT*              identitas, tujuan, data bisnis Pempek Yuk Titi
 ├── CHANGE_HISTORY*    init + implementasi v1 2026-10-08 … polish A/B/C + social proof + testimoni 2026-10-10
 ├── FAILURES           (template — belum ada)
 ├── PATTERNS           (template — belum ada)
-├── PROJECT_HEALTH*    dinilai 2026-10-08 — skor GREEN/YELLOW, overall YELLOW
+├── PROJECT_HEALTH*    dinilai 2026-10-08 — skor GREEN/YELLOW, overall YELLOW; Performance YELLOW→GREEN 2026-10-11
 ├── ARCHITECTURE_DRIFT (kosong — divergensi kecil assets/ dicatat di ARCHITECTURE)
 └── BRAIN_AUDIT*       log audit (1 entri: update post-implementation)
 tasks/                 task records (TASK-NNN.md) — masih template
@@ -53,12 +53,13 @@ snapshots/             snapshot-2026-10-08-v1-implementation.md (milestone v1+QA
 | Kenapa segini rentangnya? | index.html (meta/JSON-LD "Rp 3.000–15.000") + ISSUE-001 | CONFIRMED (dikoreksi 2026-10-08) |
 | Why decisions? | DECISIONS (dan docs/adr/) | CONFIRMED |
 | What's broken? | KNOWN_ISSUES, FAILURES | CONFIRMED — 3 issue OPEN (001 MEDIUM, 002/003 LOW); ISSUE-004 + RV-01..07 FIXED |
-| What's owed? | TECHNICAL_DEBT | template |
+| What's owed? | TECHNICAL_DEBT | TD-PERF-01..06 (01/02/04/05 ADDRESSED 2026-10-11; 03/06 OPEN deploy-time) |
 | Security posture? | SECURITY | template (risiko rendah; situs statis) |
 | Testing in place? | TESTING | template — QA manual PASS_WITH_NOTES (laporan), tanpa automated test |
 | How to deploy? | DEPLOYMENT | template (hosting belum dipilih) |
 | Latest state? | CURRENT_STATE, CHANGE_HISTORY, PROJECT_HEALTH | CONFIRMED |
-| Sehat proyeknya? | PROJECT_HEALTH | CONFIRMED (dinilai 2026-10-08, overall YELLOW) |
+| Sehat proyeknya? | PROJECT_HEALTH | CONFIRMED (dinilai 2026-10-08; Performance GREEN 2026-10-11; overall YELLOW — peluncuran) |
+| Kenapa situsnya ringan? | docs/PERFORMANCE_AUDIT §8, TECHNICAL_DEBT, CURRENT_STATE | CONFIRMED (LCP 1856–2056 ms, CLS 0, −61%/−74%, 2026-10-11) |
 
 ## Maintenance
 

@@ -1,13 +1,13 @@
 # CURRENT_STATE
 
 > Project Brain file · Current condition. Update after major changes; do NOT maintain this on every trivial edit.
-> Confidence: CONFIRMED (observed), INFERRED, UNKNOWN. Last update: 2026-10-11 (a11y target sentuh stepper 44px).
+> Confidence: CONFIRMED (observed), INFERRED, UNKNOWN. Last update: 2026-10-11 (optimasi performa: WebP + font self-host).
 
 ## Feature status
 
 | Feature | Status | Notes |
 |---------|--------|-------|
-| Hero | HADIR | `index.html` #hero: judul, tagline, CTA WA, dekorasi SVG + foto `assets/img/hero-pempek.jpg` (CONFIRMED) |
+| Hero | HADIR | `index.html` #hero: judul, tagline, CTA WA, dekorasi SVG + foto via **`<picture>`**: WebP `hero-pempek-{400,800,1600}.webp` (srcset/sizes) + fallback `hero-pempek.jpg` (width/height 1600×900, crop 16:9). Elemen LCP = WebP 400w. (CONFIRMED — 2026-10-11) |
 | Cerita singkat | HADIR | `index.html` #cerita (CONFIRMED) |
 | Menu + harga + disclaimer | HADIR | 23 kartu harga (sikoan dikelompokkan jadi 1 kartu) + disclaimer-box "Harga dapat berubah, konfirmasi via WhatsApp" (CONFIRMED — index.html); QA melaporkan 23/23 cocok REQUIREMENTS.md; tiap kartu kini punya `.card-menu__desc` singkat (23 total) (CONFIRMED 2026-10-10) |
 | Chip kategori menu (sticky) | HADIR | `.menu-nav` (nav + aria-label) 4 tautan → `#menu-sikoan/#menu-spesial/#menu-addon/#menu-minuman`; sticky `top: var(--nav-h)`, z-index 100 < header 200; scroll horizontal (scrollbar disembunyikan, `overscroll-behavior-inline: contain`), target 44px; print → hidden (CONFIRMED — index.html/style.css, terukur CDP 2026-10-10) |
@@ -26,14 +26,15 @@
 | Intro splash | HADIR | `#splash` sekali per sesi (`sessionStorage.pyt_splash`); tampil hanya `html.js.anim .splash--show`; masuk 980ms → auto-dismiss 1600ms → fade 450ms → node dihapus (failsafe 4000ms); skip klik/keydown (document, passive) <0.5s; no-JS/reduce → tidak pernah tampil (CONFIRMED) |
 | Dark mode | HADIR | Toggle `.theme-toggle` di `.nav__actions` + ikon sun/moon + `aria-pressed`; default ikut sistem (`prefers-color-scheme` via CSS media, live); pilihan eksplisit disimpan `localStorage.pyt_theme` & menang; anti-FOUC via skrip inline head SEBELUM stylesheet; sinkron antar tab (event `storage`); print selalu terang; `theme-ok` gate (theme.js gagal → tombol hidden); palet hangat, kontras AA diuji (CONFIRMED) |
 | Tombol "Pesan" per kartu menu | DIGANTI | 23 `<a class="card-menu__order">` per kartu **DIGANTI** oleh stepper jumlah + keranjang (lihat "Keranjang belanja & checkout (P1)"); `card-menu__order` = 0 di index.html; `menu-cta-static` fallback no-JS = 1 (CONFIRMED — grep) |
-| Foto per item menu | HADIR | 23 `.card-menu__media` di kartu menu → `assets/img/menu/<slug>.jpg` (Pexels, 800px, ≥20KB, `loading="lazy"` + `width`/`height` + `alt` deskriptif + `decoding="async"`); sumber & lisensi tiap file di `assets/img/menu/LISENSI.md`; foto masih ilustrasi generik Pexels (bukan foto asli warung) — ISSUE-002 tetap relevan (CONFIRMED) |
+| Foto per item menu | HADIR | 23 `.card-menu__media` di kartu menu → **`<picture>`** WebP `assets/img/menu/<slug>-{200,400,800}.webp` (srcset/sizes) + fallback `assets/img/menu/<slug>.jpg` (Pexels, 800px, `loading="lazy"` + `width`/`height` + `alt` deskriptif + `decoding="async"`); sumber & lisensi tiap file di `assets/img/menu/LISENSI.md`; foto masih ilustrasi generik Pexels (bukan foto asli warung) — ISSUE-002 tetap relevan. (CONFIRMED — 2026-10-11) |
 | Keranjang belanja & checkout (P1) | HADIR | Stepper `+/-` di tiap kartu (`.card-menu__stepper`, gating `.js`); cart bar sticky bawah (`.cart-bar`: badge jumlah + total berjalan "kalkulator"; **satu-satunya tombol pesan** saat JS aktif); panel keranjang (`.cart-panel` role=dialog aria-modal: rows item + stepper + hapus, subtotal → total, tombol Checkout WA); backdrop `.cart-backdrop`; state `sessionStorage.pyt_cart` [{id,name,price,qty}]; checkout membangun `wa.me/628814105501?text=` itemized + Total + "Terima kasih!" (runtime `js/cart.js`); no-JS → fallback CTA statis; harga dibaca runtime dari `.card-menu__price` (single source); `body.cart-open{overflow:hidden}`; z-index panel 410 > skip-link 300 > header 200; print → bar/panel/backdrop/stepper hidden; reduce → tanpa transisi (CONFIRMED) |
 | Section Cara Pesan | HADIR | `#cara-pesan` antara `#menu` dan `#lokasi`: `<ol class="steps">` 3 langkah bernomor (`.info-card reveal-3d`) + CTA `.btn--wa` prefill umum; link nav ke-7 "Cara Pesan"; langkah 2 kini menerangkan alur keranjang (pilih jumlah → keranjang → Checkout WA); grid 3 kolom ≥768px; print tetap tampil (CONFIRMED) |
 | Favicon | HADIR | `favicon.svg` di root (rounded-square #8B3E2F + ikan putih, 327B) + `<link rel="icon" type="image/svg+xml">`; 404 favicon.ico lama hilang dari console (CONFIRMED) |
+| Tipografi (font self-host) | HADIR | `css/fonts.css` (3 `@font-face`, `font-display: swap`, `unicode-range` Latin) + `assets/fonts/` (Inter variable 400–500 48,5 KB; Poppins 600 8,0 KB; Poppins 700 7,8 KB — `woff2`) + OFL; 2 `woff2` kritis di-`preload` di `<head>`; **tanpa** permintaan ke Google Fonts (0 tautan `fonts.googleapis.com`/`gstatic`). (CONFIRMED — 2026-10-11) |
 
 ## Code & quality status
 
-- Kode ada: `index.html` (1007 baris), `css/style.css` (2291), `js/main.js` (80 — frozen), `js/animations.js` (501 — pemilik animasi; pengecualian frozen untuk fitur gerak), `js/theme.js` (109 — frozen), `js/cart.js` (371 — pemilik seluruh perilaku keranjang), `js/lightbox.js` (167 — pemilik pratinjau galeri), `js/header.js` (66 — pemilik class header-compact + `--header-h` terukur), `favicon.svg`, `docs/DESIGN_BRIEF.md`, `README.md`, `assets/img/` (5 foto: hero + 4 stok galeri) + `assets/img/menu/` (23 jpg + `LISENSI.md`). (CONFIRMED — wc -l/ls 2026-10-10)
+- Kode ada: `index.html` (1007 baris), `css/style.css` (2291), `css/fonts.css` (BARU — `@font-face`), `js/main.js` (80 — frozen), `js/animations.js` (501 — pemilik animasi; pengecualian frozen untuk fitur gerak), `js/theme.js` (109 — frozen), `js/cart.js` (371 — pemilik seluruh perilaku keranjang), `js/lightbox.js` (167 — pemilik pratinjau galeri), `js/header.js` (66 — pemilik class header-compact + `--header-h` terukur), `favicon.svg`, `docs/DESIGN_BRIEF.md`, `docs/PERFORMANCE_AUDIT.md`, `README.md`, `assets/fonts/` (3 woff2 + 2 OFL), `assets/img/` (hero + varian WebP 400/800/1600 + 4 stok galeri) + `assets/img/menu/` (23 jpg + 69 WebP + `LISENSI.md`). (CONFIRMED — 2026-10-11)
 - QA: **PASS_WITH_NOTES**; code review: temuan RV-01..07 **sudah diperbaiki** (scroll-padding-top, class `.js` dipindah ke main.js, brand menutup panel nav, dead CSS dihapus, padding FAB ≥1024px, token `--color-header-bg`, figcaption ganda dihapus). (CONFIRMED via laporan QA/orkestrator; sebagian terverifikasi langsung di kode — lihat KNOWN_ISSUES "Fixed / Verified")
 - Koreksi rentang harga SEO: teks "Rp 3.000–15.000" (add-on Rp 3.000) di meta description, JSON-LD `priceRange`, dan hero "Mulai Rp 3.000" — sebelumnya salah tulis Rp 3.500–15.000. (CONFIRMED — index.html baris 7, 54, 101)
 - Upgrade visual foto 2026-10-08: hero + galeri memakai foto stok Pexels lokal (`assets/img`); struktur HTML valid (parser test), semua asset HTTP 200 di preview :8010. (CONFIRMED — verifikasi langsung)
@@ -45,6 +46,7 @@
 - UX polish "Paket A" 2026-10-10 (kartu menu kompak mobile + chip kategori sticky + 21 deskripsi + offset anchor fix): dev probe struktural + screenshot; verifikasi orkestrator CDP (halaman mobile 12.972→**8.707px**, `#menu` 9.061→**4.718px**, kartu 410→**164–181px**, landing 4 grup × 6 lebar +8px konsisten, overflowX 0, keranjang total Rp 7.000, CSS balanced, console 0 error); QA independen **PASS (ship-quality)** (struktur/responsif/keranjang/a11y/states/kontras/regresi; 2 minor); review **APPROVE_WITH_NITS** (0 CRIT/HIGH) → M1 offset + M3 shadow duplikat + L1 (`overscroll-behavior-inline`) **FIXED** oleh orkestrator, M2 (magic offset 31/56px) jadi follow-up. `js/*` tidak disentuh. (CONFIRMED)
 - UX polish "Paket B" 2026-10-10 (lightbox galeri + trust chips hero): implementasi awal oleh frontend-developer (laporan hilang karena abort — orkestrator mengambil alih verifikasi dari kode); verifikasi orkestrator CDP (buka/tutup/nav/wrap/Esc/backdrop/panah, trap + focus return, no-JS/dark/print/reduce, 320–1440 + landscape 640×360, regresi keranjang, 0 error); QA independen **PASS with 1 WARN** (Tab-trap = artefak harness, terbukti); review **APPROVE_WITH_NITS** → M1 (meta clip) + M2 (showModal guard) + L1/L3/L4/L6 **FIXED** oleh orkestrator + verifikasi ulang hijau. `js/main|theme|animations|cart` tidak disentuh. (CONFIRMED)
 - Social proof 2026-10-10 (rating Google + 3 badge Terlaris dari riset agregator; verifikasi langsung CDP oleh orkestrator — struktur/render/kontras light+dark/320–1440/JSON valid/0 error; cart regresi utuh). Sisa: verifikasi angka rating & pilihan badge ke pemilik (ISSUE-005 OPEN); sign-off visual user. (CONFIRMED)
+- Optimasi performa 2026-10-11 (WebP `<picture>` hero + 23 menu + font self-host): harness Python/aiohttp-CDP (Playwright tak ada), Slow-4G cache off — **LCP 2356–3456 → 1856–2056 ms**, **CLS 0**, muat awal **576 KB → 222 KB (−61%)**, muat penuh **2,71 MB → 698 KB (−74%)**; QA independen **PASS** (A–H, 0 regresi, 0 error konsol); code review **APPROVE(-WITH-NITS)** → temuan HIGH (`perspective` tilt hero hilang karena `<picture>`) **DIPERBAIKI** (`transform: perspective(900px) …`) & diukur ulang hijau; temuan MEDIUM `sizes` → INFO. `js/*` tak disentuh. TD-PERF-01/02/04/05 ADDRESSED. (CONFIRMED)
 
 ## Active development
 
@@ -66,6 +68,7 @@
 - Galeri 2026-10-10: 2 foto pemilik dihapus permanen atas permintaan pemilik (konten tak cocok + crop parah); galeri = 4 stok, lightbox n/4 terverifikasi. Menunggu foto asli pengganti (makanan/warung, landscape) dari pemilik. (CONFIRMED)
 - Testimoni + galeri 2×2 selesai 2026-10-10 (3 kutipan ber-nama/tanggal + tombol Maps; terverifikasi CDP). Sisa: pemilik memverifikasi kutipan (ISSUE-005) + sign-off visual. (CONFIRMED)
 - A11y target sentuh stepper 2026-10-11: `.card-menu__step` 38→44px; terverifikasi Playwright 7 lebar + interaksi keranjang; preview Brave. Sisa: sign-off visual user di perangkat asli. (CONFIRMED)
+- Optimasi performa selesai 2026-10-11 (hero + 23 menu → WebP `<picture>`; font self-host + preload; README/CHANGELOG/brain/telemetry sinkron). Target tercapai (LCP <2500, CLS <0,1, bobot turun besar). Sisa: deploy-time gzip/minify + CSS kritis (TD-PERF-03/06, menunggu hosting); commit aset WebP + font (74 berkas untracked). (CONFIRMED)
 
 ## Blocked work
 
@@ -84,6 +87,7 @@
 - Deskripsi kartu menu (21 ditambahkan 2026-10-10) adalah teks netral/editable oleh orkestrator — menunggu validasi/persetujuan pemilik untuk nada & isi. (CONFIRMED)
 - Target sentuh tombol stepper `+/-` = **44×44px** — diperbaiki 2026-10-11 (sebelumnya 38px, di bawah rekomendasi 44px meski lolos minimum WCAG 2.2 AA 24px). Terukur 44×44 di 7 lebar, overflow 0. (CONFIRMED — Playwright 2026-10-11)
 - Offset lompatan anchor & posisi chip memakai konstanta px (`--menu-nav-h: 61px`, header-wrap 768–967 `+31px`) — berpotensi drift bila font/wrap header berubah; saran follow-up: ukur tinggi header via ResizeObserver → set `--header-h`. (CONFIRMED — code review M2)
+- Varian WebP bisa **basi** bila foto JPEG diganti tanpa regenerate varian (atau sebaliknya): 24 `<picture>` menunjuk varian WebP tetap; ganti foto → regenerate `hero-pempek-*.webp` / `menu/<slug>-*.webp` dengan skrip yang sama. Galeri tetap JPEG penuh (lightbox baca `src` mentah). (CONFIRMED — 2026-10-11)
 
 ## Architecture status
 
@@ -95,8 +99,8 @@
 
 ## Branch / version (if versioned)
 
-- Current branch: UNKNOWN (belum ada git repo — diverifikasi `git status` 2026-10-08)
-- Current version: UNKNOWN
+- Current branch: `master` (git init 2026-10-11; commit `2c07bb3`). Identitas commit lokal repo. **Belum ada remote → belum di-deploy.** (CONFIRMED)
+- Current version: `1.0.0` (CHANGELOG); perubahan pasca-rilis di `[Unreleased]`.
 
 ## Snapshot pointer
 

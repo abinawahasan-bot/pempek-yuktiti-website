@@ -35,9 +35,20 @@ dan proyek ini menganut [Semantic Versioning](https://semver.org/lang/id/).
 - **Paket motion**: pita marquee, entrance hero berjenjang, parallax halus, zoom foto menu,
   scroll‑spy chip kategori. (2026‑10‑10)
 - Fallback "Memuat peta…" untuk embed Maps & fallback teks galeri. (2026‑10‑10)
+- **Aset gambar WebP berukuran ganda** — hero (`hero-pempek-{400,800,1600}.webp`, crop 16:9) +
+  69 varian menu (`<slug>-{200,400,800}.webp`, 23 item) di `assets/img/`; JPEG asli tetap ada
+  sebagai fallback `<picture>`. (2026‑10‑11)
+- **Font self‑host** — Inter (variable 400–500) + Poppins 600/700 (subset Latin, `woff2`) di
+  `assets/fonts/` + `css/fonts.css` (`@font-face`, `font-display: swap`, `unicode-range` Latin);
+  menggantikan Google Fonts CDN; lisensi OFL disertakan. (2026‑10‑11)
 
 ### Changed
 
+- **Optimasi performa (gambar + font)** — hero & 23 kartu menu kini `<picture>` (WebP via
+  `srcset`/`sizes`, JPEG fallback; hero `width/height` 1600×1063 → 1600×900 crop 16:9); 3 `<link>`
+  Google Fonts diganti **preload** 2 `woff2` kritis (Inter, Poppins 700) + `css/fonts.css` lokal.
+  Hasil terukur (Slow‑4G, cache off): **LCP 2056→1856 ms**, **CLS 0**, muat awal **576→223 KB (−61%)**,
+  muat penuh **2,71→0,70 MB (−74%)**. (2026‑10‑11)
 - **Target sentuh tombol stepper `+/-`** dinaikkan `38px → 44px` (memenuhi rekomendasi
   WCAG 2.2 Target Size). (2026‑10‑11)
 - **Offset header dinamis** via `ResizeObserver` (`--header-h`) menggantikan nilai manual

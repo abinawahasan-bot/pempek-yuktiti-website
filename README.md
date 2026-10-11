@@ -1,8 +1,8 @@
 # Pempek Yuk Titi — UII Jakal
 
-Landing page **statis satu halaman** untuk UMKM pempek "Pempek Yuk Titi — UII Jakal" (Kaliurang KM 14, Sleman). Dibangun dengan **HTML, CSS, dan JavaScript murni — tanpa framework, tanpa build step, tanpa dependensi** (hanya Google Fonts dari CDN).
+Landing page **statis satu halaman** untuk UMKM pempek "Pempek Yuk Titi — UII Jakal" (Kaliurang KM 14, Sleman). Dibangun dengan **HTML, CSS, dan JavaScript murni — tanpa framework, tanpa build step, tanpa dependensi runtime** (font Inter/Poppins **di-host sendiri** di `assets/fonts/`, tidak lagi memuat Google Fonts dari CDN).
 
-Isi halaman (satu berkas `index.html`, urut dari atas): Nav sticky → Hero (foto) → Cerita Singkat → Menu & Harga → Lokasi & Jam Buka (embed Google Maps) → Galeri (5 foto stok + 1 slot asli) → Kontak/CTA → Footer, plus tombol FAB WhatsApp melayang di layar kecil.
+Isi halaman (satu berkas `index.html`, urut dari atas): Nav sticky → Hero (foto) → Cerita Singkat → Menu & Harga → Lokasi & Jam Buka (embed Google Maps) → Galeri (4 foto stok) → Testimoni → Kontak/CTA → Footer, plus tombol FAB WhatsApp melayang di layar kecil.
 
 Fokus halaman: SEO lokal, tombol WhatsApp (`wa.me`), link Instagram, dan harga menu yang selalu disertai disclaimer.
 
@@ -15,7 +15,8 @@ pempek-yuktiti-website/
 ├── index.html            # Seluruh konten halaman + meta SEO + JSON-LD
 ├── favicon.svg           # Ikon tab/browser (SVG, tanpa dependensi)
 ├── css/
-│   └── style.css         # Semua gaya (mobile-first, design tokens di :root)
+│   ├── style.css         # Semua gaya (mobile-first, design tokens di :root)
+│   └── fonts.css         # @font-face font self-host (Inter, Poppins; subset Latin)
 ├── js/
 │   ├── main.js           # Hanya toggle nav mobile (progressive enhancement)
 │   ├── animations.js     # Animasi 3D ringan + intro splash (reduced-motion-aware)
@@ -24,8 +25,9 @@ pempek-yuktiti-website/
 │   ├── lightbox.js       # Pratinjau foto galeri (native dialog; tanpa JS galeri statis)
 │   └── header.js         # Header meramping saat gulir + ukur tinggi header (tanpa JS selalu penuh)
 ├── assets/
-│   └── img/              # Foto stok (Pexels) + foto menu per item (assets/img/menu/)
-│       └── menu/         # 23 foto menu + LISENSI.md (sumber & lisensi tiap file)
+│   ├── fonts/            # woff2 self-host (Inter, Poppins 600/700) + lisensi OFL
+│   └── img/              # Foto stok (Pexels) + varian WebP + foto menu per item
+│       └── menu/         # 23 foto menu (+ varian WebP) + LISENSI.md (sumber & lisensi)
 ├── docs/
 │   └── DESIGN_BRIEF.md   # Brief desain: palet, tipografi, wireframe, checklist
 └── .opencode/
@@ -34,6 +36,7 @@ pempek-yuktiti-website/
 
 - `index.html` — satu-satunya berkas HTML. Semua teks, harga, jam buka, alamat, dan link ada di sini.
 - `css/style.css` — gaya seluruh halaman; warna/ukuran diatur sebagai custom property di blok `:root`.
+- `css/fonts.css` + `assets/fonts/` — font **di-host sendiri** (Inter 400/500 variable + Poppins 600/700, subset Latin, format `woff2`); 2 `woff2` kritis di-`preload` di `<head>`. Lisensi OFL disertakan. Tidak ada permintaan ke Google Fonts.
 - `js/main.js` — sangat kecil & opsional: hanya membuka/menutup menu nav di layar kecil. **Halaman tetap berfungsi penuh tanpa JavaScript.**
 - `docs/DESIGN_BRIEF.md` — acuan desain (palet warna, tipografi, struktur section, aturan a11y/SEO).
 - `.opencode/brain/` — catatan internal proyek untuk keperluan agen AI, **bukan bagian dari situs**; biasanya dikecualikan dari repo/deploy publik.
@@ -148,6 +151,8 @@ Cara mengubahnya: buka Google Maps di browser → cari lokasi → **Bagikan → 
 > Catatan: foto asli yang baru ditambahkan adalah hasil optimasi dari file PNG milik pemilik (disimpan lokal sebagai JPEG, panjang sisi maks. 900px). Versi resolusi penuh tetap ada di folder milik pemilik.
 
 **Foto per item menu:** setiap kartu menu (23 item) memiliki fotonya sendiri di `assets/img/menu/<slug>.jpg` (Pexels, bebas lisensi). Daftar sumber & lisensi per file ada di `assets/img/menu/LISENSI.md`. Foto menu memakai atribut `loading="lazy"` + `width`/`height` (reservasi ruang agar tidak lompat). Semua aturan di bawah juga berlaku untuk foto menu.
+
+**Varian WebP (optimasi performa, 2026-10-11):** hero dan 23 foto menu kini disajikan lewat `<picture>` dengan **WebP** (`srcset` + `sizes`; mis. `assets/img/hero-pempek-{400,800,1600}.webp` dan `assets/img/menu/<slug>-{200,400,800}.webp`), dengan **JPEG asli sebagai fallback** (kompatibilitas). Bila mengganti foto, sertakan ulang varian WebP-nya (atau ganti srcset agar tetap menunjuk berkas yang ada). Foto **galeri tetap JPEG penuh** karena lightbox membaca `src` mentah.
 
 Mengganti foto (paling mudah — tanpa sentuh HTML): **timpa file di `assets/img/` dengan nama yang sama** (rasio disarankan 4:3 atau 1:1 untuk galeri; hero 16:9), lalu muat ulang browser. Cara lain: ganti blok `<figure class="gallery-item">...` di `index.html`:
 

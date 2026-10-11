@@ -617,6 +617,8 @@ body.has-cart .fab-wa { display: none; }
   border-radius: var(--radius-lg);
   box-shadow: 0 18px 40px -22px rgb(var(--shadow-rgb) / 0.5);
 }
+/* Pembungkus <picture> (WebP + fallback JPEG) — biarkan img mengisi lebar. */
+.hero__media picture { display: block; width: 100%; }
 .hero__media-caption {
   margin: var(--space-2) 0 0;
   font-size: 0.8rem;
@@ -811,6 +813,8 @@ body.has-cart .fab-wa { display: none; }
   height: 100%;
   object-fit: cover;
 }
+/* Pembungkus <picture> (WebP + fallback JPEG) — isi penuh wadah media. */
+.card-menu__media picture { display: block; width: 100%; height: 100%; }
 
 /* Stepper jumlah per kartu — HANYA tampil saat JS (class .js dari main.js).
    Tanpa JS: tersembunyi, dan CTA statis tetap tampil (lihat .menu-cta-static). */
@@ -1751,11 +1755,14 @@ html.lightbox-open body {
 
 /* ---------- · Hero: kartu 3D + glare mengikuti kursor ---------- */
 /* Tilt di-set lewat var --rx / --ry oleh js/animations.js.
-   Catatan: TANPA transform-style:preserve-3d di sini — <img> adalah
-   replaced element tanpa anak 3D; caption melayang berkat
-   perspective di .hero__media + translateZ pada figcaption. */
+   PENTING: <img> kini dibungkus <picture> (varian WebP), sehingga properti
+   `perspective` di .hero__media TIDAK lagi mengenai <img> (properti itu hanya
+   berlaku untuk anak langsung). Maka perspective ditulis sebagai fungsi
+   transform di sini — sama seperti kartu menu & kartu testimoni.
+   Tanpa transform-style:preserve-3d — caption melayang berkat perspective di
+   .hero__media + translateZ pada figcaption (figcaption tetap anak langsung). */
 html.anim .hero__media img {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform 320ms ease-out;
 }
 /* Kilau: sheen tipis statis + panas mengikuti kursor (idle 0.07 → hover 0.25).
