@@ -53,6 +53,13 @@ dan proyek ini menganut [Semantic Versioning](https://semver.org/lang/id/).
   agar tidak menimpa hover tilt; `perspective: 1200px` di grid induk; `will-change`
   hanya saat kartu di viewport). di HP / reduced motion / tanpa JS kartu tampil
   statis apa adanya. (2026‑10‑11)
+- **Domain & hosting diputuskan + SEO diaktifkan** — host **Netlify Drop**, domain
+  **`https://pempekyuktiti.com/`** (DECISIONS #6). `index.html`: `canonical`, `og:url`,
+  `og:image` (+`secure_url`/`type`/`width`1200/`height`630/`alt`), `twitter:image`
+  (+card `summary_large_image`), JSON‑LD `url`/`image`/`hasMenu` diisi URL absolut;
+  komentar TODO dihapus. Aset baru: `assets/og-image.jpg` (1200×630, dari hero),
+  `robots.txt` (disallow `/.opencode/` + sitemap), `sitemap.xml`. Domain **belum dibeli**
+  → verifikasi live menyusul (ISSUE‑003 FIXED). (2026‑10‑12)
 
 ### Changed
 

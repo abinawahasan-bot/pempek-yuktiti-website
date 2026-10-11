@@ -66,8 +66,8 @@ Tidak ada API key yang dibutuhkan untuk integrasi di atas. (CONFIRMED)
 
 ## SEO / structured data (aktual)
 
-- `meta description`, Open Graph (og:title/desc/type/image placeholder), JSON-LD `Restaurant` dengan `priceRange: "Rp 3.000–15.000"`. (CONFIRMED — index.html)
-- TODO menunggu domain: `canonical`, `og:url`, `og:image` final, JSON-LD `url` + `hasMenu` (placeholder "GANTI-DOMAIN-ANDA"). (CONFIRMED — komentar TODO) → KNOWN_ISSUES ISSUE-003
+- `meta description`, Open Graph (`og:title/description/type/locale/site_name/url/image`), Twitter card `summary_large_image`, JSON-LD `Restaurant` dengan `priceRange: "Rp 3.000–15.000"`. (CONFIRMED — index.html)
+- Domain `https://pempekyuktiti.com/` diisi di `canonical`, `og:url`, `og:image`+varian, `twitter:image`, JSON-LD `url`/`image`/`hasMenu`; komentar TODO dihapus. Aset `assets/og-image.jpg` (1200×630) + `robots.txt` + `sitemap.xml`. (CONFIRMED — 2026-10-12, DECISIONS #6) → KNOWN_ISSUES ISSUE-003 FIXED
 
 ## API flow / Database flow / Authentication flow
 

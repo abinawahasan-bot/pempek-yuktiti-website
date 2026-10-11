@@ -1,13 +1,13 @@
 # INDEX
 
 > Project Brain file · Map of all Project Brain knowledge. Keep this up to date — it is the entry point for retrieval.
-> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-12 (uji menyeluruh desktop/mobile + Lighthouse + 2 fix: kontras footer dark, header print).
+> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-12 (uji menyeluruh + 2 fix; lalu domain/hosting diputuskan — Netlify Drop + pempekyuktiti.com: SEO/OG/JSON-LD diisi, og-image/robots/sitemap dibuat — DECISIONS #6, ISSUE-003 FIXED).
 
 ## Project snapshot (CONFIRMED kecuali ditandai)
 
 - **Apa ini:** Landing page statis satu halaman untuk UMKM "Pempek Yuk Titi - UII Jakal" (Sleman, DIY).
 - **Stack:** HTML/CSS/JS murni — no framework, no database, no build step.
-- **Status:** Implementasi v1 SELESAI + QA + review; **dark mode + P0 konversi + P1 keranjang + foto galeri + polish A/B/C + social proof (TERVERIFIKASI pemilik) + optimasi performa (WebP + font self-host) + uji menyeluruh desktop/mobile (Lighthouse Desktop 100/100/100/100 · Mobile 91/100/100/100) SELESAI**; **belum di-deploy**; git repo ada (branch `master`, commit `2c07bb3`), tanpa remote.
+- **Status:** Implementasi v1 SELESAI + QA + review; **dark mode + P0 konversi + P1 keranjang + foto galeri + polish A/B/C + social proof (TERVERIFIKASI pemilik) + optimasi performa (WebP + font self-host) + uji menyeluruh (Lighthouse Desktop 100/100/100/100 · Mobile 91/100/100/100) + domain/hosting diputuskan (Netlify Drop + pempekyuktiti.com) SELESAI**; **belum di-deploy** (domain belum dibeli); git repo ada (branch `master`, HEAD `3c643f6`), tanpa remote.
 - **Lokasi:** /home/corvusjet/pempek-yuktiti-website
 
 ## Brain map
@@ -18,13 +18,13 @@ PROJECT*              identitas, tujuan, data bisnis Pempek Yuk Titi
 ├── ARCHITECTURE*     struktur & section AKTUAL (TERIMPLEMENTASI, diverifikasi kode)
 ├── CONVENTIONS*      semantic HTML5, mobile-first, custom props, alt text, bahasa ID
 ├── REQUIREMENTS*     fitur FR-1..FR-7 + menu & harga 2026
-├── DECISIONS*        #1 statis · #2 satu halaman · #3 harga 2026+disclaimer · #4 hosting
-├── CURRENT_STATE*    7+ fitur HADIR (termasuk chip kategori + kartu menu kompak), QA PASS; uji menyeluruh 2026-10-12 PASS; deploy & git belum
-└── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG (OPEN) · ISSUE-005 rating/badge (VERIFIED pemilik) · ISSUE-006 publikasi .opencode (OPEN, gate deploy); ISSUE-004 favicon 404 FIXED; ISSUE-007 kontras footer dark + ISSUE-008 header print FIXED 2026-10-12; RV-01..07 FIXED
+├── DECISIONS*        #1 statis · #2 satu halaman · #3 harga 2026+disclaimer · #4 hosting · #5 optimasi deportime tanpa build · #6 hosting final Netlify Drop + domain pempekyuktiti.com
+├── CURRENT_STATE*    7+ fitur HADIR (termasuk chip kategori + kartu menu kompak), QA PASS; uji menyeluruh 2026-10-12 PASS; domain/hosting diputuskan; deploy & git belum
+└── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG FIXED 2026-10-12 · ISSUE-005 rating/badge (VERIFIED pemilik) · ISSUE-006 publikasi .opencode (OPEN, gate deploy); ISSUE-004 favicon 404 FIXED; ISSUE-007 kontras footer dark + ISSUE-008 header print FIXED 2026-10-12; RV-01..07 FIXED
 ├── TECHNICAL_DEBT*    TD-PERF-01..06; 01/02/04/05 ADDRESSED (WebP+font self-host, 2026-10-11); 03/06 OPEN (deploy-time)
 ├── SECURITY           (template — statis, tanpa kredensial)
 ├── TESTING            (template — belum ada automated tooling; QA manual via laporan)
-├── DEPLOYMENT*        hosting belum dipilih (UNKNOWN; rekomendasi Netlify Drop); kit deportime di root (.htaccess, _headers) + DEPLOY.md; kompresi 188→35 KB brotli
+├── DEPLOYMENT*        hosting DIPILIH: Netlify Drop + domain pempekyuktiti.com (belum dibeli); kit deportime + aset SEO (og-image/robots/sitemap) di root; kompresi 188→35 KB brotli
 ├── DEPENDENCIES       (template — tanpa dependensi)
 ├── CHANGE_HISTORY*    init + implementasi v1 2026-10-08 … polish A/B/C + social proof + testimoni 2026-10-10
 ├── FAILURES           (template — belum ada)
@@ -65,4 +65,4 @@ snapshots/             snapshot-2026-10-08-v1-implementation.md (milestone v1+QA
 
 - Ensure every new/updated file is listed here with its retrieval purpose.
 - When a file is archived to snapshots/, remove it from the live map and note the archive.
-- Langkah berikut yang akan mengubah brain: pilih hosting/domain (→ DEPLOYMENT, DECISIONS #4, ISSUE-003), verifikasi harga ke pemilik (→ ISSUE-001), aset foto galeri (→ ISSUE-002), init git (→ CURRENT_STATE branch/version).
+- Langkah berikut yang akan mengubah brain: beli domain + deploy ke Netlify (→ DEPLOYMENT, DECISIONS #6), verifikasi harga ke pemilik (→ ISSUE-001), aset foto galeri (→ ISSUE-002), push ke remote git (→ CURRENT_STATE branch/version).

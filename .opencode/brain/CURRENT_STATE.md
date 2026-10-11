@@ -1,7 +1,7 @@
 # CURRENT_STATE
 
 > Project Brain file · Current condition. Update after major changes; do NOT maintain this on every trivial edit.
-> Confidence: CONFIRMED (observed), INFERRED, UNKNOWN. Last update: 2026-10-12 (uji menyeluruh desktop/mobile + Lighthouse + 2 fix: kontras footer dark, header print).
+> Confidence: CONFIRMED (observed), INFERRED, UNKNOWN. Last update: 2026-10-12 (uji menyeluruh desktop/mobile + Lighthouse + 2 fix; lalu keputusan domain/hosting Netlify Drop + pempekyuktiti.com: SEO/OG/JSON-LD diisi, og-image/robots/sitemap dibuat — DECISIONS #6, ISSUE-003 FIXED).
 
 ## Feature status
 
@@ -71,16 +71,17 @@
 - A11y target sentuh stepper 2026-10-11: `.card-menu__step` 38→44px; terverifikasi Playwright 7 lebar + interaksi keranjang; preview Brave. Sisa: sign-off visual user di perangkat asli. (CONFIRMED)
 - Optimasi performa selesai 2026-10-11 (hero + 23 menu → WebP `<picture>`; font self-host + preload; README/CHANGELOG/brain/telemetry sinkron). Target tercapai (LCP <2500, CLS <0,1, bobot turun besar). Sisa: deploy-time gzip/minify + CSS kritis (TD-PERF-03/06, menunggu hosting); commit aset WebP + font (74 berkas untracked). (CONFIRMED)
 - Kit deportime 2026-10-11 (kompresi + caching host-agnostic): `.htaccess` + `_headers` (root, drag-and-drop ready) + `DEPLOY.md`; README §D; DEPLOYMENT.md brain. Menutup kompresi TD-PERF-03 (188 KB → 41/35 KB). Minify + CSS kritis **tidak diadopsi** (butuh build → DECISIONS #1; user menyetujui rekomendasi 2026-10-11). Hosting direkomendasikan **Netlify Drop**. Sisa: deploy + isi domain (ISSUE-003) → verifikasi `content-encoding`. (CONFIRMED)
-- Uji menyeluruh desktop/mobile + Lighthouse + 2 fix selesai 2026-10-12 (lihat "Code & quality status"). Sisa: sign-off visual/kehalusan 3D di perangkat asli, uji 1× klik WA di HP, `canonical`/`og:image` menunggu domain (ISSUE-003), foto asli warung (ISSUE-002). (CONFIRMED)
+- Uji menyeluruh desktop/mobile + Lighthouse + 2 fix selesai 2026-10-12 (lihat "Code & quality status"). Sisa: sign-off visual/kehalusan 3D di perangkat asli, uji 1× klik WA di HP, foto asli warung (ISSUE-002). (CONFIRMED)
+- **Domain & hosting diputuskan 2026-10-12** (DECISIONS #6): Netlify Drop + `pempekyuktiti.com`. Metadata SEO diisi (`canonical`/`og`/`twitter`/JSON-LD `url`+`image`+`hasMenu`), komentar TODO dihapus; dibuat `assets/og-image.jpg` (1200×630), `robots.txt`, `sitemap.xml`. Menutup **ISSUE-003** (kode & aset; verifikasi live menunggu domain aktif). Domain **belum dibeli** — langkah user. (CONFIRMED)
 
 ## Blocked work
 
 - Foto asli warung: **tidak ada lagi di situs** (2 foto galeri dihapus 2026-10-10 atas permintaan pemilik); galeri (4) + hero + menu semuanya stok Pexels sementara; menunggu foto asli pengganti (makanan/warung, landscape) dari pemilik. (CONFIRMED — lihat KNOWN_ISSUES ISSUE-002)
-- Peluncuran (SEO/GMaps/OG optimal): menunggu domain + hosting dipilih. (CONFIRMED — ISSUE-003, DECISIONS #4)
+- Peluncuran: hosting **dipilih** (Netlify Drop, DECISIONS #6) & SEO/OG siap; tinggal **beli domain + arahkan DNS + deploy** (langkah user). (CONFIRMED — DECISIONS #6)
 
 ## Known limitations
 
-- `canonical` / `og:url` / `og:image` / JSON-LD `url`+`hasMenu` masih placeholder TODO ("https://GANTI-DOMAIN-ANDA/") sampai domain ada. (CONFIRMED — komentar TODO di index.html)
+- URL absolut situs menunjuk `https://pempekyuktiti.com/` yang **belum aktif** (domain belum dibeli) — `canonical`/`og:image`/JSON-LD belum akan terselesaikan sampai domain dibeli & deploy. (CONFIRMED — index.html)
 - Jam operasional hari belum dikonfirmasi pemilik; teks "Setiap hari" masih INFERRED. (CONFIRMED bahwa belum dikonfirmasi)
 - `assets/img/` berisi 5 foto: hero stok + 4 stok galeri (2 foto pemilik dihapus 2026-10-10). Foto menu masih ilustrasi Pexels generik. (CONFIRMED — ls repo 2026-10-10)
 - Belum ada tooling lint/format/automated test (STACK: linting UNKNOWN). (CONFIRMED)
@@ -98,8 +99,9 @@
 
 ## Deployment status
 
-- Belum pernah di-deploy; hosting final belum dipilih (Netlify / GitHub Pages / cPanel). (CONFIRMED — lihat DEPLOYMENT.md)
+- Belum pernah di-deploy; hosting **dipilih: Netlify Drop**; domain **`pempekyuktiti.com`** (belum dibeli) — DECISIONS #6, 2026-10-12. (CONFIRMED — lihat DEPLOYMENT.md)
 - **Kit deportime siap** (2026-10-11): `.htaccess` (Apache/cPanel: brotli/gzip + MIME + caching + header keamanan) & `_headers` (Netlify/Cloudflare Pages) — keduanya di **root** sehingga otomatis berlaku saat drag-and-drop; panduan `DEPLOY.md`. GitHub Pages tak perlu config. Kompresi terukur 188 KB → 41 KB gzip / 35 KB brotli. (CONFIRMED)
+- **Aset SEO/deploy siap** (2026-10-12): `assets/og-image.jpg` (1200×630), `robots.txt`, `sitemap.xml`; metadata absolut `https://pempekyuktiti.com/` di `index.html` (ISSUE-003 FIXED). (CONFIRMED)
 
 ## Branch / version (if versioned)
 

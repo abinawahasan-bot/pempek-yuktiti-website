@@ -1,18 +1,18 @@
 # DEPLOYMENT
 
 > Project Brain file · ACTUAL deployment architecture. NEVER store deployment credentials. Confidence markers apply.
-> Status: **belum pernah di-deploy**; hosting final **belum dipilih** (rekomendasi orkestrator: **Netlify Drop**). Kit deportime sudah disiapkan di root (2026-10-11).
+> Status: **belum pernah di-deploy**; hosting **DIPILIH: Netlify Drop**; domain **`pempekyuktiti.com`** (belum dibeli) — DECISIONS #6 (2026-10-12). Kit deportime + aset SEO (og-image, robots, sitemap) siap di root.
 
 ## Environments
 
 | Environment | Purpose | URL/domain | Confidence |
 |-------------|---------|-----------|------------|
 | dev (lokal) | Pratinjau di mesin sendiri (`python3 -m http.server`) | http://127.0.0.1:8011/ | CONFIRMED |
-| prod | Situs publik | **UNKNOWN** (hosting/domain belum dipilih — DECISIONS #4, ISSUE-003) | UNKNOWN |
+| prod | Situs publik | **https://pempekyuktiti.com/** (dipilih 2026-10-12 — DECISIONS #6; belum live: domain belum dibeli/deploy) | PENDING |
 
 ## Target hosting (kandidat)
 
-Sesuai DECISIONS #4, tiga kandidat. **Rekomendasi orkestrator: Netlify Drop** (tercepat, brotli otomatis, tanpa build; `_headers` di root langsung berlaku). Pilihan final tetap UNKNOWN (menunggu keputusan user): Netlify / GitHub Pages / cPanel.
+**DIPUTUSKAN (2026-10-12): Netlify Drop** (DECISIONS #6) — tercepat, brotli/HTTPS otomatis, tanpa build; `_headers` di root langsung berlaku. Alternatif (Cloudflare Pages / GitHub Pages / cPanel) tetap didukung config yang sudah ada (`.htaccess`, `_config.yml`).
 
 ## Build process
 
@@ -25,7 +25,7 @@ Sesuai DECISIONS #4, tiga kandidat. **Rekomendasi orkestrator: Netlify Drop** (t
 
 ## Servers & reverse proxy
 
-- Hosting statis/CDN. TLS via penyedia (Let's Encrypt di cPanel). Belum dikonfigurasi (belum dipilih host). (UNKNOWN)
+- Hosting statis/CDN (Netlify Drop). TLS: Let's Encrypt otomatis di Netlify setelah DNS aktif. Belum dikonfigurasi (domain belum dibeli). (PENDING)
 
 ## CI / CD
 
@@ -51,8 +51,8 @@ Sesuai DECISIONS #4, tiga kandidat. **Rekomendasi orkestrator: Netlify Drop** (t
 1. Drag & drop isi folder ke Netlify Drop (rekomendasi) — `.htaccess`/`_headers` di root otomatis berlaku. Untuk cPanel: unggah isi folder ke `public_html/`.
 2. Pastikan `index.html` ada di tingkat teratas root yang di-deploy.
 3. Kecualikan folder `.opencode/` dari unggahan publik (Netlify Drop/cPanel: jangan unggah; GitHub Pages: tambah `_config.yml` `exclude:` — `.gitignore` tidak menolong untuk berkas terlacak). Tidak ada rahasia di `.opencode/`, tetapi isinya catatan internal.
-4. Isi canonical/OG/JSON-LD `url` dengan domain final (ISSUE-003) sebelum/segera setelah live.
-5. Verifikasi: `curl -sI https://DOMAIN/css/style.css` → cari `content-encoding: br|gzip`; muat sekali di HP.
+4. Isi canonical/OG/JSON-LD `url` dengan domain final — **SELESAI 2026-10-12**: diisi `https://pempekyuktiti.com/` (ISSUE-003 FIXED). Sisa: beli domain + arahkan DNS (`DEPLOY.md`).
+5. Verifikasi: `curl -sI https://pempekyuktiti.com/css/style.css` → cari `content-encoding: br|gzip`; `/robots.txt` & `/sitemap.xml` ter-serve; Rich Results + FB Sharing Debugger untuk SEO/OG; muat sekali di HP.
 
 ## Secrets in deployment
 

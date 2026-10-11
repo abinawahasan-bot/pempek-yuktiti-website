@@ -4,6 +4,22 @@
 
 ## Changelog
 
+### 2026-10-12 (keputusan domain/hosting + SEO)
+
+#### Added
+- `assets/og-image.jpg` (1200×630, ~105 KB) dibuat dari `assets/img/hero-pempek.jpg` (crop + gradient scrim + teks Noto Sans) — aset kartu share sosial.
+- `robots.txt` (Allow `/`, Disallow `/.opencode/`, Sitemap ke domain) + `sitemap.xml` (1 URL, lastmod 2026-10-12).
+
+#### Changed
+- `index.html`: `canonical`, `og:url`, `og:image` (+`secure_url`/`type`/`width`/`height`/`alt`), `twitter:image` (+`alt`, card → `summary_large_image`), JSON-LD `url`/`image`/`hasMenu` → URL absolut `https://pempekyuktiti.com/`; semua komentar TODO domain dihapus.
+- `README.md` (§SEO), `DEPLOY.md`: dari "menunggu domain" → domain/hosting **diputuskan** (Netlify Drop); langkah deploy + DNS.
+
+#### Terkait
+- Brain: `DECISIONS.md` (#6), `KNOWN_ISSUES.md` (ISSUE-003 → FIXED), `DEPLOYMENT.md`, `CURRENT_STATE.md`, `INDEX.md`, `PROJECT_HEALTH.md`, `ARCHITECTURE.md`.
+- `CHANGELOG.md` [Unreleased] Added: domain/SEO.
+- Histori commit: feat(seo) — canonical/OG/JSON-LD + og-image/robots/sitemap.
+- Sisa (langkah user): **beli domain `pempekyuktiti.com` + arahkan DNS + deploy ke Netlify**; verifikasi live (Rich Results Test, FB Sharing Debugger, `/robots.txt` & `/sitemap.xml`).
+
 ### 2026-10-12 (uji menyeluruh desktop/mobile + Lighthouse + 2 fix)
 
 #### Fixed

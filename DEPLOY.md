@@ -4,6 +4,14 @@ Situs ini **statis tanpa build step** (DECISIONS #1: "deploy = unggah berkas
 langsung"). Berkas konfigurasi di bawah bekerja **otomatis saat di-drag & drop**
 karena berada di root situs — tidak perlu menyalin ke mana pun.
 
+## Domain & hosting — DIPUTUSKAN (2026-10-12)
+
+- **Hosting:** Netlify Drop (gratis, HTTPS otomatis) — DECISIONS #4.
+- **Domain:** `pempekyuktiti.com` — **belum dibeli** (langkah Anda; lihat "Cara deploy").
+- Semua URL absolut situs memakai `https://pempekyuktiti.com/`: `canonical`,
+  `og:url`, `og:image`, `twitter:image`, dan JSON-LD `url`/`image`/`hasMenu`.
+- `robots.txt` + `sitemap.xml` ditambahkan (menutup ISSUE-003).
+
 ## Kenapa perlu?
 
 Kode dikirim mentah berukuran ±188 KB. Terkompresi (terukur pada berkas asli):
@@ -25,17 +33,25 @@ pertama (lihat `docs/PERFORMANCE_AUDIT.md` §8 dan `TECHNICAL_DEBT` TD-PERF-03).
 
 > Aman: host yang tidak mengenali suatu berkas akan mengabaikannya.
 
-## Cara deploy (rekomendasi: Netlify Drop)
+## Cara deploy (Netlify Drop + domain sendiri)
 
-1. Buka **https://app.netlify.com/drop** (akun gratis).
-2. Seret isi folder proyek → Netlify memberi URL. `_headers` langsung berlaku.
-3. **Jangan sertakan** folder `.opencode/` (lihat di bawah). Unggah hanya berkas situs bila memungkinkan.
+1. **Beli domain** `pempekyuktiti.com` di registrar pilihan (mis. Cloudflare
+   Registrar, Namecheap, Niagahoster, Rumahweb). Catat akses DNS-nya.
+2. Buka **https://app.netlify.com/drop** (akun gratis). Seret isi folder proyek →
+   Netlify memberi URL `*.netlify.app`. `_headers` langsung berlaku.
+3. Di Netlify: **Site settings → Domain management → Add custom domain** →
+   masukkan `pempekyuktiti.com` (dan `www`). Netlify menampilkan target DNS.
+4. **DNS** (di registrar): arahkan ke Netlify sesuai yang diminta —
+   - apex `pempekyuktiti.com` → **A** `75.2.60.5` (atau ALIAS/ANAME ke `*.netlify.app` bila didukung);
+   - `www` → **CNAME** ke `<nama-situs>.netlify.app`.
+   Netlify menyediakan Let's Encrypt (HTTPS) otomatis setelah DNS propagasi.
+5. **Jangan sertakan** folder `.opencode/` (lihat di bawah). Unggah hanya berkas situs.
 
 ## Jangan publikasikan catatan internal
 
 Folder `.opencode/` (Project Brain + telemetry, 48 berkas) **sengaja dilacak git** — memori proyek. Hati-hati agar tidak ikut terbit:
 
-- **Netlify Drop / cPanel:** unggah hanya berkas situs (`index.html`, `css/`, `js/`, `assets/`, `favicon.svg`, `_headers`, `.htaccess`, `DEPLOY.md`) — **jangan** `.opencode/`.
+- **Netlify Drop / cPanel:** unggah hanya berkas situs (`index.html`, `css/`, `js/`, `assets/`, `favicon.svg`, `_headers`, `.htaccess`, `DEPLOY.md`, `robots.txt`, `sitemap.xml`) — **jangan** `.opencode/`.
 - **GitHub Pages:** Pages menyajikan **seluruh isi branch**. Tambahkan `_config.yml` di root:
   ```yaml
   exclude:
@@ -65,6 +81,8 @@ Tidak ada rahasia di `.opencode/` (secret scan bersih), tetapi isinya catatan in
 
 ## Verifikasi setelah deploy
 
-- Header: `curl -sI https://DOMAIN/css/style.css` → cari `content-encoding: br|gzip`.
+- Header: `curl -sI https://pempekyuktiti.com/css/style.css` → cari `content-encoding: br|gzip`.
 - Pastikan `.opencode/` tidak dapat diakses (harus 404).
+- Cek `https://pempekyuktiti.com/robots.txt` & `/sitemap.xml` ter-serve.
+- Validasi SEO: Google Rich Results Test (JSON-LD) + Facebook Sharing Debugger (og:image).
 - Ukur ulang dengan harness: `docs/PERFORMANCE_AUDIT.md` §6 / `/tmp/opencode/yk_measure.py`.

@@ -12,6 +12,7 @@
 | 2026-10-08 | #3 Harga 2026 + disclaimer WA (sumber primer menukuliner) | DECISIONS.md#3-pricing-2026 | Decided |
 | 2026-10-08 | #4 Hosting statis (Netlify/GitHub Pages/cPanel) | DECISIONS.md#4-hosting | Decided |
 | 2026-10-11 | #5 Optimasi deportime tanpa build (config di root; minify/CSS-kritis tidak diadopsi) | DECISIONS.md#5-deploy-time-no-build | Decided |
+| 2026-10-12 | #6 Hosting final (Netlify Drop) + domain pempekyuktiti.com | DECISIONS.md#6-hosting-domain | Decided |
 
 ## Decision entries
 
@@ -51,7 +52,7 @@
 - **Context:** Biaya UMKM minimal.
 - **Alternatives:** VPS berbayar, hosting Node.js.
 - **Reason:** Sifat statis + syarat biaya rendah. (CONFIRMED)
-- **Consequences:** Tidak boleh ada fitur yang butuh runtime server. Pilihan final antar tiga opsi masih UNKNOWN. (CONFIRMED)
+- **Consequences:** Tidak boleh ada fitur yang butuh runtime server. **Pilihan final: Netlify Drop** — ditetapkan 2026-10-12 (lihat #6). (CONFIRMED)
 - **Date:** 2026-10-08
 - **Confidence:** CONFIRMED
 
@@ -61,8 +62,18 @@
 - **Context:** TD-PERF-03/06; hosting final belum dipilih; DECISIONS #1 melarang build step; target LCP/berat sudah tercapai lewat aset WebP + font self-host.
 - **Alternatives:** Menambah build step (esbuild/terser + critical CSS) — kompleksitas toolchain; atau tanpa optimasi deportime sama sekali.
 - **Reason:** User menyetujui rekomendasi orkestrator 2026-10-11 ("eksekusi saja yang anda rekomendasikan"). Kompresi menutup **−78% gzip / −82% brotli** tanpa menambah toolchain/dependensi (188 KB → 41/35 KB). Konsisten dengan #1. (CONFIRMED)
-- **Consequences:** Tidak ada toolchain; berkas config di root berlaku otomatis saat drag-and-drop; TD-PERF-03 → RESOLVED, TD-PERF-06 → NOT ADOPTED; dapat ditinjau ulang bila kelak mengadopsi build. Rekomendasi host: **Netlify Drop** (#4 pilihan final tetap UNKNOWN).
+- **Consequences:** Tidak ada toolchain; berkas config di root berlaku otomatis saat drag-and-drop; TD-PERF-03 → RESOLVED, TD-PERF-06 → NOT ADOPTED; dapat ditinjau ulang bila kelak mengadopsi build. Rekomendasi host: **Netlify Drop** (ditetapkan #6, 2026-10-12).
 - **Date:** 2026-10-11
+- **Confidence:** CONFIRMED
+
+### #6 Hosting final & domain
+
+- **Decision:** Hosting **Netlify Drop** (gratis, HTTPS otomatis, `_headers` di root langsung berlaku) + domain **`pempekyuktiti.com`**.
+- **Context:** Menutup DECISIONS #4 (pilihan final antar tiga opsi) + ISSUE-003 (metadata SEO masih placeholder). User menyetujui rekomendasi orkestrator 2026-10-12 ("pakai rekomendasi anda").
+- **Alternatives:** Cloudflare Pages, GitHub Pages, cPanel/shared hosting — tetap valid; `.htaccess` (Apache) & `_config.yml` (GitHub Pages) tetap disiapkan untuk opsi tersebut.
+- **Reason:** Tercepat tanpa build, brotli/HTTPS otomatis, kit deportime sudah drag-and-drop-ready. (CONFIRMED — user approve)
+- **Consequences:** Semua URL absolut memakai `https://pempekyuktiti.com/` (`canonical`, `og:url`, `og:image`+varian, `twitter:image`, JSON-LD `url`/`image`/`hasMenu`); ditambah `robots.txt` + `sitemap.xml` + `assets/og-image.jpg` (1200×630). Domain **belum dibeli** (langkah user) → verifikasi live (Rich Results/FB Debugger, `content-encoding`) menunggu domain aktif.
+- **Date:** 2026-10-12
 - **Confidence:** CONFIRMED
 
 > Belum ada ADR di docs/adr/ — jika dibuat, tautkan di sini, jangan duplikasi.

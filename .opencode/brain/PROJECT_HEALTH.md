@@ -11,9 +11,9 @@
 | Testing | YELLOW | Tidak ada automated test (TESTING.md masih template); QA manual PASS_WITH_NOTES + verifikasi data harga 23/23 kartu vs REQUIREMENTS (laporan QA, CONFIRMED) |
 | Security | GREEN | Situs statis tanpa input pengguna, backend, atau kredensial → risiko rendah (REQUIREMENTS.md; SECURITY.md masih template, audit terstruktur belum dijalankan); link eksternal `rel="noopener"`; secret scan brain bersih 2026-10-08 |
 | Performance | GREEN | Diukur nyata 2026-10-11 (Slow-4G + CPU 4×, cache off): **LCP 1856–2056 ms** (<2500), **CLS 0**, muat awal 222 KB (−61%), muat penuh 698 KB (−74%) — setelah WebP (`srcset`/`sizes`) + font self-host. Sisa deploy-time (gzip/minify/CSS kritis) = TD-PERF-03/06. (CONFIRMED) |
-| Dependencies | GREEN | Tanpa dependensi pihak ketiga selain Google Fonts CDN & embed GMaps (README/index.html, CONFIRMED); tanpa package manager → risiko supply-chain nol |
+| Dependencies | GREEN | Tanpa dependensi pihak ketiga selain embed GMaps (font kini self-host sejak 2026-10-11 — README/index.html, CONFIRMED); tanpa package manager → risiko supply-chain nol |
 | Documentation | GREEN | README.md + docs/DESIGN_BRIEF.md ada; brain tersinkron (INDEX diperbarui 2026-10-12) |
-| Deployment | YELLOW | Belum di-deploy, hosting belum dipilih (DECISIONS #4 UNKNOWN), canonical/OG menunggu domain (ISSUE-003) — belum blocking untuk tahap ini |
+| Deployment | YELLOW | Belum di-deploy & domain belum dibeli; hosting **sudah dipilih** (Netlify Drop, DECISIONS #6) + `canonical`/OG/JSON-LD terisi + aset (og-image/robots/sitemap) siap (ISSUE-003 FIXED) → tinggal beli domain + deploy; belum blocking untuk tahap ini |
 
 ## Definitions
 
@@ -28,6 +28,7 @@
 - **Scope:** seluruh kategori di atas, terhadap repo saat ini.
 - **Overall: YELLOW** — kode v1 sehat dan ter-review, tapi peluncuran ditahan oleh 3 hal nyata: hosting/domain belum dipilih, ISSUE-001 (harga aggregator) belum diverifikasi ke pemilik, galeri tanpa foto asli (ISSUE-002). Tidak ada risiko blocking pada kode itu sendiri.
 - **Supersede 2026-10-09:** alasan YELLOW "galeri tanpa foto asli (ISSUE-002)" **tidak lagi berlaku penuh** — 2 foto asli pemilik masuk galeri (ISSUE-002 → PARTIALLY_RESOLVED). Sisa penahan peluncuran: hosting/domain belum dipilih + verifikasi harga ke pemilik + foto menu masih ilustrasi stok.
+- **Supersede 2026-10-12:** alasan YELLOW "hosting/domain belum dipilih" **tidak lagi berlaku penuh** — hosting **dipilih: Netlify Drop** + domain **`pempekyuktiti.com`**; `canonical`/OG/JSON-LD + aset (og-image/robots/sitemap) siap (ISSUE-003 FIXED). Sisa penahan peluncuran: **beli domain + deploy** (langkah user) + verifikasi harga ke pemilik (ISSUE-001) + foto menu masih ilustrasi stok (ISSUE-002).
 
 ## Update performa — 2026-10-11
 

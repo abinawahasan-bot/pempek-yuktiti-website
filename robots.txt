@@ -1,0 +1,8 @@
+# pempekyuktiti.com — Pempek Yuk Titi · UII Jakal
+User-agent: *
+Allow: /
+
+# Catatan internal proyek (Project Brain/telemetry) — jangan diindeks.
+Disallow: /.opencode/
+
+Sitemap: https://pempekyuktiti.com/sitemap.xml

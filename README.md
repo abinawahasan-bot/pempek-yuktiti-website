@@ -192,22 +192,22 @@ Aturan wajib:
 
 ---
 
-## SEO setelah domain resmi ada (PENTING)
+## SEO & domain (domain: pempekyuktiti.com)
 
-Beberapa tag SEO **sengaja masih dikomentari/dikosongkan** di `index.html` karena situs ini belum punya domain resmi. Mengisi URL domain yang mengarang justru merugikan (mesin pencari diarahkan ke alamat yang tidak ada, dan share kartu sosial media rusak).
+Domain & hosting **diputuskan 2026-10-12**: `https://pempekyuktiti.com/` + **Netlify Drop** (DECISIONS #6). Metadata SEO sudah **diisi dengan URL absolut** (bukan lagi placeholder):
 
-Saat domain resmi (mis. `https://pempekyuktiti.id/`) sudah aktif, buka `index.html` lalu:
-
-| # | Yang diaktifkan | Lokasi di `index.html` |
+| # | Tag | Nilai |
 |---|---|---|
-| 1 | `<link rel="canonical" href="...">` | Komentar `TODO: canonical` di `<head>` — hapus tanda komentar `<!-- -->` dan isi URL absolut |
-| 2 | `<meta property="og:url" ...>` | Komentar `TODO: og:url & og:image` di `<head>` |
-| 3 | `<meta property="og:image" ...>` | Komentar yang sama — isi URL **file gambar milik sendiri** (mis. `https://DOMAIN/assets/og-image.jpg`), jangan hotlink |
-| 4 | Field `"url"` dan `"hasMenu"` di JSON-LD | Komentar `TODO SEO` tepat di atas blok `<script type="application/ld+json">` — tambahkan `"url": "https://DOMAIN/"` dan `"hasMenu": "https://DOMAIN/#menu"` ke objek Restaurant |
+| 1 | `<link rel="canonical">` | `https://pempekyuktiti.com/` |
+| 2 | `og:url` | `https://pempekyuktiti.com/` |
+| 3 | `og:image` (+secure_url/type/width/height/alt) & `twitter:image` | `https://pempekyuktiti.com/assets/og-image.jpg` (1200×630, aset sendiri — bukan hotlink) |
+| 4 | JSON-LD `url` + `image` + `hasMenu` | `https://pempekyuktiti.com/`, `…/assets/og-image.jpg`, `…/#menu` |
 
-**Kenapa belum aktif:** canonical/og:url ke domain yang belum ada = sinyal salah ke Google & platform sosial. `og:image` memerlukan **URL absolut** (domain) — aset siap dipakai: `assets/img/hero-pempek.jpg`. Setelah diisi, validasi ulang dengan Google Rich Results Test.
+Ditambahkan pula `robots.txt` (disallow `/.opencode/` + sitemap) dan `sitemap.xml`.
 
-Meta dasar yang **sudah aktif sekarang**: `<title>`, `meta description`, `robots index,follow`, Open Graph (`og:title/description/type/locale/site_name`), Twitter card, dan JSON-LD `Restaurant` (alamat, telepon, jam buka, `priceRange`, `sameAs` Instagram).
+> **Status domain:** nama `pempekyuktiti.com` **belum dibeli**. Situs belum live — URL absolut di atas akan aktif begitu domain dibeli + deploy ke Netlify (lihat `DEPLOY.md`). Setelah live: validasi **Google Rich Results Test** (JSON-LD) + **Facebook Sharing Debugger** (og:image).
+
+Meta dasar yang sudah aktif: `<title>`, `meta description`, `robots index,follow`, Open Graph (`og:title/description/type/locale/site_name/url/image`), Twitter card (`summary_large_image`), dan JSON-LD `Restaurant` (alamat, telepon, jam buka, `priceRange`, `sameAs` Instagram).
 
 ---
 

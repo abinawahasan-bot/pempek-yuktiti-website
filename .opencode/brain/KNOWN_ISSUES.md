@@ -40,12 +40,12 @@
 ### ID: ISSUE-003
 - **Title:** Metadata SEO menunggu domain resmi (canonical, og:url, og:image, JSON-LD url+hasMenu)
 - **Severity:** LOW
-- **Status:** OPEN
-- **Description:** `canonical`, `og:url`, `og:image` final, dan properti JSON-LD `url` + `hasMenu` masih placeholder "https://GANTI-DOMAIN-ANDA/" beserta komentar TODO — sengaja ditunda sampai domain + aset OG tersedia. (CONFIRMED — index.html baris 12–24, 38)
-- **Reproduction:** Cari komentar "TODO" di `index.html`.
-- **Root cause:** Domain/hosting belum dipilih (DECISIONS #4 UNKNOWN). (CONFIRMED)
-- **Fix:** Setelah domain resmi hidup: isi URL absolut, hapus komentar TODO, jangan hotlink gambar OG.
-- **Regression test:** Validasi Rich Results / Facebook Sharing Debugger setelah peluncuran.
+- **Status:** FIXED (2026-10-12 — kode & aset; **verifikasi live menunggu domain aktif**)
+- **Description:** `canonical`, `og:url`, `og:image` final, dan properti JSON-LD `url` + `hasMenu` sebelumnya placeholder "https://GANTI-DOMAIN-ANDA/" beserta komentar TODO — ditunda sampai domain + aset OG tersedia. (histori — index.html)
+- **Reproduction:** Dulu: cari komentar "TODO" di `index.html` (kini tidak ada lagi).
+- **Root cause:** Domain/hosting belum dipilih → **RESOLVED**: Netlify Drop + `pempekyuktiti.com` (DECISIONS #4 → **#6**, 2026-10-12). (CONFIRMED)
+- **Fix:** Isi URL absolut `https://pempekyuktiti.com/` (tanpa hotlink): `canonical`; `og:url`; `og:image` + `og:image:secure_url`/`:type`/`:width`(1200)/`:height`(630)/`:alt`; `twitter:card` → `summary_large_image` + `twitter:image`/`:alt`; JSON-LD `url` + `image` + `hasMenu`; semua komentar TODO dihapus. Dibuat `assets/og-image.jpg` (1200×630; dari hero + overlay brand), `robots.txt`, `sitemap.xml`. (CONFIRMED — index.html)
+- **Regression test:** Setelah domain aktif: Google Rich Results Test (JSON-LD), Facebook Sharing Debugger (og:image), cek `/robots.txt` & `/sitemap.xml` ter-serve.
 - **Catatan:** Sisa QA-02 / RV-11 dari review. Keputusan: koreksi rentang SEO (Rp 3.500–15.000 → Rp 3.000–15.000) sudah selesai di kode sehingga TIDAK dibuat issue terpisah untuk itu; risiko data harga basi tetap di ISSUE-001.
 
 ### ID: ISSUE-004
