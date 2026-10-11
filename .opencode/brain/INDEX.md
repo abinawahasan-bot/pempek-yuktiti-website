@@ -1,7 +1,7 @@
 # INDEX
 
 > Project Brain file · Map of all Project Brain knowledge. Keep this up to date — it is the entry point for retrieval.
-> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (a11y target sentuh stepper 44px).
+> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (git init + CHANGELOG + audit performa TD-PERF-01..06).
 
 ## Project snapshot (CONFIRMED kecuali ditandai)
 

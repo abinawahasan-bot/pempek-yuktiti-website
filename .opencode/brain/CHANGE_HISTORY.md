@@ -4,6 +4,26 @@
 
 ## Changelog
 
+### 2026-10-11 (github init + CHANGELOG + audit performa)
+
+#### Added
+- `.gitignore` (minimal — situs statis, tanpa build step) + `.git/` (repo baru).
+- `CHANGELOG.md` (Keep a Changelog, Bahasa Indonesia): `[Unreleased]` (dark mode, keranjang, polish, motion, a11y stepper) + `[1.0.0] - 2026-10-08` (v1).
+- `docs/PERFORMANCE_AUDIT.md` — laporan audit performa terukur (Playwright + CDP, 2 skenario).
+
+#### Changed
+- Inisialisasi Git: `git init` (branch `master`, mengikuti `init.defaultBranch` global user), commit awal `2c07bb3` (84 berkas). Identitas **lokal repo**: `corvusjet <283604278+abinawahasan-bot@users.noreply.github.com>` — config global TIDAK diubah.
+
+#### Tests
+- Audit performa (Playwright 1.63 + Chromium 151, 390×844, cache off, server lokal tanpa gzip):
+  - Baseline: FCP/LCP 456ms, CLS 0,091 (1 shift, font swap t≈729ms), longtask 119ms, muat awal 13 req/563KB/4 img, muat penuh 38 req/**2,64MB**/28 img.
+  - Slow-4G + CPU 4×: FCP 2052ms, **LCP 3136ms** (target <2500), CLS 0,105, load 3579ms. Elemen LCP = `IMG` hero.
+  - gzip total kode 179,3KB → **43,5KB (−76%)**; thumbnail menu 800px → 92px (×8,7) di 23 gambar; 0 WebP/AVIF/srcset.
+- Secret scan repo (sebelum commit): bersih (hanya placeholder `ENV_VAR_NAME`).
+
+#### Terkait
+- Temuan ditambahkan ke `TECHNICAL_DEBT.md` (TD-PERF-01..07). Rekomendasi menunggu approval user.
+
 ### 2026-10-11 (a11y: target sentuh tombol stepper 38→44px)
 
 #### Changed
