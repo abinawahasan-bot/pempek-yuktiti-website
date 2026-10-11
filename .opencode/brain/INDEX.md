@@ -1,13 +1,13 @@
 # INDEX
 
 > Project Brain file · Map of all Project Brain knowledge. Keep this up to date — it is the entry point for retrieval.
-> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (optimasi performa WebP + font self-host; kit deportime kompresi+caching).
+> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-12 (uji menyeluruh desktop/mobile + Lighthouse + 2 fix: kontras footer dark, header print).
 
 ## Project snapshot (CONFIRMED kecuali ditandai)
 
 - **Apa ini:** Landing page statis satu halaman untuk UMKM "Pempek Yuk Titi - UII Jakal" (Sleman, DIY).
 - **Stack:** HTML/CSS/JS murni — no framework, no database, no build step.
-- **Status:** Implementasi v1 SELESAI + QA + review; **dark mode + P0 konversi + P1 keranjang + foto galeri + polish A/B/C + social proof (TERVERIFIKASI pemilik) + optimasi performa (WebP + font self-host) SELESAI** (terverifikasi render; LCP <2500, CLS 0); **belum di-deploy**; git repo ada (branch `master`, commit `2c07bb3`), tanpa remote.
+- **Status:** Implementasi v1 SELESAI + QA + review; **dark mode + P0 konversi + P1 keranjang + foto galeri + polish A/B/C + social proof (TERVERIFIKASI pemilik) + optimasi performa (WebP + font self-host) + uji menyeluruh desktop/mobile (Lighthouse Desktop 100/100/100/100 · Mobile 91/100/100/100) SELESAI**; **belum di-deploy**; git repo ada (branch `master`, commit `2c07bb3`), tanpa remote.
 - **Lokasi:** /home/corvusjet/pempek-yuktiti-website
 
 ## Brain map
@@ -19,8 +19,8 @@ PROJECT*              identitas, tujuan, data bisnis Pempek Yuk Titi
 ├── CONVENTIONS*      semantic HTML5, mobile-first, custom props, alt text, bahasa ID
 ├── REQUIREMENTS*     fitur FR-1..FR-7 + menu & harga 2026
 ├── DECISIONS*        #1 statis · #2 satu halaman · #3 harga 2026+disclaimer · #4 hosting
-├── CURRENT_STATE*    7+ fitur HADIR (termasuk chip kategori + kartu menu kompak), QA PASS; deploy & git belum
-└── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG (OPEN) · ISSUE-005 rating/badge (VERIFIED pemilik) · ISSUE-006 publikasi .opencode (OPEN, gate deploy); ISSUE-004 favicon 404 FIXED; RV-01..07 FIXED
+├── CURRENT_STATE*    7+ fitur HADIR (termasuk chip kategori + kartu menu kompak), QA PASS; uji menyeluruh 2026-10-12 PASS; deploy & git belum
+└── KNOWN_ISSUES*     ISSUE-001 harga aggregator · ISSUE-002 foto asli (OPEN — 2 foto pemilik dihapus 2026-10-10) · ISSUE-003 canonical/OG (OPEN) · ISSUE-005 rating/badge (VERIFIED pemilik) · ISSUE-006 publikasi .opencode (OPEN, gate deploy); ISSUE-004 favicon 404 FIXED; ISSUE-007 kontras footer dark + ISSUE-008 header print FIXED 2026-10-12; RV-01..07 FIXED
 ├── TECHNICAL_DEBT*    TD-PERF-01..06; 01/02/04/05 ADDRESSED (WebP+font self-host, 2026-10-11); 03/06 OPEN (deploy-time)
 ├── SECURITY           (template — statis, tanpa kredensial)
 ├── TESTING            (template — belum ada automated tooling; QA manual via laporan)
@@ -52,14 +52,14 @@ snapshots/             snapshot-2026-10-08-v1-implementation.md (milestone v1+QA
 | Pratinjau foto galeri? | ARCHITECTURE (Galeri), CURRENT_STATE (lightbox), js/lightbox.js, CHANGE_HISTORY 2026-10-10 | CONFIRMED (terverifikasi CDP 2026-10-10) |
 | Kenapa segini rentangnya? | index.html (meta/JSON-LD "Rp 3.000–15.000") + ISSUE-001 | CONFIRMED (dikoreksi 2026-10-08) |
 | Why decisions? | DECISIONS (dan docs/adr/) | CONFIRMED |
-| What's broken? | KNOWN_ISSUES, FAILURES | CONFIRMED — 3 issue OPEN (001 MEDIUM, 002/003 LOW); ISSUE-004 + RV-01..07 FIXED |
+| What's broken? | KNOWN_ISSUES, FAILURES | CONFIRMED — 5 issue OPEN (001 MEDIUM, 002/003/005/006 LOW); ISSUE-004/007/008 + RV-01..07 FIXED |
 | What's owed? | TECHNICAL_DEBT | TD-PERF-01..06 (01/02/04/05 ADDRESSED 2026-10-11; 03/06 OPEN deploy-time) |
 | Security posture? | SECURITY | template (risiko rendah; situs statis) |
-| Testing in place? | TESTING | template — QA manual PASS_WITH_NOTES (laporan), tanpa automated test |
+| Testing in place? | TESTING | QA manual — PASS_WITH_NOTES (2026-10-08) → uji menyeluruh **PASS** 2026-10-12 (9 breakpoint, emulasi HP, no-JS, reduced-motion, print, keranjang, lightbox, a11y) + Lighthouse; tanpa automated test |
 | How to deploy? | DEPLOYMENT, README §Deploy, DEPLOY.md | CONFIRMED (tanpa build; config kompresi di root; hosting belum dipilih) |
 | Latest state? | CURRENT_STATE, CHANGE_HISTORY, PROJECT_HEALTH | CONFIRMED |
 | Sehat proyeknya? | PROJECT_HEALTH | CONFIRMED (dinilai 2026-10-08; Performance GREEN 2026-10-11; overall YELLOW — peluncuran) |
-| Kenapa situsnya ringan? | docs/PERFORMANCE_AUDIT §8, TECHNICAL_DEBT, CURRENT_STATE | CONFIRMED (LCP 1856–2056 ms, CLS 0, −61%/−74%, 2026-10-11) |
+| Kenapa situsnya ringan? | docs/PERFORMANCE_AUDIT §8, TECHNICAL_DEBT, CURRENT_STATE | CONFIRMED (LCP 1856–2056 ms, CLS 0, −61%/−74%, 2026-10-11; **Lighthouse Desktop 100 · Mobile Perf 91, 2026-10-12**) |
 
 ## Maintenance
 

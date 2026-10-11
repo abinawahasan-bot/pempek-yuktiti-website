@@ -79,6 +79,26 @@
 
 ## Fixed / Verified
 
+### ID: ISSUE-007
+- **Title:** Kontras teks footer gagal WCAG AA di mode gelap
+- **Severity:** MEDIUM
+- **Status:** FIXED (2026-10-12)
+- **Description:** `.footer__text` & `.footer__copy` memakai `--color-surface-2`. Di mode gelap token itu = `#201A16` (nyaris hitam) di atas footer `--color-primary` `#B8503A` → kontras **3,47:1** (butuh ≥4,5:1). Audit dark mode sebelumnya (2026-10-09) menguji `.footer__brand`/`.footer__label`/link (yang memakai `--color-on-primary`), sehingga kekurangan ini lolos. (CONFIRMED — Lighthouse `color-contrast`, 2026-10-12)
+- **Reproduction:** Mode gelap → gulir ke footer → Lighthouse `color-contrast`, atau hitung kontras `#201A16` di latar `#B8503A`.
+- **Root cause:** `.footer__text`/`.footer__copy` memakai token permukaan (`--color-surface-2`) alih-alih token teks-footer `--color-footer-text` yang memang dibuat untuk itu (light `#EFE7DC`, dark `#FFFFFF`). (CONFIRMED)
+- **Fix:** `color: var(--color-footer-text)` di `.footer__text` & `.footer__copy` (`css/style.css` ~1611 & ~1638). Light tetap `#EFE7DC` (6,06:1); dark `#FFFFFF` (**4,95:1**). (CONFIRMED — verifikasi kontras runtime 2026-10-12; Lighthouse A11y 96→**100**)
+- **Regression test:** Lighthouse A11y (mobile & desktop) = 100 (`color-contrast` lulus); hitung kontras `.footer__text` vs `.site-footer` ≥4,5 di kedua tema.
+
+### ID: ISSUE-008
+- **Title:** Header tetap `position: sticky` saat cetak
+- **Severity:** LOW
+- **Status:** FIXED (2026-10-12)
+- **Description:** `.site-header` sticky juga berlaku di `@media print` → bar bisa mengambang/berulang/terpotong di tepi kertas. (CONFIRMED — uji emulasi print 2026-10-12)
+- **Reproduction:** Emulasi print (`media=print`) → `getComputedStyle('.site-header').position` = `sticky`.
+- **Root cause:** Blok `@media print` tidak meng-override `position` header. (CONFIRMED)
+- **Fix:** `.site-header { position: static !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }` di `@media print` (`css/style.css`). Layar tetap `sticky`. (CONFIRMED)
+- **Regression test:** Emulasi print → header `static`; mode layar → header `sticky`.
+
 ### ID: RV-01..07 (temuan code review — diperbaiki 2026-10-08)
 - **Status:** FIXED
 - **Temuan & perbaikan:** scroll-padding-top untuk header sticky; class `.js` dipindah ke main.js; brand menutup panel nav; dead CSS dihapus; padding FAB ≥1024px; token `--color-header-bg` dibuat; figcaption ganda dihapus. (CONFIRMED via laporan review)

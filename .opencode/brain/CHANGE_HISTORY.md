@@ -4,6 +4,44 @@
 
 ## Changelog
 
+### 2026-10-12 (uji menyeluruh desktop/mobile + Lighthouse + 2 fix)
+
+#### Fixed
+- `css/style.css` `@media print`: `.site-header { position: static !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }` — header tak lagi lengket/mengambang saat cetak (layar tetap `sticky`). (ISSUE-008)
+- `css/style.css` `.footer__text` & `.footer__copy`: `color: var(--color-surface-2)` → **`var(--color-footer-text)`**. Di mode gelap `--color-surface-2` = `#201A16` (nyaris hitam) di atas footer `#B8503A` → kontras **3,47:1 (gagal AA)**; diganti → **4,95:1** (dark) / **6,06:1** (light). Lighthouse A11y **96 → 100**. (ISSUE-007)
+
+#### Tests
+- Sweep 9 breakpoint (320/360/375/390/414/768/1024/1280/1440): overflow-x **0** semua, 0 konten tersembunyi; tinggi header 51/51/51/51/51/97/73/73/73 px.
+- Emulasi HP asli (Pixel 7: `hasTouch`, `isMobile`, `pointer: coarse`): tilt **mati** (`--rx: none`, `transform: none`), scroll-3D **off** (driven 26 → 0), 0 overflow.
+- No-JS: 23 kartu tampil, `stepper`/`cart-bar` `display:none`, `.menu-cta-static` `flex`, 6 tautan `wa.me`, 0 tombol lightbox.
+- Reduced-motion: `.anim` off, `transform: none`, splash `none`, konten utuh.
+- Keranjang (sessionStorage `pyt_cart`): Sikoan Rp 3.500 + 3×Kapal Selam Rp 13.500 → count 4 / Rp 44.000; dec Sikoan → hapus baris, count 3 / Rp 40.500; persist antar-reload; URL checkout `https://wa.me/628814105501?text=…` benar.
+- Lightbox (buka, `img` src, "1 / 4", ArrowLeft/Right, Esc) · menu-spy 4 grup `aria-current` tepat · hamburger mobile `aria-expanded` toggle · dark↔light (`pyt_theme`) · skip-link `#main`.
+- A11y: 1 `<h1>`, landmark lengkap, 0 `<img>` tanpa `alt`, 0 tombol tanpa label, focus-trap cart, keyboard lightbox. Konsol **0 error**.
+- Lighthouse (`CHROME_PATH=/usr/bin/chromium npx lighthouse http://127.0.0.1:8000/`): **Desktop 100/100/100/100**; **Mobile Perf 91 · A11y 100 · BP 100 · SEO 100** (FCP 1,7 s · LCP 3,1 s · TBT 50 ms · CLS 0,093). Mobile run ke-2 (Perf 77, TBT 430 ms) = noise CPU.
+- Payload kode: JS ~50 KB · CSS ~77 KB · HTML ~72 KB mentah → total ~199 KB mentah / **~48 KB gzip**; 101 aset gambar (28 JPG + 72 WebP varian) 4,7 MB.
+
+#### Terkait
+- Brain: `CURRENT_STATE.md`, `KNOWN_ISSUES.md` (ISSUE-007, ISSUE-008 FIXED), `INDEX.md`, `TESTING.md`.
+- `CHANGELOG.md` [Unreleased] Fixed: kontras footer dark + header print.
+- Sisa: sign-off visual/perangkat asli + 1× klik WA di HP (milik user); `canonical`/`og:image` (ISSUE-003), foto asli warung (ISSUE-002).
+
+### 2026-10-11 (scroll-driven 3D kartu menu & testimoni)
+
+#### Added
+- `js/animations.js` **§8 `setupDriven3D`**: depth ringan ala Dribbble pada 23 `.card-menu` + 3 `.testimoni__item` — entrance "melesat" berjenjang (`opacity`/`scale`/`translate`/`rotateX`) + tilt mengikuti posisi scroll via rAF; `--drx`/`--dz` diisi **hanya** untuk kartu di viewport (`IntersectionObserver`); array paralel `drivers[]` (menghindari bug DOM-key collision); `.driven-live` mematikan transisi entrance setelah settle; dipasang via `safe(setupDriven3D, revealDrivenAll)`.
+- `css/style.css`: blok `.reveal-3d--driven` + reset untuk `prefers-reduced-motion` & `html:not(.js)`; `perspective: 1200px` pada `.menu-grid`/`.testimoni__list`; memakai properti individual `translate`/`rotate` (tak menimpa `transform` tilt hover).
+
+#### Gating
+- Aktif hanya bila: `html.js.anim` **dan** `min-width: 1024px` **dan** kartu in-view (IO). HP (pointer coarse) / reduced-motion / tanpa JS → kartu tampil **statis** apa adanya.
+
+#### Tests
+- Terverifikasi CDP @1440×900: 26 elemen driven, nilai per-kartu berbeda, berubah saat scroll, hover tilt `--rx/-ry` 3,50°, `matrix3d` nyata. (CONFIRMED)
+- Uji menyeluruh 2026-10-12: emulasi HP asli → tilt & scroll-3D **MATI** (`--rx: none`, driven 0), 0 overflow-x; reduced-motion & no-JS → statis. **PASS**.
+
+#### Terkait
+- `CHANGELOG.md` [Unreleased] Added (scroll-driven 3D). Fitur terverifikasi di `CURRENT_STATE.md` (baris "Animasi 3D").
+
 ### 2026-10-11 (kit deportime: kompresi + caching host-agnostic)
 
 #### Added

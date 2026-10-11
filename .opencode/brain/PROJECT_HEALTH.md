@@ -12,7 +12,7 @@
 | Security | GREEN | Situs statis tanpa input pengguna, backend, atau kredensial → risiko rendah (REQUIREMENTS.md; SECURITY.md masih template, audit terstruktur belum dijalankan); link eksternal `rel="noopener"`; secret scan brain bersih 2026-10-08 |
 | Performance | GREEN | Diukur nyata 2026-10-11 (Slow-4G + CPU 4×, cache off): **LCP 1856–2056 ms** (<2500), **CLS 0**, muat awal 222 KB (−61%), muat penuh 698 KB (−74%) — setelah WebP (`srcset`/`sizes`) + font self-host. Sisa deploy-time (gzip/minify/CSS kritis) = TD-PERF-03/06. (CONFIRMED) |
 | Dependencies | GREEN | Tanpa dependensi pihak ketiga selain Google Fonts CDN & embed GMaps (README/index.html, CONFIRMED); tanpa package manager → risiko supply-chain nol |
-| Documentation | GREEN | README.md + docs/DESIGN_BRIEF.md ada; brain tersinkron (INDEX diperbarui 2026-10-08) |
+| Documentation | GREEN | README.md + docs/DESIGN_BRIEF.md ada; brain tersinkron (INDEX diperbarui 2026-10-12) |
 | Deployment | YELLOW | Belum di-deploy, hosting belum dipilih (DECISIONS #4 UNKNOWN), canonical/OG menunggu domain (ISSUE-003) — belum blocking untuk tahap ini |
 
 ## Definitions
@@ -34,6 +34,13 @@
 - **Kategori Performance: YELLOW → GREEN.** Optimasi diterapkan (WebP + `srcset`/`sizes` untuk hero & 23 thumbnail menu; font Inter/Poppins di-host sendiri + preload) dan diukur ulang dengan harness yang sama (Slow-4G + CPU 4×, cache off): **LCP 1856–2056 ms** (<2500), **CLS 0**, muat awal 576 KB → **222 KB (−61%)**, muat penuh 2,71 MB → **698 KB (−74%)**. QA independen PASS (tanpa regresi) + code review (1 temuan HIGH efek tilt hero → diperbaiki). (CONFIRMED — laporan QA/review + pengukuran orkestrator)
 - PERFORMANCE: TD-PERF-01/02/04/05 ADDRESSED; TD-PERF-03 (kompresi) **RESOLVED** via config di root; TD-PERF-06 + sisa minify **NOT ADOPTED** (tanpa build, DECISIONS #1/#5).
 - **Overall tetap YELLOW** — penahan bukan lagi performa, melainkan peluncuran (hosting/domain belum dipilih, ISSUE-001 harga, foto asli).
+
+## Update pengujian — 2026-10-12
+
+- **Testing: tetap YELLOW** (otomasi masih nol — tidak ada test runner), **tetapi cakupan manual kini kuat**: uji menyeluruh desktop + mobile **PASS** (9 breakpoint bebas overflow, emulasi HP asli, no-JS, reduced-motion, print, keranjang + checkout WA, lightbox, menu-spy, dark mode, skip-link), konsol **0 error**. Bukti regression test tercatat di TESTING.md. (CONFIRMED)
+- **Quality/Performance — Lighthouse** (agen orkestrator, Chromium): **Desktop 100/100/100/100**; **Mobile Perf 91 · A11y 100 · BP 100 · SEO 100** (FCP 1,7 s · LCP 3,1 s · TBT 50 ms · CLS 0,093). (CONFIRMED)
+- **2 bug diperbaiki** (ditemukan sesi ini): (a) **kontras footer mode gelap** — `.footer__text`/`.footer__copy` salah token (`--color-surface-2` `#201A16` di atas `#B8503A` = 3,47:1) → `--color-footer-text` (4,95:1 / 6,06:1); A11y Lighthouse 96 → 100 (ISSUE-007). (b) **header sticky saat cetak** → dipaksa `static` di `@media print` (ISSUE-008). Keduanya masuk "Important regression tests" (TESTING.md). (CONFIRMED)
+- **Overall tetap YELLOW** — alasan sama (belum deploy; ISSUE-001/002/003). Kualitas kode yang *terukur* (Lighthouse) kini tinggi; sesi ini tidak menambah otomasi sehingga Testing tetap YELLOW secara jujur. (CONFIRMED)
 
 ## Rules
 
