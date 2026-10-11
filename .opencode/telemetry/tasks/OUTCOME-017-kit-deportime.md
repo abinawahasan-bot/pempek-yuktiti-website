@@ -22,13 +22,14 @@ orchestration, performance, deployment, project-brain, telemetry, changelog.
 
 ## Files Changed
 
-- `deploy/.htaccess` (BARU) — Apache/cPanel: brotli/gzip + MIME `.woff2`/`.webp` + caching + header keamanan (dibungkus `<IfModule>`).
-- `deploy/_headers` (BARU) — Netlify/Cloudflare Pages: caching + header keamanan.
-- `deploy/README.md` (BARU) — panduan per host + angka kompresi + catatan sengaja-belum + bagian "Jangan publikasikan catatan internal".
+- `.htaccess` (root) — Apache/cPanel: brotli/gzip + MIME `.woff2`/`.webp` + caching + header keamanan (dibungkus `<IfModule>`).
+- `_headers` (root) — Netlify/Cloudflare Pages: caching + header keamanan.
+- `DEPLOY.md` (root) — panduan per host + angka kompresi + catatan sengaja-belum + bagian "Jangan publikasikan catatan internal".
+- (Dipindah dari `deploy/` ke root agar drag-and-drop langsung berlaku; folder `deploy/` dihapus.)
 
 ## Safety Finding
 
-- **ISSUE-006 (LOW)** dibuat: `.opencode/` (48 berkas, memori internal, tanpa rahasia) tidak boleh terbit saat deploy; GH Pages perlu `_config.yml` `exclude:`, `.gitignore` tidak efektif untuk berkas terlacak. Panduan di `deploy/README.md` + README §B.
+- **ISSUE-006 (LOW)** dibuat: `.opencode/` (48 berkas, memori internal, tanpa rahasia) tidak boleh terbit saat deploy; GH Pages perlu `_config.yml` `exclude:`, `.gitignore` tidak efektif untuk berkas terlacak. Panduan di `DEPLOY.md` + README §B.
 - `README.md` §Deploy — bagian **D. Kompresi & caching**.
 - Brain: `DEPLOYMENT.md` (diisi dari template), `CURRENT_STATE.md`, `CHANGE_HISTORY.md`, `TECHNICAL_DEBT.md`, `INDEX.md`.
 - `CHANGELOG.md` — Added kit deportime.
@@ -59,4 +60,4 @@ orchestration, performance, deployment, project-brain, telemetry, changelog.
 
 ## Final Result
 
-DONE (sebagian) — kompresi TD-PERF-03 tertutup via config siap-pakai untuk 3 kandidat host (188 KB → 35 KB brotli); DEPLOYMENT.md brain terisi; docs/telemetry sinkron. Sisa: **pilih hosting** (keputusan user, DECISIONS #4/ISSUE-003) lalu salin config + verifikasi; **minify/CSS-kritis (TD-PERF-06)** menunggu keputusan apakah mengadopsi build step.
+DONE (sebagian) — kompresi TD-PERF-03 **RESOLVED** via config di root untuk 3 kandidat host (188 KB → 35 KB brotli); DEPLOYMENT.md brain terisi; docs/telemetry sinkron. Rekomendasi hosting: **Netlify Drop**. **Minify/CSS-kritis (TD-PERF-06) → NOT ADOPTED** (butuh build → DECISIONS #1; user menyetujui rekomendasi tetap tanpa build 2026-10-11). Sisa: **deploy** + **isi domain** (ISSUE-003, menunggu domain user) lalu verifikasi `content-encoding`.

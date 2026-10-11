@@ -69,7 +69,7 @@
 - Testimoni + galeri 2×2 selesai 2026-10-10 (3 kutipan ber-nama/tanggal + tombol Maps; terverifikasi CDP). Sisa: pemilik memverifikasi kutipan (ISSUE-005) + sign-off visual. (CONFIRMED)
 - A11y target sentuh stepper 2026-10-11: `.card-menu__step` 38→44px; terverifikasi Playwright 7 lebar + interaksi keranjang; preview Brave. Sisa: sign-off visual user di perangkat asli. (CONFIRMED)
 - Optimasi performa selesai 2026-10-11 (hero + 23 menu → WebP `<picture>`; font self-host + preload; README/CHANGELOG/brain/telemetry sinkron). Target tercapai (LCP <2500, CLS <0,1, bobot turun besar). Sisa: deploy-time gzip/minify + CSS kritis (TD-PERF-03/06, menunggu hosting); commit aset WebP + font (74 berkas untracked). (CONFIRMED)
-- Kit deportime 2026-10-11 (kompresi + caching host-agnostic): `deploy/.htaccess` + `deploy/_headers` + `deploy/README.md`; README §D; DEPLOYMENT.md brain. Menutup kompresi TD-PERF-03 (188 KB → 41/35 KB). Minify + CSS kritis tetap OPEN (butuh build → DECISIONS #1). Sisa: pilih hosting → salin config → verifikasi `content-encoding`. (CONFIRMED)
+- Kit deportime 2026-10-11 (kompresi + caching host-agnostic): `.htaccess` + `_headers` (root, drag-and-drop ready) + `DEPLOY.md`; README §D; DEPLOYMENT.md brain. Menutup kompresi TD-PERF-03 (188 KB → 41/35 KB). Minify + CSS kritis **tidak diadopsi** (butuh build → DECISIONS #1; user menyetujui rekomendasi 2026-10-11). Hosting direkomendasikan **Netlify Drop**. Sisa: deploy + isi domain (ISSUE-003) → verifikasi `content-encoding`. (CONFIRMED)
 
 ## Blocked work
 
@@ -97,7 +97,7 @@
 ## Deployment status
 
 - Belum pernah di-deploy; hosting final belum dipilih (Netlify / GitHub Pages / cPanel). (CONFIRMED — lihat DEPLOYMENT.md)
-- **Kit deportime siap** (2026-10-11): `deploy/.htaccess` (Apache/cPanel: brotli/gzip + MIME + caching + header keamanan), `deploy/_headers` (Netlify/Cloudflare Pages), `deploy/README.md` (panduan). GitHub Pages tak perlu config. Kompresi terukur 188 KB → 41 KB gzip / 35 KB brotli. Bertindak saat berkas config disalin ke root saat deploy. (CONFIRMED)
+- **Kit deportime siap** (2026-10-11): `.htaccess` (Apache/cPanel: brotli/gzip + MIME + caching + header keamanan) & `_headers` (Netlify/Cloudflare Pages) — keduanya di **root** sehingga otomatis berlaku saat drag-and-drop; panduan `DEPLOY.md`. GitHub Pages tak perlu config. Kompresi terukur 188 KB → 41 KB gzip / 35 KB brotli. (CONFIRMED)
 
 ## Branch / version (if versioned)
 

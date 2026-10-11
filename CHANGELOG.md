@@ -41,10 +41,11 @@ dan proyek ini menganut [Semantic Versioning](https://semver.org/lang/id/).
 - **Font self‑host** — Inter (variable 400–500) + Poppins 600/700 (subset Latin, `woff2`) di
   `assets/fonts/` + `css/fonts.css` (`@font-face`, `font-display: swap`, `unicode-range` Latin);
   menggantikan Google Fonts CDN; lisensi OFL disertakan. (2026‑10‑11)
-- **Kit deportime (kompresi + caching)** — `deploy/.htaccess` (Apache/cPanel: brotli/gzip + MIME
-  `.woff2`/`.webp` + caching + header keamanan), `deploy/_headers` (Netlify/Cloudflare Pages),
-  `deploy/README.md` (panduan); README §D. **Tanpa build step** (sesuai DECISIONS #1). Kompresi
-  terukur pada kode asli: **188 KB → 41 KB gzip (−78%) / 35 KB brotli (−82%)**. (2026‑10‑11)
+- **Kit deportime (kompresi + caching)** — `.htaccess` (Apache/cPanel: brotli/gzip + MIME
+  `.woff2`/`.webp` + caching + header keamanan), `_headers` (Netlify/Cloudflare Pages) — keduanya
+  di **root** agar otomatis berlaku saat drag-and-drop — dan `DEPLOY.md` (panduan); README §D.
+  **Tanpa build step** (sesuai DECISIONS #1). Kompresi terukur pada kode asli:
+  **188 KB → 41 KB gzip (−78%) / 35 KB brotli (−82%)**. (2026‑10‑11)
 
 ### Changed
 

@@ -231,9 +231,8 @@ Situs ini murni statis — **semua opsi di bawah hanya butuh mengunggah file**, 
    ```yaml
    exclude:
      - .opencode
-     - deploy
    ```
-   Jangan andalkan `.gitignore` — berkas yang sudah terlacak **tetap** akan dipublikasikan. Alternatif: sumberkan Pages dari folder/branch yang hanya berisi berkas situs.
+   Jangan andalkan `.gitignore` — berkas yang sudah terlacak **tetap** akan dipublikasikan. Detail per host di [`DEPLOY.md`](DEPLOY.md) (**ISSUE-006**).
 
 ### C. cPanel shared hosting
 
@@ -244,15 +243,17 @@ Situs ini murni statis — **semua opsi di bawah hanya butuh mengunggah file**, 
 
 > **Catatan:** kecualikan folder `.opencode/` dari unggahan/publikasi — isinya catatan internal proyek, bukan bagian situs.
 
-### D. Kompresi & caching (opsional, direkomendasikan)
+### D. Kompresi & caching (sudah disiapkan)
 
-Situs tetap **tanpa build step** — optimasi ini murni di sisi server/CDN, cukup menyalin satu berkas. Lihat [`deploy/README.md`](deploy/README.md).
+Situs tetap **tanpa build step** — berkas konfigurasi sudah ada di **root**, jadi berlaku otomatis saat di-drag & drop. Lihat [`DEPLOY.md`](DEPLOY.md) untuk detail.
 
-- **Netlify / Cloudflare Pages:** salin `deploy/_headers` ke root situs (kompresi otomatis di CDN; berkas ini mengatur caching + header keamanan).
-- **cPanel / Apache:** salin `deploy/.htaccess` ke `public_html/.htaccess` (mengaktifkan brotli/gzip + MIME `.woff2`/`.webp` + caching + header keamanan).
+- **Netlify / Cloudflare Pages:** `_headers` (root) dibaca otomatis — kompresi di CDN + caching + header keamanan. *(Rekomendasi: Netlify Drop.)*
+- **cPanel / Apache:** `.htaccess` (root) aktif saat diunggah ke `public_html/` — brotli/gzip + MIME `.woff2`/`.webp` + caching + header keamanan.
 - **GitHub Pages:** tidak perlu berkas — CDN GitHub sudah kompres + cache.
 
 Hasil terukur pada kode asli: **188 KB → 41 KB (gzip, −78%) / 35 KB (brotli, −82%)**.
+
+> **Jangan publikasikan** folder `.opencode/` (catatan internal). Detail per host di [`DEPLOY.md`](DEPLOY.md) — **ISSUE-006**.
 
 ---
 

@@ -74,7 +74,7 @@
 - **Status:** OPEN (deploy-time gate)
 - **Description:** Folder `.opencode/` (Project Brain + telemetry, 48 berkas terlacak git) **sengaja** ada di version control, tetapi tidak boleh tersaji publik. Pada **GitHub Pages**, seluruh isi branch disajikan → `.opencode/` akan dapat diakses tanpa pengecualian. (CONFIRMED — `.gitignore` menyatakan .opencode sengaja dilacak; `git ls-files .opencode` = 48)
 - **Root cause:** Deploy berbagi tree yang sama dengan memori proyek; GH Pages tidak punya mekanisme exclude selain Jekyll `_config.yml`. (CONFIRMED)
-- **Fix:** Netlify Drop/cPanel → jangan unggah `.opencode/`; GitHub Pages → tambahkan `_config.yml` `exclude: [.opencode, deploy]`. **Jangan** andalkan `.gitignore` (berkas terlacak tetap terbit). Panduan: `deploy/README.md` §"Jangan publikasikan catatan internal". Tidak ada rahasia di `.opencode/` (secret scan bersih) → severity LOW.
+- **Fix:** Netlify Drop/cPanel → unggah hanya berkas situs (jangan `.opencode/`); GitHub Pages → tambahkan `_config.yml` `exclude: [.opencode]`. **Jangan** andalkan `.gitignore` (berkas terlacak tetap terbit). Panduan: `DEPLOY.md` §"Jangan publikasikan catatan internal". Tidak ada rahasia di `.opencode/` (secret scan bersih) → severity LOW.
 - **Regression test:** Setelah deploy, `curl -sI https://DOMAIN/.opencode/brain/INDEX.md` harus **404**; pastikan tidak ada berkas `.opencode/**` yang dapat diakses.
 
 ## Fixed / Verified

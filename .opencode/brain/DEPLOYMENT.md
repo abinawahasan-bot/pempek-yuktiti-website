@@ -1,7 +1,7 @@
 # DEPLOYMENT
 
 > Project Brain file · ACTUAL deployment architecture. NEVER store deployment credentials. Confidence markers apply.
-> Status: **belum pernah di-deploy**; hosting final **belum dipilih**. Kit deportime sudah disiapkan (2026-10-11).
+> Status: **belum pernah di-deploy**; hosting final **belum dipilih** (rekomendasi orkestrator: **Netlify Drop**). Kit deportime sudah disiapkan di root (2026-10-11).
 
 ## Environments
 
@@ -12,12 +12,12 @@
 
 ## Target hosting (kandidat)
 
-Sesuai DECISIONS #4, tiga kandidat (pilihan final UNKNOWN): **Netlify** / **GitHub Pages** / **cPanel shared hosting**.
+Sesuai DECISIONS #4, tiga kandidat. **Rekomendasi orkestrator: Netlify Drop** (tercepat, brotli otomatis, tanpa build; `_headers` di root langsung berlaku). Pilihan final tetap UNKNOWN (menunggu keputusan user): Netlify / GitHub Pages / cPanel.
 
 ## Build process
 
 - **Tidak ada build step** (DECISIONS #1: "deploy = unggah berkas langsung"). Sumber = artefak.
-- Optimasi deportime disiapkan sebagai **berkas config server** (bukan build): `deploy/.htaccess` (Apache/cPanel), `deploy/_headers` (Netlify/Cloudflare Pages). Lihat `deploy/README.md`.
+- Optimasi deportime disiapkan sebagai **berkas config server** (bukan build), ditempatkan di **root** agar berlaku otomatis saat drag-and-drop: `.htaccess` (Apache/cPanel), `_headers` (Netlify/Cloudflare Pages). Panduan `DEPLOY.md`.
 
 ## Containers / runtime
 
@@ -33,10 +33,10 @@ Sesuai DECISIONS #4, tiga kandidat (pilihan final UNKNOWN): **Netlify** / **GitH
 
 ## Kompresi & caching (deportime)
 
-- **Berkas:** `deploy/.htaccess`, `deploy/_headers`; panduan `deploy/README.md`. (CONFIRMED 2026-10-11)
+- **Berkas:** `.htaccess`, `_headers` (keduanya di root); panduan `DEPLOY.md`. (CONFIRMED 2026-10-11)
 - **Terukur pada kode asli:** 188 KB → **41 KB (gzip −78%)** / **35 KB (brotli −82%)**.
 - Netlify/GitHub Pages: kompresi otomatis di CDN; cPanel: `.htaccess` mengaktifkan brotli/gzip + MIME `.woff2`/`.webp` + caching + header keamanan. Caching CSS/JS sengaja `max-age=86400, must-revalidate` (nama berkas **tanpa hash** → hindari `immutable` 1 tahun).
-- **Minify + CSS kritis (TD-PERF-03 sisa, TD-PERF-06) TIDAK dipasang**: butuh build step → bertentangan DECISIONS #1; menunggu keputusan user.
+- **Minify + CSS kritis (TD-PERF-03 sisa, TD-PERF-06) TIDAK diadopsi**: butuh build step → bertentangan DECISIONS #1; user menyetujui rekomendasi tetap tanpa build (2026-10-11).
 
 ## Monitoring & logging
 
@@ -48,7 +48,7 @@ Sesuai DECISIONS #4, tiga kandidat (pilihan final UNKNOWN): **Netlify** / **GitH
 
 ## Deploy runbook
 
-1. Salin `deploy/<config>` yang relevan ke root situs (`_headers` → root Netlify/CF; `.htaccess` → `public_html/`).
+1. Drag & drop isi folder ke Netlify Drop (rekomendasi) — `.htaccess`/`_headers` di root otomatis berlaku. Untuk cPanel: unggah isi folder ke `public_html/`.
 2. Pastikan `index.html` ada di tingkat teratas root yang di-deploy.
 3. Kecualikan folder `.opencode/` dari unggahan publik (Netlify Drop/cPanel: jangan unggah; GitHub Pages: tambah `_config.yml` `exclude:` — `.gitignore` tidak menolong untuk berkas terlacak). Tidak ada rahasia di `.opencode/`, tetapi isinya catatan internal.
 4. Isi canonical/OG/JSON-LD `url` dengan domain final (ISSUE-003) sebelum/segera setelah live.

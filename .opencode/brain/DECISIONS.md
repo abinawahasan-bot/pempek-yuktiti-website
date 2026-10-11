@@ -11,6 +11,7 @@
 | 2026-10-08 | #2 Section satu halaman (Hero/Cerita/Menu/Lokasi/Kontak/Galeri) | DECISIONS.md#2-single-page-sections | Decided |
 | 2026-10-08 | #3 Harga 2026 + disclaimer WA (sumber primer menukuliner) | DECISIONS.md#3-pricing-2026 | Decided |
 | 2026-10-08 | #4 Hosting statis (Netlify/GitHub Pages/cPanel) | DECISIONS.md#4-hosting | Decided |
+| 2026-10-11 | #5 Optimasi deportime tanpa build (config di root; minify/CSS-kritis tidak diadopsi) | DECISIONS.md#5-deploy-time-no-build | Decided |
 
 ## Decision entries
 
@@ -52,6 +53,16 @@
 - **Reason:** Sifat statis + syarat biaya rendah. (CONFIRMED)
 - **Consequences:** Tidak boleh ada fitur yang butuh runtime server. Pilihan final antar tiga opsi masih UNKNOWN. (CONFIRMED)
 - **Date:** 2026-10-08
+- **Confidence:** CONFIRMED
+
+### #5 Optimasi deportime tanpa build
+
+- **Decision:** Optimasi saat deploy (kompresi + caching) dilakukan **murni via berkas konfigurasi server di root** (`_headers` untuk Netlify/Cloudflare Pages, `.htaccess` untuk Apache/cPanel). **Minify** HTML/CSS/JS dan **pemisahan CSS kritis** — yang butuh langkah build — **tidak diadopsi**.
+- **Context:** TD-PERF-03/06; hosting final belum dipilih; DECISIONS #1 melarang build step; target LCP/berat sudah tercapai lewat aset WebP + font self-host.
+- **Alternatives:** Menambah build step (esbuild/terser + critical CSS) — kompleksitas toolchain; atau tanpa optimasi deportime sama sekali.
+- **Reason:** User menyetujui rekomendasi orkestrator 2026-10-11 ("eksekusi saja yang anda rekomendasikan"). Kompresi menutup **−78% gzip / −82% brotli** tanpa menambah toolchain/dependensi (188 KB → 41/35 KB). Konsisten dengan #1. (CONFIRMED)
+- **Consequences:** Tidak ada toolchain; berkas config di root berlaku otomatis saat drag-and-drop; TD-PERF-03 → RESOLVED, TD-PERF-06 → NOT ADOPTED; dapat ditinjau ulang bila kelak mengadopsi build. Rekomendasi host: **Netlify Drop** (#4 pilihan final tetap UNKNOWN).
+- **Date:** 2026-10-11
 - **Confidence:** CONFIRMED
 
 > Belum ada ADR di docs/adr/ — jika dibuat, tautkan di sini, jangan duplikasi.
