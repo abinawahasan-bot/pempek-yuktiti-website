@@ -1610,7 +1610,10 @@ html.lightbox-open body {
 
 .footer__text {
   font-size: var(--fs-small);
-  color: var(--color-surface-2);
+  /* Token footer khusus (light #EFE7DC, dark #FFFFFF) — JANGAN surface-2:
+     di dark surface-2 = #201A16 (nyaris hitam) → kontras 3.47 ✗ di atas
+     footer #B8503A. footer-text memberi 4.94:1 di dark, identik di light. */
+  color: var(--color-footer-text);
   margin-bottom: 0;
 }
 
@@ -1641,7 +1644,7 @@ html.lightbox-open body {
   border-top: 1px solid var(--color-secondary);
   text-align: center;
   font-size: var(--fs-small);
-  color: var(--color-surface-2);
+  color: var(--color-footer-text);
 }
 
 /* =============================================================
@@ -2206,6 +2209,14 @@ html.js.anim .reveal-3d:focus-within {
   body.has-cart { padding-bottom: 0; }
   /* CTA statis menu dikembalikan di cetak — keranjang tak tersedia. */
   .js .menu-cta-static { display: flex; }
+  /* Header tidak lengket saat cetak: position:static mencegah bar
+     mengambang/berulang & terpotong di tepi halaman. Blur dibuang karena
+     backdrop-filter tak berguna di kertas dan bisa memaksa rasterisasi. */
+  .site-header {
+    position: static !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }
 
 /* ---------- Background dekoratif & splash ---------- */

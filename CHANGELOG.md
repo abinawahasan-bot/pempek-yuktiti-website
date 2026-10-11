@@ -81,6 +81,14 @@ dan proyek ini menganut [Semantic Versioning](https://semver.org/lang/id/).
 - **Lightbox**: meta terklip di viewport pendek (M1), guard `showModal()` (M2), tombol
   yatim bila skrip dievaluasi ulang (L1), dll. (2026‑10‑10)
 - **Offset anchor** aditif (~+63px) → mendarat konsisten **+8px** di bawah baris chip. (2026‑10‑10)
+- **Kontras teks footer di mode gelap** → `.footer__text` & `.footer__copy` memakai
+  `--color-surface-2` (yang di mode gelap = `#201A16`, hampir hitam) di atas footer
+  `--color-primary` `#B8503A` → kontras **3,47:1 (gagal WCAG AA)**; diganti token
+  `--color-footer-text` (#FFFFFF di gelap = **4,95:1**, identik `#EFE7DC` di terang = **6,06:1**).
+  Ditemukan Lighthouse (A11y 96→**100**). (2026‑10‑12)
+- **Header lengket saat cetak** → `.site-header` dipaksa `position: static` +
+  `backdrop-filter: none` di `@media print`, agar bar tidak mengambang/berulang/terpotong
+  di kertas. (2026‑10‑12)
 
 ### Removed
 
