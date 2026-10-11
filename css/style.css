@@ -1965,6 +1965,65 @@ html.js.anim .reveal-3d:focus-within {
   transition: none;
 }
 
+/* ---------- · Scroll-driven 3D ala Dribbble (kartu menu & testimoni) ----------
+   Nuansa depth + entrance "melesat" TANPA WebGL/Three.js/Spline:
+   - class `.reveal-3d--driven` ditambahkan JS HANYA saat aktif: anim
+     (no-preference) + desktop ≥1024px → tanpa JS / reduced / HP: kartu
+     tampil statis apa adanya.
+   - Entrance: scale 0.98→1, translateY 8px→0, rotateX 4°→posisi scroll,
+     easing cepat "melesat" (cubic-bezier 0.16,1,0.3,1) — cuma di `js.anim`.
+   - Scroll-driven memakai properti individual translate/rotate (bukan
+     `transform` milik tilt hover) → tidak saling menimpa; --drx/--dz
+     diisi rAF cuma untuk kartu yang sedang di-viewport.
+   - `perspective` di grid induk supaya translateZ punya kedalaman nyata.
+   - `.driven-live` mematikan transisi entrance setelah settle agar update
+     scroll tidak tertinggal; transisi tilt hover tetap halus via --tilt-t. */
+@media (min-width: 1024px) {
+  .menu-grid,
+  .testimoni__list {
+    perspective: 1200px;
+  }
+  html.anim .card-menu {
+    --tilt-t: transform 300ms ease-out, box-shadow 300ms ease-out, border-color 300ms ease-out;
+  }
+  html.anim .testimoni__item {
+    --tilt-t: transform 300ms ease-out, box-shadow 300ms ease-out;
+  }
+
+  html.js.anim .reveal-3d--driven {
+    opacity: 0;
+    scale: 0.98;
+    translate: 0 8px 0;
+    rotate: x 4deg;
+    transition:
+      opacity 280ms ease-out,
+      transform 300ms ease-out,
+      translate 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      rotate 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      scale 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--stagger, 0ms);
+  }
+  html.js.anim .reveal-3d--driven.is-in {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0 var(--dz, 0px);
+    rotate: x var(--drx, 0deg);
+  }
+  /* Keyboard: kartu berisi tombol stepper — fokus sebelum reveal harus
+     langsung tampil (pola .reveal-3d:focus-within). */
+  html.js.anim .reveal-3d--driven:not(.is-in):focus-within {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0 var(--dz, 0px);
+    rotate: x var(--drx, 0deg);
+    transition: none;
+  }
+  /* Setelah entrance selesai: hanya transisi tilt yang tersisa. */
+  html.js.anim .reveal-3d--driven.driven-live {
+    transition: var(--tilt-t, none);
+  }
+}
+
 /* ---------- · Tombol: hover lift ---------- */
 .btn {
   transition:
@@ -2022,6 +2081,17 @@ html.js.anim .reveal-3d:focus-within {
   .reveal-3d {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
+  }
+  /* Kartu driven ikut di-reset: tanpa sembunyi, tanpa depth, tanpa 3D. */
+  html.js.anim .reveal-3d--driven,
+  html.js.anim .reveal-3d--driven.is-in {
+    opacity: 1 !important;
+    scale: 1 !important;
+    translate: none !important;
+    rotate: none !important;
     transition: none !important;
     transition-delay: 0ms !important;
     will-change: auto !important;
@@ -2093,6 +2163,16 @@ html.js.anim .reveal-3d:focus-within {
   .reveal-3d {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
+  }
+  html.js.anim .reveal-3d--driven,
+  html.js.anim .reveal-3d--driven.is-in {
+    opacity: 1 !important;
+    scale: 1 !important;
+    translate: none !important;
+    rotate: none !important;
     transition: none !important;
     transition-delay: 0ms !important;
     will-change: auto !important;

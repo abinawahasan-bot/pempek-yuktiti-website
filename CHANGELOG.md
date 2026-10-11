@@ -46,6 +46,13 @@ dan proyek ini menganut [Semantic Versioning](https://semver.org/lang/id/).
   di **root** agar otomatis berlaku saat drag-and-drop — dan `DEPLOY.md` (panduan); README §D.
   **Tanpa build step** (sesuai DECISIONS #1). Kompresi terukur pada kode asli:
   **188 KB → 41 KB gzip (−78%) / 35 KB brotli (−82%)**. (2026‑10‑11)
+- **Scroll‑driven 3D ala Dribbble** pada kartu menu (23) & testimoni (3) — desktop
+  ≥1024px + `prefers-reduced-motion: no-preference`: entrance "melesat" berjenjang +
+  tilt `rotateX` mengikuti posisi scroll (`--drx`/`--dz` diisi rAF hanya untuk kartu
+  di viewport via `IntersectionObserver`; properti individual `translate`/`rotate`
+  agar tidak menimpa hover tilt; `perspective: 1200px` di grid induk; `will-change`
+  hanya saat kartu di viewport). di HP / reduced motion / tanpa JS kartu tampil
+  statis apa adanya. (2026‑10‑11)
 
 ### Changed
 

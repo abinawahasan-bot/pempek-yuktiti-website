@@ -15,6 +15,8 @@
    3. Tilt 3D hero + kartu menu (hanya hover:hover & pointer:fine).
    4. Scroll-reveal 3D via satu IntersectionObserver, unobserve
       setelah reveal, fallback .is-in serentak tanpa IO.
+   5. Scroll-driven depth ringan ala Dribbble: kartu menu & testimoni
+      (desktop ≥1024px saja; .reveal-3d--driven + rAF sambil IO).
 
    Semua bagian dibungkus try/catch ringan: satu kegagalan tidak
    mematikan bagian lain, tanpa console spam.
@@ -469,12 +471,235 @@
     update();
   }
 
+  /* ---------- (8) Scroll-driven depth ringan ala Dribbble ----------
+     Kartu menu & testimoni: sedikit rotateX + pop translateZ mengikuti
+     posisi gulir (rAF-throttled) — nuansa depth "Dribbble" TANPA WebGL.
+     Hanya translate/rotate/scale/opacity (kompositor), tanpa repaint masif.
+
+     Gating berlapis (HP aman):
+     - class `anim` (prefers-reduced-motion: no-preference) wajib;
+     - desktop saja via matchMedia min-width:1024px (bukan sniffing);
+     - IntersectionObserver: update scroll hanya untuk kartu di viewport;
+     - class `.reveal-3d--driven` baru ditambahkan SAAT aktif — CSS
+       entrance hanya jalan di `html.js.anim` → tanpa JS semua tampil;
+     - `.driven-live` mematikan transisi entrance setelah settle agar
+       update scroll tidak tertinggal (tilt hover tetap halus via --tilt-t). */
+  var DRIVE_MQ = "(min-width: 1024px)";
+  /* State lintas-breakpoint: null = belum dicek; sisanya hasil matchMedia. */
+  var driveMq = null;
+  var driveStarted = false;
+
+  /* Jaring pengaman: pastikan tidak ada kartu driven yang tersembunyi
+     bila setupDriven3D gagal di tengah jalan. */
+  function revealDrivenAll() {
+    var els = document.querySelectorAll(".reveal-3d--driven");
+    for (var i = 0; i < els.length; i++) {
+      els[i].classList.add("is-in", "driven-live");
+    }
+  }
+
+  function setupDriven3D() {
+    if (!docEl.classList.contains("anim")) {
+      return;
+    }
+    if (driveMq === null) {
+      try {
+        driveMq = window.matchMedia(DRIVE_MQ);
+      } catch (err) {
+        return;
+      }
+      /* Sinkron dengan CSS @media (min-width: 1024px): jendela yang tadi
+         menyempit lalu melebar → aktifkan setup; melebar lalu menyempit →
+         buang hint layer (CSS sudah menampilkan semuanya apa adanya). */
+      if (driveMq.addEventListener) {
+        driveMq.addEventListener("change", function (ev) {
+          if (ev.matches && !driveStarted) {
+            setupDriven3D(); /* re-entry → inisialisasi via guard di bawah */
+          } else if (!ev.matches && driveStarted) {
+            var all = document.querySelectorAll(".reveal-3d--driven");
+            for (var q = 0; q < all.length; q++) {
+              all[q].style.willChange = "";
+            }
+          }
+        });
+      }
+    }
+    /* Guard: observer & listener scroll hanya dipasang SEKALI. */
+    if (driveStarted) {
+      return;
+    }
+    if (!driveMq.matches) {
+      return;
+    }
+    driveStarted = true;
+
+    var els = document.querySelectorAll(".card-menu, .testimoni__item");
+    if (!els.length) {
+      return;
+    }
+
+    /* Config per kartu: rotasi & kedalaman maksimum (sangat kecil).
+       Disimpan di ARRAY paralel dengan `els` — bukan objek berkunci elemen
+       (kunci objek DOM dikonversi ke string [object HTMLDivElement] →
+       semua kartu menu bertabrakan jadi satu entri). */
+    var drivers = [];
+    for (var i = 0; i < els.length; i++) {
+      var isMenu = els[i].classList.contains("card-menu");
+      drivers[i] = {
+        el: els[i],
+        cfg: { rx: isMenu ? 5 : 3, z: isMenu ? 18 : 14 }
+      };
+    }
+
+    /* Stagger entrance antar saudara (pola setupReveal, langkah 60ms dan
+       dibatasi 420ms agar cascade "melesat" tidak menunggu lama). */
+    var prevParent = null;
+    var idx = 0;
+    for (var s = 0; s < els.length; s++) {
+      if (els[s].parentElement !== prevParent) {
+        prevParent = els[s].parentElement;
+        idx = 0;
+      }
+      els[s].style.setProperty("--stagger", Math.min(idx * 60, 420) + "ms");
+      idx++;
+    }
+
+    /* Tanpa IntersectionObserver: tampilkan semua sekarang (statis; depth
+       tetap lewat is-in, tanpa update scroll berkelanjutan). */
+    if (typeof window.IntersectionObserver !== "function") {
+      for (var f = 0; f < els.length; f++) {
+        els[f].classList.add("reveal-3d--driven", "is-in", "driven-live");
+      }
+      return;
+    }
+
+    for (var a = 0; a < els.length; a++) {
+      els[a].classList.add("reveal-3d--driven");
+    }
+
+    var active = [];
+    var ticking = false;
+    var hasRaf = typeof window.requestAnimationFrame === "function";
+
+    function applyOne(driver, vh) {
+      var el = driver.el;
+      var rect = el.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= vh) {
+        return; /* di luar viewport → jangan hitung */
+      }
+      var centerY = rect.top + rect.height / 2;
+      /* p: pusat kartu di bawah viewport ≈ -1, di tengah = 0, di atas ≈ 1 */
+      var p = (vh / 2 - centerY) / (vh / 2 + rect.height / 2);
+      p = clamp(p, -1, 1);
+      el.style.setProperty("--drx", (p * driver.cfg.rx).toFixed(2) + "deg");
+      el.style.setProperty(
+        "--dz",
+        ((1 - Math.abs(p)) * driver.cfg.z).toFixed(1) + "px"
+      );
+    }
+
+    function update() {
+      ticking = false;
+      if (!docEl.classList.contains("anim") || !driveMq.matches) {
+        return;
+      }
+      var vh =
+        window.innerHeight || document.documentElement.clientHeight || 1;
+      for (var i = 0; i < active.length; i++) {
+        applyOne(active[i], vh);
+      }
+    }
+
+    function schedule() {
+      if (ticking) {
+        return;
+      }
+      ticking = true;
+      if (hasRaf) {
+        window.requestAnimationFrame(update);
+      } else {
+        update();
+      }
+    }
+
+    /* Reveal sekali (threshold 0.15, pola setupReveal) + matikan transisi
+       entrance setelah settle (driven-live) supaya update berikut instan. */
+    var revealObs = new IntersectionObserver(
+      function (entries) {
+        for (var j = 0; j < entries.length; j++) {
+          if (!entries[j].isIntersecting) {
+            continue;
+          }
+          var el = entries[j].target;
+          var driver = drivers[Array.prototype.indexOf.call(els, el)];
+          revealObs.unobserve(el);
+          /* Isi depth dulu agar target entrance sudah sesuai posisi gulir. */
+          applyOne(driver, window.innerHeight || 1);
+          el.classList.add("is-in");
+          var delay = 0;
+          try {
+            delay = parseInt(el.style.getPropertyValue("--stagger"), 10) || 0;
+          } catch (err) {
+            /* diam */
+          }
+          window.setTimeout(function () {
+            el.classList.add("driven-live");
+          }, delay + 460);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    /* Viewport IN/OUT: daftar kartu yang perlu update scroll + dijadikan
+       layer sendiri (kompositor) selama terlihat. */
+    var viewObs = new IntersectionObserver(
+      function (entries) {
+        for (var k = 0; k < entries.length; k++) {
+          var driver = drivers[Array.prototype.indexOf.call(els, entries[k].target)];
+          if (!driver) {
+            continue;
+          }
+          if (entries[k].isIntersecting) {
+            if (active.indexOf(driver) === -1) {
+              active.push(driver);
+            }
+            try {
+              entries[k].target.style.willChange = "translate, rotate";
+            } catch (err) {
+              /* diam */
+            }
+          } else {
+            var pos = active.indexOf(driver);
+            if (pos !== -1) {
+              active.splice(pos, 1);
+            }
+            try {
+              entries[k].target.style.willChange = "";
+            } catch (err) {
+              /* diam */
+            }
+          }
+        }
+        schedule();
+      },
+      { rootMargin: "48px 0px" }
+    );
+
+    for (var o = 0; o < els.length; o++) {
+      revealObs.observe(els[o]);
+      viewObs.observe(els[o]);
+    }
+    window.addEventListener("scroll", schedule, { passive: true });
+    schedule();
+  }
+
   /* ---------- Pasang semuanya ---------- */
   safe(setupHeroTilt);
   safe(setupMenuTilt);
   safe(setupTestiTilt);
   safe(setupMenuSpy);
   safe(setupHeroParallax);
+  safe(setupDriven3D, revealDrivenAll);
   /* Bila reveal gagal di tengah jalan, paksa semua tampil:
      konten tak terlihat permanen lebih buruk daripada tanpa animasi. */
   safe(setupReveal, revealAll);
