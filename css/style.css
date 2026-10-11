@@ -1,0 +1,2294 @@
+/* =============================================================
+   Pempek Yuk Titi - UII Jakal — css/style.css
+   Mobile-first, tanpa framework. Design tokens di :root
+   sesuai DESIGN_BRIEF §2. Breakpoint: 768px (md), 1024px (lg).
+   ============================================================= */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Warna (palet DESIGN_BRIEF §2) */
+  --color-primary: #8B3E2F;
+  --color-primary-hover: #743327;      /* turunan primary (lebih gelap) untuk hover tombol */
+  --color-secondary: #D97757;          /* aksen dekoratif / efek hover — bukan untuk teks kecil; vs surface 2.82:1 */
+  --color-accent: #3A7C59;
+  --color-surface: #F7F3EB;
+  --color-surface-2: #EFE7DC;
+  --color-text: #1F1B18;
+  --color-text-muted: #5C524D;
+  --color-border: #D7CCC2;
+  --color-warning: #B45309;
+  --color-wa: #25D366;
+  --color-wa-hover: #1DB954;           /* turunan WA untuk hover */
+  --color-on-primary: #FFFFFF;         /* putih vs #8B3E2F = 7.44:1 */
+  --color-on-wa: #1F1B18;              /* gelap vs #25D366 = 8.62:1 (putih hanya 1.98:1, gagal AA) */
+
+  /* Tipografi */
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --fs-h1: clamp(1.8rem, 4vw, 2.8rem);
+  --fs-h2: clamp(1.4rem, 3vw, 2rem);
+  --fs-h3: clamp(1.2rem, 2.5vw, 1.6rem);
+  --fs-h4: clamp(1rem, 2vw, 1.15rem);
+  --fs-body: clamp(0.95rem, 1vw, 1rem);
+  --fs-small: clamp(0.875rem, 0.9vw, 0.95rem);
+  --lh-heading: 1.2;
+  --lh-body: 1.7;
+
+  /* Spasi & bentuk */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  /* Layout */
+  --container: 1100px;
+  --nav-h: 60px;
+  /* Tinggi baris chip kategori (.menu-nav) — dipakai untuk offset sticky
+     dan lompatan anchor ke kelompok menu. Terukur 61px (44px tautan +
+     padding 8px×2 + border 1) dan konstan di semua breakpoint. */
+  --menu-nav-h: 61px;
+  /* Turunan --color-surface (#F7F3EB) @ 96% alpha — latar sticky header */
+  --color-header-bg: rgba(247, 243, 235, 0.96);
+  --shadow-1: 0 1px 2px rgba(31, 27, 24, 0.06), 0 8px 24px rgba(31, 27, 24, 0.06);
+  --shadow-fab: 0 6px 18px rgba(31, 27, 24, 0.28);
+
+  /* --- Token pendukung dark mode (nilai LIGHT = perilaku lama persis) --- */
+  /* Warna teks berbasis primary — primary gelap tidak cukup kontras sbg teks
+     di permukaan gelap (butuh ≥4.5), sedangkan primary sbg LATAR tombol
+     harus tetap gelap agar teks putih lolos AA → peran dipisah. */
+  --color-primary-text: #8B3E2F;
+  /* Teks di atas latar --color-accent (badge) */
+  --color-on-accent: #FFFFFF;
+  /* Teks isi footer (bg = --color-primary) — terpisah dari surface-2 agar
+     dark bisa memakai putih murni */
+  --color-footer-text: #EFE7DC;
+  /* Triplet rgb untuk bayangan (agar bayangan gelap dapat di-ganti saat mode
+     gelap tanpa menyentuh tiap aturan) */
+  --shadow-rgb: 31 27 24;
+  /* Glow hover tombol (rgb primary / WA) */
+  --glow-primary: 139 62 47;
+  --glow-wa: 37 211 102;
+  /* Puncak pita sheen kartu (putih) — di dark diredupkan agar tak memantul */
+  --sheen-peak: 0.55;
+  /* Alfa blob dekor & opasitas pola — dark butuh sedikit lebih tinggi agar
+     blob/pola tidak "hilang" di permukaan gelap */
+  --blob-alpha: 0.12;
+  --pattern-opacity: 0.04;
+}
+
+/* ---------- Dark mode tokens ----------
+   Palet gelap HANGAT (senada brand, bukan hitam pekat).
+   Struktur sinkronisasi — UBAH KEDUA BLOK BERSAMAAN, nilai WAJIB identik:
+     (a) :root[data-theme="dark"]              → pilihan eksplisit user
+         (di-set oleh skrip anti-flash di <head> dari localStorage "pyt_theme",
+          lalu oleh js/theme.js saat tombol ditekan)
+     (b) @media (prefers-color-scheme: dark)
+         :root:not([data-theme="light"])       → fallback sistem live
+         (tanpa JS / user belum pernah memilih; ikut sistem kapan saja)
+   Konstan TIDAK diubah di sini (identik light & dark, sengaja):
+     --color-on-primary #FFFFFF (putih vs primary dark #B8503A = 4.94:1 AA)
+     --color-wa / --color-wa-hover / --color-on-wa (brand WA, teks gelap 8.60:1)
+   Setiap nilai di bawah sudah diaudit kontrasnya — lihat laporan validasi. */
+:root { color-scheme: light; }
+
+/* (a) Pilihan eksplisit user */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-surface: #191513;
+  --color-surface-2: #201A16;
+  --color-text: #F2EBE2;
+  --color-text-muted: #BBAFA2;
+  --color-border: #3A312B;         /* dekoratif: kontras 1.43:1 (disengaja, non-teks; teks memakai --color-text*) */
+  --color-primary: #B8503A;        /* latar tombol/footer — putih 4.94:1, vs surface 3.55:1 */
+  --color-primary-hover: #9C4029;  /* hover lebih gelap → kontras teks putih naik */
+  --color-primary-text: #E89671;   /* teks link/harga/eyebrow — vs surface 7.5:1 */
+  --color-secondary: #E08A63;      /* aksen dekoratif/hover — bukan untuk teks kecil; vs surface 6.90:1 */
+  --color-accent: #55A87F;
+  --color-on-accent: #1F1B18;      /* teks gelap di atas badge hijau = 6.1:1 (putih hanya 2.88 ✗) */
+  --color-warning: #E9A23B;        /* vs surface 7.9:1 (#B45309 hanya ~3.3 ✗) */
+  --color-header-bg: rgba(25, 21, 19, 0.96);
+  --color-footer-text: #FFFFFF;    /* putih di atas footer #B8503A = 4.94:1 */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-fab: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-rgb: 0 0 0;
+  --glow-primary: 184 80 58;
+  --glow-wa: 37 211 102;
+  --sheen-peak: 0.14;
+  --blob-alpha: 0.17;
+  --pattern-opacity: 0.06;
+}
+
+/* (b) Fallback sistem — NILAI SAMA PERSIS dengan blok (a) di atas */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-surface: #191513;
+    --color-surface-2: #201A16;
+    --color-text: #F2EBE2;
+    --color-text-muted: #BBAFA2;
+    --color-border: #3A312B;         /* dekoratif: kontras 1.43:1 (disengaja, non-teks; teks memakai --color-text*) */
+    --color-primary: #B8503A;        /* latar tombol/footer — putih 4.94:1, vs surface 3.55:1 */
+    --color-primary-hover: #9C4029;  /* hover lebih gelap → kontras teks putih naik */
+    --color-primary-text: #E89671;   /* teks link/harga/eyebrow — vs surface 7.5:1 */
+    --color-secondary: #E08A63;      /* aksen dekoratif/hover — bukan untuk teks kecil; vs surface 6.90:1 */
+    --color-accent: #55A87F;
+    --color-on-accent: #1F1B18;      /* teks gelap di atas badge hijau = 6.1:1 (putih hanya 2.88 ✗) */
+    --color-warning: #E9A23B;        /* vs surface 7.9:1 (#B45309 hanya ~3.3 ✗) */
+    --color-header-bg: rgba(25, 21, 19, 0.96);
+    --color-footer-text: #FFFFFF;    /* putih di atas footer #B8503A = 4.94:1 */
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-fab: 0 6px 18px rgba(0, 0, 0, 0.5);
+    --shadow-rgb: 0 0 0;
+    --glow-primary: 184 80 58;
+    --glow-wa: 37 211 102;
+    --sheen-peak: 0.14;
+    --blob-alpha: 0.17;
+    --pattern-opacity: 0.06;
+  }
+}
+
+/* ---------- Basis ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* [RV-01] Lompatan anchor tidak boleh tertutup sticky header:
+   beri jarak = tinggi header TERUKUR (--header-h oleh js/header.js) +
+   --space-2. Fallback --nav-h = perilaku lama bila tanpa JS / RO lawas. */
+html { scroll-padding-top: calc(var(--header-h, var(--nav-h)) + var(--space-2)); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  padding-bottom: 4.5rem; /* ruang untuk FAB WhatsApp di mobile */
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: var(--lh-heading);
+  margin: 0 0 var(--space-3);
+  font-weight: 600;
+  color: var(--color-text);
+}
+h1 { font-size: var(--fs-h1); font-weight: 700; }
+h2 { font-size: var(--fs-h2); font-weight: 700; }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); margin-bottom: 0; }
+
+p { margin: 0 0 var(--space-4); }
+ul { margin: 0; padding: 0; }
+svg { display: block; }
+address { font-style: normal; }
+
+a { color: var(--color-primary-text); }
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Target skip-link tidak perlu cincin fokus utuh (bukan elemen interaktif konten) */
+#main:focus { outline: none; }
+
+.container {
+  width: min(90vw, var(--container));
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: 300;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+.skip-link:focus { top: 0; }
+
+/* ---------- Nav (sticky) ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background-color: var(--color-header-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  min-height: var(--nav-h);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.nav__brand-sub { color: var(--color-primary-text); font-weight: 600; }
+.nav__brand:hover { color: var(--color-primary-text); }
+/* Layar sangat sempit: sufiks "· UII Jakal" disembunyikan agar baris
+   brand + (tema + hamburger) tetap MUAT SATU BARIS seperti sebelum ada
+   tombol tema (tanpa ini header melipat jadi 2 baris di 320/360px). */
+@media (max-width: 372px) {
+  .nav__brand-sub { display: none; }
+}
+
+/* Kelompok tombol aksi nav (tema + hamburger) — selalu berdampingan &
+   rata kanan. margin-left:auto di GRUP (bukan per tombol): saat flex-wrap
+   memecah baris, auto-margin tetap menempel ke grup → kedua tombol tidak
+   pernah terpisah ke baris berbeda. Tanpa JS: grup kosong (tombol display
+   none) → lebar 0, daftar nav tetap rata kanan seperti semula. */
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-left: auto;
+}
+
+.nav__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--space-1);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  cursor: pointer;
+}
+.nav__toggle:hover { border-color: var(--color-primary); }
+/* Tombol hamburger hanya muncul bila JS aktif — tanpa JS nav tetap tampil penuh */
+.js .nav__toggle { display: inline-flex; }
+
+/* ---------- Tombol tema (progressive enhancement, pola .js seperti hamburger) ----------
+   Tanpa JS → display:none (nav & halaman tetap utuh).
+   Posisi/rata kanan diatur oleh .nav__actions (lihat di atas).
+   Ikon menunjukkan MODE YANG AKAN DIAKTIFKAN (konsisten dengan aria-label):
+   terang aktif → tampilkan bulan (aksi: ke gelap); gelap → tampilkan matahari. */
+.theme-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--color-primary); }
+/* F-LOW-02: tampil HANYA bila JS aktif (.js = main.js) DAN theme.js
+   hidup/sukses inisialisasi (.theme-ok = ditambahkan theme.js di akhir IIFE).
+   Tanpa theme-ok (theme.js gagal/diblokir) → tombol tetap display:none
+   dari aturan dasar, bukan tombol inert. Default .theme-toggle tetap none;
+   print (!important) juga tetap menutup. */
+.js.theme-ok .theme-toggle { display: inline-flex; }
+.theme-toggle__icon { display: block; flex: none; }
+.theme-toggle__icon--sun { display: none; }
+/* Mode gelap aktif (eksplisit) → matahari (aksi: kembali terang) */
+:root[data-theme="dark"] .theme-toggle .theme-toggle__icon--sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .theme-toggle__icon--moon { display: none; }
+/* Mode gelap aktif (ikut sistem, belum ada pilihan eksplisit) → matahari */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .theme-toggle__icon--sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .theme-toggle__icon--moon { display: none; }
+}
+.nav__icon--close { display: none; }
+.nav.is-open .nav__icon--burger { display: none; }
+.nav.is-open .nav__icon--close { display: block; }
+
+.nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Dengan JS di layar kecil: link disembunyikan sampai tombol dibuka */
+.js .nav__list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: var(--space-2) 0 var(--space-3);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-1);
+}
+.js .nav.is-open .nav__list { display: flex; }
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  color: var(--color-text);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.nav__link:hover {
+  color: var(--color-primary-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-secondary);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
+/* ---------- Header ramping saat gulir (khusus ponsel, class oleh js/header.js) ----------
+   Tanpa JS class tak pernah ada → header selalu penuh (aman). Token --nav-h
+   ikut menyusut sehingga sticky .menu-nav + scroll-padding anchor mengikuti
+   OTOMATIS tanpa hitung ulang. Di print, media max-width:767px tak cocok
+   (halaman cetak lebar) → header cetak selalu penuh. */
+@media (max-width: 767px) {
+  html.header-compact { --nav-h: 50px; }
+  html.header-compact .nav__brand { font-size: 0.95rem; }
+}
+/* Transisi perampingan HANYA bila gerak diizinkan (di reduce: instan). */
+@media (prefers-reduced-motion: no-preference) {
+  .nav__inner { transition: min-height 200ms ease-out; }
+  .nav__brand { transition: font-size 200ms ease-out; }
+}
+
+/* ---------- Tombol ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.btn__icon { flex: none; }
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.btn--primary:hover { background-color: var(--color-primary-hover); }
+
+.btn--wa {
+  background-color: var(--color-wa);
+  color: var(--color-on-wa);
+}
+.btn--wa:hover { background-color: var(--color-wa-hover); }
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-primary-text);
+  border-color: var(--color-primary-text);
+}
+.btn--ghost:hover {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* ---------- FAB WhatsApp ---------- */
+.fab-wa {
+  position: fixed;
+  right: var(--space-4);
+  bottom: max(var(--space-4), env(safe-area-inset-bottom, 0px));
+  z-index: 150;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-wa);
+  color: var(--color-on-wa);
+  box-shadow: var(--shadow-fab);
+  text-decoration: none;
+}
+.fab-wa:hover { background-color: var(--color-wa-hover); }
+/* Saat keranjang aktif (sticky bar tampil di bawah), FAB disembunyikan agar
+   tidak bertumpuk dengan tombol checkout. */
+body.has-cart .fab-wa { display: none; }
+
+/* ---------- Section umum ---------- */
+.section {
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+}
+.section--alt { background-color: var(--color-surface-2); }
+/* Seam sederhana bila dua section--alt berurutan (mis. #cara-pesan + #lokasi):
+   batas tipis dekoratif, token yang ada, tak menggeser konten. */
+.section--alt + .section--alt { border-top: 1px solid var(--color-border); }
+
+.section__head { margin-bottom: var(--space-5); }
+.section__head--center { text-align: center; margin-inline: auto; }
+
+.section__lead {
+  max-width: 62ch;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+.section__head--center .section__lead { margin-inline: auto; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding-top: clamp(2.5rem, 8vw, 5rem);
+  overflow: hidden;
+}
+
+.hero__eyebrow {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-text);
+}
+
+.hero h1 { max-width: 18ch; margin-bottom: var(--space-3); }
+
+.hero__sub {
+  max-width: 54ch;
+  font-size: clamp(1.02rem, 1.5vw, 1.25rem);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  list-style: none;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+.hero__meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.hero__meta li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  flex: none;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+/* Chip fakta ringkas (konten statis, bukan kontrol).
+   Isi HANYA fakta yang sudah tercantum di halaman ini: 23 kartu menu,
+   rentang harga (kartu menu + JSON-LD), jam buka (lokasi/footer).
+   Sengaja tanpa "setiap hari" di sini — teks itu sudah ada di lokasi &
+   footer, dan hari buka tidak ikut dinyatakan ulang. */
+.hero__chips {
+  display: flex;
+  flex-wrap: wrap;          /* di layar sempit chip membungkus, bukan meluber */
+  gap: var(--space-2);
+  list-style: none;
+  margin: var(--space-3) 0 0;
+}
+.hero__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  background-color: var(--color-surface-2);
+  color: var(--color-text-muted);   /* 6.19:1 di light, 8.0:1 di dark — lolos AA */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+/* Baris rating Google di hero — tautan ke listing Maps agar pengunjung
+   melihat angka live (angka tampil bisa basi; tautan selalu benar). */
+.hero__rating {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+.hero__rating-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-primary-text);   /* 13.95:1 light, 14.55:1 dark — lolos AA */
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1px;
+}
+.hero__rating-link:hover { border-color: var(--color-secondary); }
+.hero__rating-star { color: var(--color-secondary); }  /* dekoratif, aria-hidden */
+
+.hero__wave {
+  width: 100%;
+  height: clamp(40px, 6vw, 72px);
+  margin-top: clamp(2rem, 7vw, 4.5rem);
+  color: var(--color-surface-2);
+}
+
+.hero__media {
+  margin-top: clamp(2rem, 6vw, 3.5rem);
+  margin-bottom: 0;
+}
+.hero__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 40px -22px rgb(var(--shadow-rgb) / 0.5);
+}
+.hero__media-caption {
+  margin: var(--space-2) 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ---------- Menu ---------- */
+.menu-group { margin-bottom: var(--space-6); }
+
+.menu-group__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-h3);
+}
+.menu-group__title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background-color: var(--color-border);
+}
+
+/* Chips kategori menu — sticky tepat di bawah header sticky selama
+   menggulir section #menu (z-index 100 < header 200). `top` memakai tinggi
+   header TERUKUR (--header-h oleh js/header.js; fallback --nav-h) sehingga
+   benar di semua kondisi: penuh/ramping/wrap-2-baris/font susulan — tanpa
+   koreksi manual per rentang. Gulir horizontal di layar sempit: tak pernah
+   wrap, scrollbar disembunyikan tapi tetap bisa di-scroll (drag/tombol Tab
+   fokus ke link yang terpotong). Latar --color-surface = warna latar #menu
+   (section tanpa alt bg), jadi chip tetap terbaca saat konten lewat di
+   belakangnya. */
+.menu-nav {
+  position: sticky;
+  top: var(--header-h, var(--nav-h));
+  z-index: 100;
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) 0;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none; /* Firefox */
+}
+.menu-nav::-webkit-scrollbar { display: none; } /* Chromium/WebKit */
+/* (Dulu ada kompensasi manual +31px untuk rentang 768–967px di sini —
+   DIHAPUS 2026-10-10: --header-h terukur otomatis mencakup wrap 2 baris.) */
+.menu-nav__list {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+.menu-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* target sentuh */
+  padding: 0 var(--space-3);
+  background-color: var(--color-surface-2);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease-out,
+    border-color 180ms ease-out,
+    color 180ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  .menu-nav__link:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-secondary);
+    color: var(--color-primary-text);
+  }
+}
+/* Cincin fokus bawaan :focus-visible global tetap berlaku; ini hanya
+   menambah isyarat warna pada chip. */
+.menu-nav__link:focus-visible {
+  border-color: var(--color-secondary);
+  color: var(--color-primary-text);
+}
+
+/* Lompatan anchor ke kelompok menu harus melewati header + baris chip.
+   PENTING: `html { scroll-padding-top }` (baris ~162) SUDAH menyumbang
+   tinggi header + --space-2, dan scroll-margin bersifat ADITIF terhadapnya.
+   Jadi di sini cukup menambah tinggi baris chip saja (= --menu-nav-h),
+   bukan nav-h + chip (itu akan melewati baris chip 60px+). */
+.menu-group[id] { scroll-margin-top: var(--menu-nav-h); }
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+/* Kartu menu — BASE = PONSEL (mobile-first): baris kompak, thumbnail
+   persegi 92px di kiri, nama + harga + deskripsi bertumpuk di kanan,
+   stepper melintang penuh di baris bawah. Setiap anak memakai area
+   bernama via grid-template-areas; .badge dan .card-menu__desc OPSIONAL
+   → barisnya tinggi 0 bila tak ada di DOM (track auto tanpa item).
+   Tampilan besar dipulihkan di blok @media (min-width: 768px) sesudah
+   aturan stepper di bawah. Latar/border/radius tak berubah; bayangan
+   dimiliki aturan .card-menu di blok Animasi (~1358) — jangan dideklarasikan
+   lagi di sini (dulu ada var(--shadow-1) di sini namun selalu tertimpa). */
+.card-menu {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  grid-template-areas:
+    "media badge"
+    "media name"
+    "media price"
+    "media desc"
+    "step  step";
+  align-items: start;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  padding: var(--space-3);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.card-menu:hover { border-color: var(--color-secondary); }
+
+.card-menu__name {
+  grid-area: name;
+  margin: 0;
+}
+
+.card-menu__price {
+  grid-area: price;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-primary-text);
+  white-space: nowrap;
+  text-align: left;
+}
+
+.card-menu__desc {
+  grid-area: desc;
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+.badge {
+  grid-area: badge;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0.15rem 0.6rem;
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+/* Wadah multi-badge satu kartu (mis. "Terlaris" + "Isi 4 pempek"):
+   menempati area grid `badge`; badge di dalamnya berbaris lentur.
+   (.badge di dalamnya aman: grid-area tak berlaku di flex.) */
+.card-menu__badges {
+  grid-area: badge;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* Foto tiap kartu menu — ponsel: persegi 92px (cover), >=768px: 4:3.
+   Upaya bandwidth rendah (lazy + w=800) tetap berlaku. */
+.card-menu__media {
+  grid-area: media;
+  aspect-ratio: 1 / 1;
+  align-self: start;
+  border-radius: calc(var(--radius-md) - 4px);
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+.card-menu__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Stepper jumlah per kartu — HANYA tampil saat JS (class .js dari main.js).
+   Tanpa JS: tersembunyi, dan CTA statis tetap tampil (lihat .menu-cta-static). */
+.card-menu__stepper {
+  grid-area: step;
+  margin-top: var(--space-1);
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+}
+.js .card-menu__stepper { display: flex; }
+
+.card-menu__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 44x44px = target sentuh yang direkomendasikan (WCAG 2.2 Target Size,
+     Android/Material 48dp, Apple 44pt). Sebelumnya 38px — di bawah
+     rekomendasi meski tetap lolos minimum 24px (WCAG 2.2 AA). */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: border-color 180ms ease-out, background-color 180ms ease-out;
+}
+/* Lift HANYA di perangkat hover-fine (pola .btn) — tap touch tak sticky. */
+@media (hover: hover) and (pointer: fine) {
+  .card-menu__step:hover {
+    border-color: var(--color-secondary);
+    background-color: var(--color-surface-2);
+  }
+}
+.card-menu__step:active { transform: translateY(1px); }
+.card-menu__qty {
+  min-width: 2.4rem;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+/* Kartu menu — layout BESAR (>=768px): memulihkan tampilan semula.
+   Foto 4:3 lebar penuh di atas, nama kiri / harga kanan pada baseline
+   yang sama, deskripsi & stepper selebar kartu. Aturan tilt 3D + sheen
+   (html.anim .card-menu / ::before, blok Animasi di bawah) TIDAK
+   disentuh — ::before tetap abspos, jadi aman untuk display:grid. */
+@media (min-width: 768px) {
+  .card-menu {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "media media"
+      "badge badge"
+      "name  price"
+      "desc  desc"
+      "step  step";
+    align-items: baseline;
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
+    padding: var(--space-4);
+  }
+  .card-menu__media {
+    aspect-ratio: 4 / 3;
+    border-radius: calc(var(--radius-md) - 2px);
+  }
+  .card-menu__price { text-align: right; }
+  .card-menu__stepper { margin-top: 0; }
+}
+
+.disclaimer-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 0;
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  color: var(--color-warning);
+  border: 2px solid var(--color-warning);
+  border-left-width: 6px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+}
+.disclaimer-box__icon { flex: none; margin-top: 0.2em; }
+
+.menu__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+/* CTA statis di bawah menu disembunyikan saat JS aktif — fungsinya digantikan
+   stepper + keranjang. Tanpa JS: tetap tampil (kartu tanpa tombol pesan). */
+.js .menu-cta-static { display: none; }
+
+/* ---------- Keranjang (sticky bar + sheet) ---------- */
+/* Bar sticky bawah: tampil hanya saat ada item (body.has-cart diatur cart.js).
+   Tanpa JS rekan panes tidak pernah tampil sama sekali. */
+.cart-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: none;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -6px 24px rgba(31, 27, 24, 0.12);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+body.has-cart .cart-bar { display: block; }
+/* Ruang ekstra di bawah footer agar bar tak menutupi konten terakhir. */
+body.has-cart { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+
+.cart-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 64px;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.cart-bar__summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0.3rem 0.8rem;
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.cart-bar__summary:hover { border-color: var(--color-secondary); }
+.cart-bar__icon { flex: none; color: var(--color-primary-text); }
+.cart-bar__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 0.3rem;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+}
+.cart-bar__total { text-align: right; }
+.cart-bar__total-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+.cart-bar__total-value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+.cart-bar__checkout { flex: none; }
+
+/* Pengecilan utk layar sempit: bar harus muat 1 baris tanpa overflow. */
+@media (max-width: 479px) {
+  .cart-bar__inner { gap: var(--space-2); }
+  .cart-bar__label { display: none; }
+  .cart-bar__summary { padding: 0.3rem 0.55rem; }
+  .cart-bar__total-value { font-size: 0.9rem; }
+  .cart-bar__checkout { padding: 0.55rem 0.9rem; font-size: 0.9rem; }
+}
+
+/* Kunci scroll latar saat panel keranjang terbuka (class `cart-open`
+   ditambahkan/dihapus oleh cart.js pada openPanel/closePanel). */
+body.cart-open { overflow: hidden; }
+
+/* Backdrop + sheet keranjang. Panel diposisikan di tengah melayang utk
+   desktop, membentang penuh utk ponsel (max-width 560px tetap tengah). */
+.cart-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background-color: rgba(31, 27, 24, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 240ms ease-out, visibility 0s linear 240ms;
+}
+.cart-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 240ms ease-out;
+}
+
+.cart-panel {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 410;
+  width: min(560px, 100%);
+  max-height: min(85vh, 640px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: 0 -10px 40px rgba(31, 27, 24, 0.25);
+  transform: translate(-50%, 110%);
+  visibility: hidden;
+  transition: transform 280ms ease-out, visibility 0s linear 280ms;
+}
+.cart-panel.is-open {
+  transform: translate(-50%, 0);
+  visibility: visible;
+  transition: transform 280ms ease-out;
+}
+
+.cart-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+.cart-panel__title { margin: 0; font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-text); }
+.cart-panel__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-surface-2);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+.cart-panel__close:hover { border-color: var(--color-secondary); }
+
+.cart-panel__body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-3) var(--space-5);
+}
+.cart-panel__items { list-style: none; margin: 0; padding: 0; }
+.cart-panel.has-items .cart-panel__empty { display: none; }
+.cart-panel__empty { margin: var(--space-5) 0; text-align: center; color: var(--color-text-muted); }
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.cart-item:last-child { border-bottom: none; }
+.cart-item__name {
+  grid-column: 1;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.cart-item__remove {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.cart-item__remove:hover { border-color: var(--color-secondary); color: var(--color-text); }
+.cart-item__meta { grid-column: 1; font-size: var(--fs-small); color: var(--color-text-muted); }
+.cart-item__subtotal {
+  grid-column: 2;
+  justify-self: end;
+  align-self: end;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-panel__foot {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+.cart-panel__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.cart-panel__total-label { font-weight: 600; color: var(--color-text); }
+.cart-panel__total-value {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+.cart-panel__checkout { width: 100%; }
+.cart-panel__note {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ---------- Lokasi ---------- */
+.lokasi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.lokasi__info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+.info-card {
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+}
+.info-card h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: 1.05rem;
+}
+.info-card__icon { color: var(--color-primary-text); flex: none; }
+.info-card p { margin: 0; }
+.info-card address { color: var(--color-text); }
+
+/* ---------- · Cara Pesan (3 langkah) ---------- */
+.steps {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+.step__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.cara-pesan__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.lokasi__maps-btn { justify-self: start; }
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+.map-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* Placeholder selagi iframe peta memuat (atau bila embed diblokir/gagal):
+   tertutup otomatis oleh iframe yang opaque; tombol "Buka di Google Maps"
+   di bawahnya tetap menjadi jalan keluar. */
+.map-wrapper::before {
+  content: "Memuat peta…";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+@supports not (aspect-ratio: 16 / 9) {
+  .map-wrapper { aspect-ratio: auto; padding-bottom: 56.25%; }
+}
+
+/* ---------- Galeri ---------- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  /* Flex + teks tengah: bila <img> gagal dimuat, alt text tampil rapi di
+     tengah kotak (bukan menempel di sudut). Saat normal, img/button 100%
+     tetap mengisi penuh — tak terpengaruh. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  background-color: var(--color-surface-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='4' cy='4' r='1.5' fill='%23D7CCC2'/%3E%3C/svg%3E");
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.gallery-item__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Galeri: pemicu perbesar (dibuat js/lightbox.js) ----------
+   Elemen ini TIDAK ada di HTML. Tanpa JS galeri persis seperti semula:
+   6 <figure> + <img>, tanpa tombol, tanpa elemen fokusable mati.
+   <button> mengisi figure 1:1 lalu <img> dipindah ke dalamnya; <img>
+   lightbox memakai URL yang sama dari HTTP cache → tidak ada unduhan
+   gambar tambahan sama sekali. */
+.gallery-item__zoom {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  cursor: zoom-in;
+}
+.gallery-item__zoom .gallery-item__img {
+  transition: transform 260ms ease-out;
+}
+/* Cincin fokus bawaan global tetap berlaku; ini hanya menaruhnya di dalam
+   (figure memakai `overflow: hidden`, jadi offset positif akan terpotong). */
+.gallery-item__zoom:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: -3px;
+}
+/* Badge pembesar = dua lapisan: ::before lingkaran warnanya, ::after
+   glif kacanya. Glif digambar dengan `mask` (bukan SVG hex) supaya
+   warnanya tetap datang dari token — tanpa dukungan mask pun badge
+   tetap jadi lingkaranFilled yang wajar, bukan kotak aneh. */
+.gallery-item__zoom::before,
+.gallery-item__zoom::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+  pointer-events: none;
+}
+.gallery-item__zoom::before {
+  right: var(--space-2);
+  bottom: var(--space-2);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-fab);
+}
+/* Offset = (34 − 18) / 2 + jarak tepi → glif tepat di tengah lingkaran. */
+.gallery-item__zoom::after {
+  right: calc(var(--space-2) + 8px);
+  bottom: calc(var(--space-2) + 8px);
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-on-primary);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20.5 20.5 16.2 16.2'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20.5 20.5 16.2 16.2'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 18px 18px;
+  mask-size: 18px 18px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item__zoom:hover::before,
+  .gallery-item__zoom:hover::after,
+  .gallery-item__zoom:focus-visible::before,
+  .gallery-item__zoom:focus-visible::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .gallery-item__zoom:hover .gallery-item__img {
+    transform: scale(1.04);
+  }
+}
+
+/* ---------- Testimoni pelanggan (statis, tanpa JS) ----------
+   Kartu kutipan ulasan Google di bawah grid galeri — tanpa link nav baru
+   (header sudah di batas wrap). Semua warna dari token (ikut dark mode). */
+.testimoni { margin-top: var(--space-6); }
+.testimoni__title {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  text-align: center;
+}
+.testimoni__list {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.testimoni__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+}
+.testimoni__quote { margin: 0; }
+.testimoni__quote p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-text);   /* 13.95:1 light, 14.55:1 dark — lolos AA */
+}
+.testimoni__name {
+  margin: auto 0 0;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text);   /* nama tegas; keterangan perannya muted */
+}
+.testimoni__name span { color: var(--color-text-muted); font-weight: 400; }  /* 6.19:1 light, 8.0:1 dark */
+.testimoni__more { margin-top: var(--space-4); }
+@media (min-width: 768px) {
+  .testimoni__list { grid-template-columns: repeat(3, 1fr); }
+}
+/* Perangkat sentuh tidak punya hover → badge dibiarkan terlihat agar
+   foto yang bisa diketuk jelas ditandai. */
+@media (hover: none) {
+  .gallery-item__zoom::before,
+  .gallery-item__zoom::after { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Lightbox galeri (native <dialog>, diisi js/lightbox.js) ---------- */
+/* Tanpa JS: <dialog> tanpa atribut `open` → `display:none` dari UA.
+   Aturan eksplisit di bawah menjaga perilaku itu walau aturan lain
+   (mis. `.lightbox { display:flex }`) sedang berlaku. */
+.lightbox:not([open]) { display: none; }
+
+.lightbox {
+  display: flex;
+  flex-direction: column;
+  /* Lebar & tinggi dikunci viewport → tidak pernah memicu scroll/overflow
+     horizontal, bahkan di 320px. */
+  width: min(96vw, 1040px);
+  max-width: 96vw;
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 24px 70px -18px rgb(var(--shadow-rgb) / 0.55);
+  overflow: hidden;
+}
+/* Backdrop gelap semi transparan; warnanya dari token bayangan yang
+   sudah berganti otomatis di dark mode (0 0 0 di sana). */
+.lightbox::backdrop {
+  background-color: rgb(var(--shadow-rgb) / 0.72);
+}
+
+/* Masuk/keluar dialog — HANYA bila gerak diizinkan. Di luar blok ini
+   (reduced-motion) <dialog> langsung tampil tanpa transisi apa pun. */
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 200ms ease-out, transform 220ms ease-out;
+  }
+  .lightbox[open] {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightbox__frame {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;            /* izinkan menyusut di dalam dialog ber-max-height */
+}
+
+.lightbox__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  background-color: var(--color-surface-2);
+}
+
+.lightbox__img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  /* Cadangkan ruang baris meta (±110px) agar caption/counter tak terpotong
+     di viewport pendek (mis. ponsel landscape): gambar disusut duluan,
+     bukan meta yang terklip oleh overflow dialog. */
+  max-height: min(82vh, calc(92vh - 110px));
+  min-height: 0;
+  object-fit: contain;
+}
+/* Selagi <img> belum punya src (sebelum foto pertama dibuka), sembunyikan
+   teks alt dari pengguna awas + beri tinggi minimum agar bingkai stabil. */
+.lightbox__img:not([src]) {
+  font-size: 0;
+  min-height: 40vh;
+}
+
+.lightbox__btn {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;              /* target sentuh ≥44px (WCAG 2.5.5) */
+  height: 44px;
+  padding: 0;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+  transition: background-color 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out;
+}
+.lightbox__btn:hover {
+  background-color: var(--color-surface-2);
+  border-color: var(--color-secondary);
+  color: var(--color-primary-text);
+}
+.lightbox__close {
+  top: var(--space-2);
+  right: var(--space-2);
+}
+.lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lightbox__nav--prev { left: var(--space-2); }
+.lightbox__nav--next { right: var(--space-2); }
+/* :focus-visible global (outline 3px + offset 2px) tetap berlaku; hanya
+   warna cincin disesuaikan dengan latar lightbox yang terang. */
+.lightbox__btn:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.lightbox__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-4);
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+.lightbox__caption {
+  margin: 0;
+  min-width: 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+.lightbox__counter {
+  margin: 0;
+  flex: none;
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+/* Layar sangat sempit: counter turun ke baris sendiri agar caption
+   tetap terbaca penuh tanpa terpotong. */
+@media (max-width: 479px) {
+  .lightbox__meta { gap: var(--space-1); }
+}
+
+/* Kunci gulir halaman saat dialog modal terbuka (js/lightbox.js pasang
+   class ini + compensate lebar scrollbar). */
+html.lightbox-open { overflow: hidden; }
+html.lightbox-open body {
+  padding-right: var(--lightbox-scrollbar, 0px);
+}
+
+/* ---------- Kontak ---------- */
+.kontak-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.kontak-note {
+  margin-top: var(--space-5);
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background-color: var(--color-primary);
+  color: var(--color-footer-text);
+  padding: var(--space-6) 0 var(--space-5);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.footer__brand {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-on-primary);
+}
+
+.footer__label {
+  margin-bottom: var(--space-1);
+  font-weight: 600;
+  color: var(--color-on-primary);
+}
+
+.footer__text {
+  font-size: var(--fs-small);
+  color: var(--color-surface-2);
+  margin-bottom: 0;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-on-primary);
+  font-weight: 500;
+}
+.site-footer a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-secondary);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+.site-footer :focus-visible { outline-color: var(--color-surface); }
+
+.footer__copy {
+  margin: var(--space-5) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-secondary);
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-surface-2);
+}
+
+/* =============================================================
+   Breakpoint md — tablet (min-width: 768px)
+   ============================================================= */
+@media (min-width: 768px) {
+  :root {
+    --fs-h1: clamp(2.2rem, 4vw, 3.2rem);
+    --fs-h2: clamp(1.6rem, 3vw, 2.2rem);
+    --fs-h3: clamp(1.25rem, 2.5vw, 1.7rem);
+    --fs-body: clamp(1rem, 1vw, 1.05rem);
+    --fs-small: clamp(0.9rem, 0.9vw, 0.95rem);
+    --nav-h: 66px;
+  }
+
+  /* Nav: selalu tampil horizontal, sembunyikan tombol (dengan/ tanpa JS) */
+  .js .nav__toggle { display: none; }
+  .js .nav__list,
+  .nav__list {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 0 var(--space-1);
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .menu-grid--dense { grid-template-columns: repeat(3, 1fr); }
+
+  .lokasi__info { grid-template-columns: repeat(2, 1fr); }
+
+  .steps { grid-template-columns: repeat(3, 1fr); }
+
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .footer__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =============================================================
+   Breakpoint lg — desktop (min-width: 1024px)
+   ============================================================= */
+@media (min-width: 1024px) {
+  :root {
+    --fs-h1: clamp(2.6rem, 3.5vw, 4rem);
+    --fs-h2: clamp(1.8rem, 2.5vw, 2.6rem);
+    --fs-h3: clamp(1.3rem, 2vw, 1.8rem);
+    --fs-body: clamp(1rem, 0.9vw, 1.08rem);
+    --fs-small: clamp(0.9rem, 0.8vw, 0.95rem);
+    --nav-h: 72px;
+  }
+
+  .js .nav__list,
+  .nav__list { gap: 0 var(--space-3); }
+
+  .menu-grid { grid-template-columns: repeat(3, 1fr); }
+  .menu-grid--dense { grid-template-columns: repeat(4, 1fr); }
+
+  /* Lokasi: info kiri, peta kanan */
+  .lokasi-grid { grid-template-columns: 1fr 1.25fr; align-items: start; }
+  .lokasi__info { grid-template-columns: 1fr; }
+
+  .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; }
+
+  /* [QA-01/RV-05] FAB disembunyikan mulai lg → padding kompensasi body
+     boleh dilepas di sini (sebelumnya ada di blok 768, menutupi footer). */
+  body { padding-bottom: 0; }
+
+  /* FAB tidak perlu di desktop (CTA selalu terlihat) */
+  .fab-wa { display: none; }
+}
+
+/* =============================================================
+   Animasi 3D — progressive enhancement (js/animations.js)
+   -------------------------------------------------------------
+   Gating keamanan (WAJIB, jangan dilanggar):
+   - State tersembunyi `.reveal-3d` HANYA di bawah `html.js.anim`
+     → tanpa JS  : semua konten tampil (tidak ada `.js`)
+     → reduced   : semua konten tampil (tidak ada `.anim`)
+     → JS + no-preference: animasi aktif.
+   - Interaksi tilt HANYA di `@media (hover: hover) and (pointer: fine)`
+     → sentuh/tidak ada hover: tanpa sticky-hover, cuma depth statis.
+   - Hanya transform / opacity / box-shadow (tidak ada layout thrash).
+   ============================================================= */
+
+/* ---------- · Depth statis (selalu tampil, tanpa gerak) ---------- */
+.hero__media {
+  position: relative;
+  perspective: 900px;
+}
+.hero__media img {
+  box-shadow:
+    0 2px 6px rgb(var(--shadow-rgb) / 0.10),
+    0 18px 40px -22px rgb(var(--shadow-rgb) / 0.5),
+    0 34px 64px -36px rgb(var(--shadow-rgb) / 0.45);
+}
+.card-menu {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-rgb) / 0.06),
+    0 10px 26px -16px rgb(var(--shadow-rgb) / 0.30);
+}
+.gallery-item {
+  box-shadow: 0 8px 22px -14px rgb(var(--shadow-rgb) / 0.35);
+}
+
+/* ---------- · Hero: kartu 3D + glare mengikuti kursor ---------- */
+/* Tilt di-set lewat var --rx / --ry oleh js/animations.js.
+   Catatan: TANPA transform-style:preserve-3d di sini — <img> adalah
+   replaced element tanpa anak 3D; caption melayang berkat
+   perspective di .hero__media + translateZ pada figcaption. */
+html.anim .hero__media img {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 320ms ease-out;
+}
+/* Kilau: sheen tipis statis + panas mengikuti kursor (idle 0.07 → hover 0.25).
+   Dipasang di figure karena <img> (replaced element) tidak punya ::after. */
+.hero__media::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(
+    115% 85% at var(--glare-x, 50%) var(--glare-y, 35%),
+    rgb(255 255 255 / 0.95) 0%,
+    rgb(255 255 255 / 0.35) 30%,
+    rgb(255 255 255 / 0) 62%
+  );
+  opacity: 0.07;
+  pointer-events: none;
+  transition: opacity 300ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  html.anim .hero__media:hover::after { opacity: 0.25; }
+}
+/* Caption melayang sedikit di depan bidang kartu (depth statis). */
+.hero__media-caption { transform: translateZ(30px); }
+
+/* Idle float halus — hanya saat motion diizinkan (tanpa JS pun aman). */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__media {
+    animation: yk-float 6s ease-in-out infinite alternate;
+  }
+}
+@keyframes yk-float {
+  from { transform: translateY(-6px); }
+  to   { transform: translateY(6px); }
+}
+
+/* ---------- · Kartu menu: tilt 3D + kilau saat hover (desktop) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  html.anim .card-menu {
+    transform: perspective(800px)
+      rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition:
+      transform 300ms ease-out,
+      box-shadow 300ms ease-out,
+      border-color 300ms ease-out;
+  }
+  html.anim .card-menu:hover {
+    transform: perspective(800px)
+      rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.02);
+    box-shadow:
+      0 2px 4px rgb(var(--shadow-rgb) / 0.08),
+      0 22px 44px -20px rgb(var(--shadow-rgb) / 0.42);
+    /* border-color sengaja TIDAK diduplikasi di sini — rule lama
+       `.card-menu:hover` (~baris 681) sudah menanganinya. */
+  }
+
+  /* Sheen: pita cahaya digeser (translateX saja, tanpa layout thrash).
+     ::before abspos → bukan grid item, aman untuk .card-menu { display:grid }. */
+  html.anim .card-menu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20%;
+    width: 55%;
+    background: linear-gradient(
+      100deg,
+      rgb(255 255 255 / 0) 0%,
+      rgb(255 255 255 / var(--sheen-peak)) 50%,
+      rgb(255 255 255 / 0) 100%
+    );
+    opacity: 0;
+    transform: translate3d(-160%, 0, 0) skewX(-12deg);
+    pointer-events: none;
+    transition: transform 650ms ease-out, opacity 280ms ease-out;
+  }
+  html.anim .card-menu:hover::before {
+    opacity: 1;
+    transform: translate3d(360%, 0, 0) skewX(-12deg);
+  }
+}
+/* Catatan: TIDAK ada scroll-reveal per kartu menu (terlalu banyak node). */
+
+/* ---------- · Paket motion: entrance hero, tilt testimoni, zoom menu, spy chip, pita, parallax ----------
+   Aturan rumah: SEMUA gerak di bawah `html.anim` / `html.js.anim` (absen saat
+   reduced-motion / tanpa JS → konten tampil statis). Hanya properti
+   transform/opacity/translate (tanpa layout thrash). */
+
+/* 1 · Entrance hero berjenjang — berjalan saat JS menambah .hero--play
+   (js/animations.js, setelah splash). Default = tampil (aman bila gagal). */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hero-media-in {
+  from { opacity: 0; transform: scale(0.97) translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+html.js.anim .hero--play .hero__eyebrow { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.05s; }
+html.js.anim .hero--play #hero-title { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.12s; }
+html.js.anim .hero--play .hero__sub { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.2s; }
+html.js.anim .hero--play .hero__meta { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.28s; }
+html.js.anim .hero--play .hero__actions { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.36s; }
+html.js.anim .hero--play .hero__chips { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.44s; }
+html.js.anim .hero--play .hero__rating { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: 0.5s; }
+/* Media: entrance dulu, lalu float idle lanjut (daftar ganda — animasi
+   TERAKHIR menang setelah entrance selesai; float kembali jalan). */
+html.js.anim .hero--play .hero__media { animation: hero-media-in 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s both, yk-float 6s ease-in-out 1.15s infinite alternate; }
+
+/* 2 · Tilt kartu testimoni (desktop; pola sama dengan kartu menu, 3°). */
+@media (hover: hover) and (pointer: fine) {
+  html.anim .testimoni__item {
+    transform: perspective(800px)
+      rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition:
+      transform 300ms ease-out,
+      box-shadow 300ms ease-out;
+  }
+  html.anim .testimoni__item:hover {
+    transform: perspective(800px)
+      rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.02);
+    box-shadow:
+      0 2px 4px rgb(var(--shadow-rgb) / 0.08),
+      0 22px 44px -20px rgb(var(--shadow-rgb) / 0.42);
+  }
+}
+
+/* 3 · Zoom foto kartu menu saat hover/fokus (desktop; media overflow hidden). */
+@media (hover: hover) and (pointer: fine) {
+  html.anim .card-menu__media img { transition: transform 300ms ease-out; }
+  html.anim .card-menu:hover .card-menu__media img,
+  html.anim .card-menu:focus-within .card-menu__media img { transform: scale(1.06); }
+}
+
+/* 4 · Chip aktif via scroll-spy (aria-current oleh js/animations.js).
+   Dibuat semirip hover agar kontras ikut terverifikasi (primary-text). */
+.menu-nav__link[aria-current="true"] {
+  background-color: var(--color-surface);
+  border-color: var(--color-secondary);
+  color: var(--color-primary-text);
+  box-shadow: inset 0 0 0 1px var(--color-secondary);
+}
+
+/* 5 · Pita berjalan di bawah hero — dekoratif, lambat; statis tanpa .anim. */
+.ribbon {
+  overflow: hidden;
+  background-color: var(--color-primary);
+  color: #fff; /* 7.9:1 di primary light, 4.94:1 di primary dark — lolos AA */
+}
+.ribbon__track {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ribbon__copy { display: none; }
+html.js.anim .ribbon__track {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: max-content;
+  animation: ribbon-scroll 32s linear infinite;
+}
+html.js.anim .ribbon__copy { display: inline; }
+@keyframes ribbon-scroll { to { transform: translateX(-50%); } }
+
+/* 6 · Parallax media hero — digerakkan var --hero-py oleh JS via properti
+   `translate` (TERPISAH dari `transform` milik tilt/entrance/float). */
+html.anim .hero__media { translate: 0 var(--hero-py, 0px); }
+
+/* ---------- · Scroll-reveal 3D (section head, galeri, info, kontak) ---------- */
+/* Tersembunyi hanya jika JS jalan DAN motion diizinkan (html.js.anim).
+   Tanpa JS / reduced-motion / IntersectionObserver tanpa dukungan → tampil. */
+html.js.anim .reveal-3d {
+  opacity: 0;
+  transform: perspective(700px) translateY(28px) rotateX(10deg);
+  transition:
+    opacity 550ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--stagger, 0ms);
+}
+html.js.anim .reveal-3d.is-in {
+  opacity: 1;
+  transform: none;
+}
+/* Aksesibilitas keyboard: saat fokus masuk ke elemen fokusabel di dalam
+   .reveal-3d (mis. tombol zoom galeri, link .kontak-actions), konten harus
+   langsung tampil & fokus ring terlihat — jangan menunggu reveal. */
+html.js.anim .reveal-3d:focus-within {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ---------- · Tombol: hover lift ---------- */
+.btn {
+  transition:
+    transform 220ms ease-out,
+    box-shadow 220ms ease-out,
+    background-color 180ms ease-out,
+    border-color 180ms ease-out,
+    color 180ms ease-out;
+}
+/* Lift HANYA di perangkat hover-fine agar tap di layar sentuh tidak
+   meninggalkan sticky-hover. Umpan balik tap tetap di :active (di luar). */
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px) scale(1.02); }
+  .btn--primary:hover { box-shadow: 0 12px 22px -12px rgb(var(--glow-primary) / 0.65); }
+  .btn--wa:hover { box-shadow: 0 12px 22px -12px rgb(var(--glow-wa) / 0.6); }
+  .btn--ghost:hover { box-shadow: 0 12px 22px -12px rgb(var(--glow-primary) / 0.45); }
+}
+.btn:active { transform: translateY(0) scale(0.99); }
+
+/* ---------- · FAB WhatsApp: pulse ring halus ----------
+   Ring memakai pseudo-element + transform/opacity (kompositor),
+   BUKAN animasi box-shadow tanpa henti (FAB fixed selalu terlihat di
+   mobile → repaint terus-menerus). ::after dipilih agar tidak bentrok
+   dengan ikon SVG yang mengisi kotak tombol (children di atas z normal). */
+.fab-wa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--color-wa);
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.anim .fab-wa::after { animation: yk-fab-pulse 3s ease-out infinite; }
+}
+@keyframes yk-fab-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ---------- · Kill-switch prefers-reduced-motion (pertahanan terakhir) ---------- */
+/* Berguna juga bila pengguna MENGGANTI preferensi ke reduce setelah halaman
+   dimuat (class `anim` mungkin sudah terpasang) — konten tidak boleh
+   terjebak tak terlihat dan tidak boleh ada gerak tersisa. */
+@media (prefers-reduced-motion: reduce) {
+  html.js.anim .reveal-3d,
+  .reveal-3d {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
+  }
+  .hero__media,
+  .fab-wa,
+  .fab-wa::after { animation: none !important; }
+  html.anim .hero__media img,
+  html.anim .card-menu,
+  html.anim .card-menu:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero__media-caption { transform: none !important; }
+  .btn { transition: none !important; }
+  .btn:hover,
+  .btn:active { transform: none !important; }
+  .card-menu__step { transition: none !important; }
+  .card-menu__step:active { transform: none !important; }
+  .cart-bar,
+  .cart-panel,
+  .cart-backdrop { transition: none !important; }
+  /* Lightbox: tanpa gerak sama sekali (masuk/keluar, tombol, badge, zoom img). */
+  .lightbox,
+  .lightbox::backdrop,
+  .lightbox__btn,
+  .lightbox__img,
+  .gallery-item__zoom::before,
+  .gallery-item__zoom::after,
+  .gallery-item__zoom .gallery-item__img { transition: none !important; }
+  .gallery-item__zoom:hover .gallery-item__img,
+  .lightbox { transform: none !important; }
+  /* Scroll-spy chip hanya mengganti warna instan (fade 180ms bawaan dimatikan). */
+  .menu-nav__link { transition: none !important; }
+}
+
+/* Cetak: konten yang masih dalam state reveal (belum discroll) harus tampil penuh */
+@media print {
+  /* Cetak SELALU terang — override dua blok dark (a)/(b) di atas.
+     Selector sengaja setingkat (0,2,0) DAN berada paling bawah file:
+     `:root` polos (0,1,0) kalah dari @media (prefers-color-scheme: dark). */
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
+    color-scheme: light;
+    --color-surface: #F7F3EB;
+    --color-surface-2: #EFE7DC;
+    --color-text: #1F1B18;
+    --color-text-muted: #5C524D;
+    --color-border: #D7CCC2;
+    --color-primary: #8B3E2F;
+    --color-primary-hover: #743327;
+    --color-primary-text: #8B3E2F;
+    --color-secondary: #D97757;
+    --color-accent: #3A7C59;
+    --color-on-accent: #FFFFFF;
+    --color-warning: #B45309;
+    --color-header-bg: rgba(247, 243, 235, 0.96);
+    --color-footer-text: #EFE7DC;
+    --shadow-1: 0 1px 2px rgba(31, 27, 24, 0.06), 0 8px 24px rgba(31, 27, 24, 0.06);
+    --shadow-fab: 0 6px 18px rgba(31, 27, 24, 0.28);
+    --shadow-rgb: 31 27 24;
+    --glow-primary: 139 62 47;
+    --glow-wa: 37 211 102;
+    --sheen-peak: 0.55;
+    --blob-alpha: 0.12;
+    --pattern-opacity: 0.04;
+  }
+  html.js.anim .reveal-3d,
+  .reveal-3d {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
+  }
+  html.anim .hero__media img,
+  html.anim .card-menu {
+    transform: none !important;
+    transition: none !important;
+  }
+  /* Lapisan dekoratif & splash tidak boleh tercetak */
+  .bg-decor { display: none !important; }
+  .splash { display: none !important; }
+  .theme-toggle { display: none !important; }
+  /* Keranjang (bar + sheet + backdrop) tidak boleh tercetak. */
+  .cart-bar,
+  .cart-panel,
+  .cart-backdrop { display: none !important; }
+  /* Stepper qty juga tak perlu dicetak (23 × tombol/angka kosong). */
+  .card-menu__stepper { display: none !important; }
+  /* Chips kategori hanya untuk navigasi layar — tak dicetak. */
+  .menu-nav { display: none !important; }
+  /* Pita dekoratif tak boleh tercetak (hemat tinta; teks putih di primary). */
+  .ribbon { display: none !important; }
+  /* Lightbox (pratinjau foto) tak boleh ikut tercetak — dialog yang
+     kebetulan sedang terbuka juga disembunyikan. */
+  .lightbox { display: none !important; }
+  /* Galeri tetap tercetak sebagai foto biasa (tanpa tombol/badge perbesar). */
+  .gallery-item__zoom { cursor: auto; }
+  .gallery-item__zoom::before,
+  .gallery-item__zoom::after { display: none !important; }
+  body.has-cart { padding-bottom: 0; }
+  /* CTA statis menu dikembalikan di cetak — keranjang tak tersedia. */
+  .js .menu-cta-static { display: flex; }
+}
+
+/* ---------- Background dekoratif & splash ---------- */
+/* Lapisan hangat DI BELAKANG konten (z-index:-1, pointer-events:none).
+   Warna latar section TIDAK diubah — layer ini hanya terlihat pada section
+   ber-background transparan (hero/menu/galeri) serta di balik header 96%.
+   Alpha blob ≤ 0.12 agar kontras teks AA tidak turun; blob di pojok
+   kanan-atas / kanan-bawah / kiri-bawah — JAUH dari teks hero (kiri-atas).
+   Semua gerak hanya transform/opacity, tanpa library. */
+.bg-decor {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(130% 85% at 86% 0%, rgb(217 119 87 / calc(var(--blob-alpha) * 0.58)), rgb(217 119 87 / 0) 55%),
+    linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
+}
+
+/* Pola geometris sangat halus (jaring belah-ketupat songket/batik Palembang) */
+.bg-decor__pattern {
+  position: absolute;
+  inset: 0;
+  opacity: var(--pattern-opacity);
+  background-image:
+    repeating-linear-gradient(45deg, var(--color-primary) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, var(--color-secondary) 0 1px, transparent 1px 18px);
+}
+
+/* 3 blob radial lembut — blur besar, alpha ≤ 0.12 */
+.bg-decor__blob {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(52px);
+  will-change: transform;
+}
+.bg-decor__blob--1 {
+  width: 46vmax;
+  height: 46vmax;
+  top: -15vmax;
+  right: -13vmax;
+  background: radial-gradient(circle at 50% 50%, rgb(217 119 87 / var(--blob-alpha)), rgb(217 119 87 / 0) 70%);
+}
+.bg-decor__blob--2 {
+  width: 42vmax;
+  height: 42vmax;
+  right: -14vmax;
+  bottom: -16vmax;
+  background: radial-gradient(circle at 50% 50%, rgb(139 62 47 / calc(var(--blob-alpha) * 0.92)), rgb(139 62 47 / 0) 70%);
+}
+.bg-decor__blob--3 {
+  width: 38vmax;
+  height: 38vmax;
+  bottom: -14vmax;
+  left: -13vmax;
+  background: radial-gradient(circle at 50% 50%, rgb(58 124 89 / calc(var(--blob-alpha) * 0.83)), rgb(58 124 89 / 0) 70%);
+}
+
+/* Drift sangat pelan — HANYA saat gerak diizinkan (html.anim).
+   Tanpa `anim` → blob statis (tetap terlihat, tanpa gerak). */
+html.anim .bg-decor__blob--1 { animation: bg-drift-1 28s ease-in-out infinite alternate; }
+html.anim .bg-decor__blob--2 { animation: bg-drift-2 34s ease-in-out infinite alternate; }
+html.anim .bg-decor__blob--3 { animation: bg-drift-3 31s ease-in-out infinite alternate; }
+
+@keyframes bg-drift-1 {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-36px, 28px, 0) scale(1.08); }
+}
+@keyframes bg-drift-2 {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(30px, -34px, 0) scale(1.05); }
+}
+@keyframes bg-drift-3 {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(26px, -24px, 0) scale(1.07); }
+}
+
+/* ---------- (B) Intro splash — default SEMBUNYI (anti-flash) ---------- */
+.splash {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  opacity: 1;
+  background:
+    radial-gradient(120% 80% at 78% 16%, rgb(217 119 87 / calc(var(--blob-alpha) * 0.83)), rgb(217 119 87 / 0) 60%),
+    linear-gradient(165deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
+  transition: opacity 450ms ease-out;
+}
+/* Tampil HANYA bila: JS aktif (html.js) + gerak diizinkan (html.anim)
+   + JS memilih menampilkan (splash--show). Selebihnya tetap display:none. */
+html.js.anim .splash.splash--show {
+  display: flex;
+}
+
+.splash__inner {
+  max-width: 34rem;
+  text-align: center;
+}
+.splash__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.splash__title {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-weight: 700;
+}
+/* Bar kecil di bawah title — animasi masuk via scaleX */
+.splash__title::after {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 3px;
+  margin: 0.85rem auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+}
+.splash__tag {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+/* Animasi masuk — total 980ms (≤ 1.2s), hanya transform/opacity */
+html.js.anim .splash.splash--show .splash__mark {
+  animation: splash-mark 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+html.js.anim .splash.splash--show .splash__title {
+  animation: splash-rise 460ms 140ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+html.js.anim .splash.splash--show .splash__title::after {
+  animation: splash-bar 560ms 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+html.js.anim .splash.splash--show .splash__tag {
+  animation: splash-rise 460ms 280ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Keluar: fade 450ms lalu node dihapus dari DOM oleh JS */
+.splash--done {
+  opacity: 0;
+}
+
+@keyframes splash-mark {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes splash-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes splash-bar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}

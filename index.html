@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pempek Yuk Titi - UII Jakal | Pempek Palembang di Sleman</title>
+  <meta name="description" content="Pempek Yuk Titi - UII Jakal, Kaliurang KM 14 Sleman. Pempek Palembang dengan cuko tebal manis-pedas, harga merakyat Rp 3.000–15.000. Chat via WhatsApp.">
+  <meta name="robots" content="index,follow">
+  <meta name="language" content="id">
+  <meta name="theme-color" content="#F7F3EB" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191513" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- TODO: canonical — ganti saat sudah punya domain (hapus komentar, isi URL absolut).
+  <link rel="canonical" href="https://GANTI-DOMAIN-ANDA/">
+  -->
+
+  <!-- Open Graph (bahasa Indonesia) -->
+  <meta property="og:title" content="Pempek Yuk Titi - UII Jakal | Pempek Palembang di Sleman">
+  <meta property="og:description" content="Pempek Palembang di Kaliurang KM 14 Sleman. Cuko tebal manis-pedas, harga merakyat. Pesan via WhatsApp.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:site_name" content="Pempek Yuk Titi - UII Jakal">
+  <!-- TODO: og:url & og:image — isi setelah ada domain + aset gambar sendiri (jangan hotlink).
+  <meta property="og:url" content="https://GANTI-DOMAIN-ANDA/">
+  <meta property="og:image" content="https://GANTI-DOMAIN-ANDA/assets/og-image.jpg">
+  -->
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pempek Yuk Titi - UII Jakal">
+  <meta name="twitter:description" content="Pempek Palembang di Kaliurang KM 14 Sleman. Pesan via WhatsApp.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <script>
+    /* Tema: hidrasi sebelum render pertama (anti flash). Tanpa nilai → ikut sistem. */
+    (function () { try { var t = localStorage.getItem("pyt_theme"); if (t === "dark" || t === "light") { document.documentElement.setAttribute("data-theme", t); } } catch (e) {} })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/header.js" defer></script>
+  <script src="js/lightbox.js" defer></script>
+
+  <!-- TODO SEO: tambahkan "url" dan "hasMenu" (URL absolut) setelah domain resmi tersedia. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Pempek Yuk Titi - UII Jakal",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kaliurang St No.Km 14, Tj. Manding, Umbulmartani",
+      "addressLocality": "Ngemplak",
+      "addressRegion": "Sleman Regency",
+      "postalCode": "55584",
+      "addressCountry": "ID"
+    },
+    "telephone": "+628814105501",
+    "servesCuisine": ["Palembang", "Indonesian"],
+    "priceRange": "Rp 3.000–15.000",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "139"
+    },
+    "openingHours": ["Mo-Su 15:00-22:30"],
+    "sameAs": ["https://www.instagram.com/pempek_yuktiti/"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+  <!-- Lapisan dekoratif hangat (latar, non-interaktif, disembunyikan saat cetak) -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="bg-decor__pattern"></div>
+    <span class="bg-decor__blob bg-decor__blob--1"></span>
+    <span class="bg-decor__blob bg-decor__blob--2"></span>
+    <span class="bg-decor__blob bg-decor__blob--3"></span>
+  </div>
+
+  <!-- Intro splash: hanya tampil bila JS aktif + gerak diizinkan + sekali per sesi -->
+  <div class="splash" id="splash" aria-hidden="true">
+    <div class="splash__inner">
+      <div class="splash__mark" aria-hidden="true">P</div>
+      <p class="splash__title">Pempek Yuk Titi</p>
+      <p class="splash__tag">Pempek Palembang · Kaliurang KM 14</p>
+    </div>
+  </div>
+
+  <!-- 1 · Nav (sticky) -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Navigasi utama">
+      <div class="container nav__inner">
+        <a class="nav__brand" href="#hero">Pempek&nbsp;Yuk&nbsp;Titi&nbsp;<span class="nav__brand-sub">· UII Jakal</span></a>
+
+        <div class="nav__actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Mode gelap" aria-pressed="false">
+            <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+            <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+            </svg>
+          </button>
+
+          <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <svg class="nav__icon nav__icon--burger" aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg class="nav__icon nav__icon--close" aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+          <span class="sr-only">Menu navigasi</span>
+        </button>
+        </div><!-- /.nav__actions -->
+
+        <ul class="nav__list" id="nav-menu">
+          <li><a class="nav__link" href="#hero">Beranda</a></li>
+          <li><a class="nav__link" href="#cerita">Cerita</a></li>
+          <li><a class="nav__link" href="#menu">Menu</a></li>
+          <li><a class="nav__link" href="#cara-pesan">Cara Pesan</a></li>
+          <li><a class="nav__link" href="#lokasi">Lokasi</a></li>
+          <li><a class="nav__link" href="#galeri">Galeri</a></li>
+          <li><a class="nav__link" href="#kontak">Kontak</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- 2 · Hero -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="hero__eyebrow">Pempek Palembang · Kaliurang KM 14</p>
+        <h1 id="hero-title">Pempek Yuk Titi - UII Jakal</h1>
+        <p class="hero__sub">Pempek Palembang di Kaliurang KM 14 Sleman. Cuko tebal, manis-pedas, merakyat.</p>
+        <ul class="hero__meta">
+          <li>Kaliurang KM 14, Sleman</li>
+          <li>Setiap hari 15.00–22.30</li>
+          <li>Mulai Rp 3.000</li>
+        </ul>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#menu">Lihat Menu</a>
+          <a class="btn btn--wa" href="https://wa.me/628814105501" target="_blank" rel="noopener noreferrer">
+            <svg class="btn__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/>
+            </svg>
+            Chat via WhatsApp<span class="sr-only"> (buka di tab baru)</span>
+          </a>
+        </div>
+        <!-- Chip fakta ringkas — hanya mengulang fakta yang sudah terkonfirmasi
+             di halaman ini (jumlah kartu menu = 23, rentang harga di kartu
+             menu & JSON-LD, jam buka di footer/lokasi). TIDAK menambah klaim
+             baru (mis. "setiap hari" sengaja tidak ditulis di sini). -->
+        <ul class="hero__chips">
+          <li class="hero__chip">23 Menu Varian</li>
+          <li class="hero__chip">Harga Rp 3.000–15.000</li>
+          <li class="hero__chip">Buka 15.00–22.30</li>
+        </ul>
+        <!-- Rating Google — referensi: direktori mirror listing Google Maps
+             (grubbio.com, diakses 2026-10-10): 4,9/5 dari 139 ulasan.
+             Angka ini BISA basi — verifikasi ke pemilik & perbarui bila
+             berubah (samakan juga aggregateRating di JSON-LD). -->
+        <p class="hero__rating">
+          <a class="hero__rating-link" href="https://www.google.com/maps/search/?api=1&query=Pempek+Yuk+Titi+UII+Jakal+Kaliurang+Sleman" target="_blank" rel="noopener noreferrer">
+            <span class="hero__rating-star" aria-hidden="true">★</span>
+            <strong>4,9/5</strong>&nbsp;· 139 ulasan Google<span class="sr-only"> (buka di tab baru)</span>
+          </a>
+        </p>
+        <figure class="hero__media">
+          <img
+            src="assets/img/hero-pempek.jpg"
+            alt="Pempek disajikan dengan cuko kental khas Palembang di atas meja kayu"
+            width="1600" height="1063"
+            fetchpriority="high" decoding="async">
+          <figcaption class="hero__media-caption">Foto ilustrasi — foto asli warung akan menyusul.</figcaption>
+        </figure>
+      </div>
+      <svg class="hero__wave" viewBox="0 0 1440 72" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0,36 C160,60 320,12 480,24 C640,36 800,68 960,60 C1120,52 1280,16 1440,28 L1440,72 L0,72 Z"/>
+      </svg>
+    </section>
+
+    <!-- Pita berjalan — murni dekoratif (semua fakta sudah ada di hero),
+         aria-hidden agar pembaca layar tak mendengar duplikat berulang.
+         Gerak HANYA di bawah html.js.anim (lihat CSS); tanpanya tampil
+         sebagai baris statis tengah. -->
+    <div class="ribbon" aria-hidden="true">
+      <div class="ribbon__track">
+        <span>Pempek Palembang ✦ Cuko Medok ✦ 23 Menu Varian ✦ Mulai Rp 3.000 ✦ Pesan via WhatsApp ✦&nbsp;</span>
+        <span class="ribbon__copy">Pempek Palembang ✦ Cuko Medok ✦ 23 Menu Varian ✦ Mulai Rp 3.000 ✦ Pesan via WhatsApp ✦&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- 3 · Cerita singkat -->
+    <section class="section section--alt" id="cerita" aria-labelledby="cerita-title">
+      <div class="container">
+        <div class="section__head reveal-3d">
+          <h2 id="cerita-title">Cerita Singkat</h2>
+          <p class="section__lead">Pempek khas Palembang, ramah anak kuliahan &amp; warga lokal. Signature cuko tebal manis-pedas, dengan pilihan seperti Adaan, Lenggang, dan Tekwan.</p>
+          <p class="section__lead">Warung kecil di Kaliurang KM 14 Sleman yang buka setiap hari sore hingga malam — mampir sepulang aktivitas, atau pesan langsung lewat WhatsApp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Menu (harga + disclaimer wajib) -->
+    <section class="section" id="menu" aria-labelledby="menu-title">
+      <div class="container">
+        <div class="section__head reveal-3d">
+          <h2 id="menu-title">Menu &amp; Harga</h2>
+          <p class="section__lead">Pilihan pempek, add-on, dan minuman. Sikoan dihitung per pcs.</p>
+        </div>
+
+        <!-- Chips kategori — sticky di bawah header, lompat ke .menu-group[id] -->
+        <nav class="menu-nav reveal-3d" aria-label="Kategori menu">
+          <ul class="menu-nav__list">
+            <li><a class="menu-nav__link" href="#menu-sikoan">Sikoan</a></li>
+            <li><a class="menu-nav__link" href="#menu-spesial">Spesial &amp; Paket</a></li>
+            <li><a class="menu-nav__link" href="#menu-addon">Add-on</a></li>
+            <li><a class="menu-nav__link" href="#menu-minuman">Minuman</a></li>
+          </ul>
+        </nav>
+
+        <!-- Kartu menu: foto + stepper jumlah (23x). cart.js membaca:
+             atribut data-item-id / data-item-name di <article> dan harga dari
+             teks .card-menu__price (single source — jangan tambah data-price).
+             Saat mengubah nama/harga, sinkronkan juga atribut kartu itu. -->
+        <div class="menu-group" id="menu-sikoan">
+          <h3 class="menu-group__title">Pempek Sikoan</h3>
+          <div class="menu-grid">
+            <article class="card-menu" data-item-id="sikoan" data-item-name="Pempek Sikoan">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/sikoan.jpg" alt="Pempek Sikoan goreng berwarna keemasan" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <span class="badge">Terlaris</span>
+              <h4 class="card-menu__name">Sikoan (@pcs)</h4>
+              <p class="card-menu__price">Rp 3.500</p>
+              <p class="card-menu__desc">Lenjer · Telor · Kulit · Adaan · Sosis · Keju · Belah · Krispi</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Pempek Sikoan">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="sikoan" aria-label="Kurangi Pempek Sikoan">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="sikoan" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="sikoan" aria-label="Tambah Pempek Sikoan">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+          </div>
+        </div>
+
+        <div class="menu-group" id="menu-spesial">
+          <h3 class="menu-group__title">Pempek Spesial &amp; Paket</h3>
+          <div class="menu-grid">
+            <article class="card-menu" data-item-id="kapal-selam" data-item-name="Kapal Selam Besar">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/kapal-selam.jpg" alt="Pempek Kapal Selam Besar berisi telur" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <span class="badge">Terlaris</span>
+              <h4 class="card-menu__name">Kapal Selam Besar</h4>
+              <p class="card-menu__price">Rp 13.500</p>
+              <p class="card-menu__desc">Pempek besar berisi telur.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Kapal Selam Besar">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="kapal-selam" aria-label="Kurangi Kapal Selam Besar">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="kapal-selam" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="kapal-selam" aria-label="Tambah Kapal Selam Besar">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="lenggang" data-item-name="Lenggang">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/lenggang.jpg" alt="Pempek Lenggang goreng dengan saus cuko" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Lenggang</h4>
+              <p class="card-menu__price">Rp 12.000</p>
+              <p class="card-menu__desc">Pempek goreng dengan timun dan cuko.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Lenggang">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="lenggang" aria-label="Kurangi Lenggang">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="lenggang" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="lenggang" aria-label="Tambah Lenggang">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="rujak-mie" data-item-name="Rujak Mie">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/rujak-mie.jpg" alt="Pempek Rujak Mie dengan saus cuko" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Rujak Mie</h4>
+              <p class="card-menu__price">Rp 13.500</p>
+              <p class="card-menu__desc">Pempek dengan mie dan cuko.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Rujak Mie">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="rujak-mie" aria-label="Kurangi Rujak Mie">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="rujak-mie" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="rujak-mie" aria-label="Tambah Rujak Mie">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="tekwan" data-item-name="Tekwan">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/tekwan.jpg" alt="Pempek Tekwan berkuah kaldu ikan" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Tekwan</h4>
+              <p class="card-menu__price">Rp 13.000</p>
+              <p class="card-menu__desc">Pempek ikan berkuah khas Palembang.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Tekwan">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="tekwan" aria-label="Kurangi Tekwan">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="tekwan" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="tekwan" aria-label="Tambah Tekwan">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="model-tahu" data-item-name="Model Tahu">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/model-tahu.jpg" alt="Pempek Model Tahu dengan cuko" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Model Tahu</h4>
+              <p class="card-menu__price">Rp 13.000</p>
+              <p class="card-menu__desc">Pempek tahu dengan cuko.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Model Tahu">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="model-tahu" aria-label="Kurangi Model Tahu">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="model-tahu" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="model-tahu" aria-label="Tambah Model Tahu">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="paket-otentik" data-item-name="Paket Otentik">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/paket-otentik.jpg" alt="Paket Otentik aneka pempek" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <div class="card-menu__badges">
+                <span class="badge">Terlaris</span>
+                <span class="badge">Isi 4 pempek</span>
+              </div>
+              <h4 class="card-menu__name">Paket Otentik</h4>
+              <p class="card-menu__price">Rp 12.000</p>
+              <p class="card-menu__desc">Lenjer + Telor + Kulit + Adaan</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Paket Otentik">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="paket-otentik" aria-label="Kurangi Paket Otentik">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="paket-otentik" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="paket-otentik" aria-label="Tambah Paket Otentik">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+          </div>
+        </div>
+
+        <div class="menu-group" id="menu-addon">
+          <h3 class="menu-group__title">Add-on</h3>
+          <div class="menu-grid menu-grid--dense">
+            <article class="card-menu" data-item-id="mie-kuning" data-item-name="Mie Kuning">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/mie-kuning.jpg" alt="Mie Kuning dengan telur" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Mie Kuning</h4>
+              <p class="card-menu__price">Rp 3.000</p>
+              <p class="card-menu__desc">Mie kuning, pendamping pempek.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Mie Kuning">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="mie-kuning" aria-label="Kurangi Mie Kuning">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="mie-kuning" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="mie-kuning" aria-label="Tambah Mie Kuning">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="bihun" data-item-name="Bihun">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/bihun.jpg" alt="Bihun kuah dengan telur dadar" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Bihun</h4>
+              <p class="card-menu__price">Rp 3.000</p>
+              <p class="card-menu__desc">Bihun, pendamping pempek.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Bihun">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="bihun" aria-label="Kurangi Bihun">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="bihun" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="bihun" aria-label="Tambah Bihun">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="ekstra-cuko" data-item-name="Ekstra Cuko 50ml">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/ekstra-cuko.jpg" alt="Ekstra Cuko 50ml saus sambal" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Ekstra Cuko 50ml</h4>
+              <p class="card-menu__price">Rp 3.000</p>
+              <p class="card-menu__desc">Tambahan cuko 50 ml.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Ekstra Cuko 50ml">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="ekstra-cuko" aria-label="Kurangi Ekstra Cuko 50ml">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="ekstra-cuko" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="ekstra-cuko" aria-label="Tambah Ekstra Cuko 50ml">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="cuko-250ml" data-item-name="Cuko 250ml">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/cuko-250ml.jpg" alt="Cuko 250ml dalam toples" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Cuko 250ml</h4>
+              <p class="card-menu__price">Rp 15.000</p>
+              <p class="card-menu__desc">Cuko kemasan 250 ml.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Cuko 250ml">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="cuko-250ml" aria-label="Kurangi Cuko 250ml">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="cuko-250ml" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="cuko-250ml" aria-label="Tambah Cuko 250ml">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="ebi" data-item-name="Ebi">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/ebi.jpg" alt="Ebi udang kering" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Ebi</h4>
+              <p class="card-menu__price">Rp 3.000</p>
+              <p class="card-menu__desc">Tambahan ebi (udang kering).</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Ebi">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="ebi" aria-label="Kurangi Ebi">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="ebi" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="ebi" aria-label="Tambah Ebi">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="sambel" data-item-name="Sambel ekstra pedas">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/sambel.jpg" alt="Sambel ekstra pedas" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Sambel ekstra pedas</h4>
+              <p class="card-menu__price">Rp 3.000</p>
+              <p class="card-menu__desc">Sambal pedas tambahan.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Sambel ekstra pedas">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="sambel" aria-label="Kurangi Sambel ekstra pedas">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="sambel" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="sambel" aria-label="Tambah Sambel ekstra pedas">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+          </div>
+        </div>
+
+        <div class="menu-group" id="menu-minuman">
+          <h3 class="menu-group__title">Minuman</h3>
+          <div class="menu-grid menu-grid--dense">
+            <article class="card-menu" data-item-id="teh-manis" data-item-name="Teh Manis">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/teh-manis.jpg" alt="Teh Manis es teh cokelat" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Teh Manis</h4>
+              <p class="card-menu__price">Rp 4.000</p>
+              <p class="card-menu__desc">Teh manis.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Teh Manis">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="teh-manis" aria-label="Kurangi Teh Manis">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="teh-manis" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="teh-manis" aria-label="Tambah Teh Manis">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="teh-tawar" data-item-name="Teh Tawar">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/teh-tawar.jpg" alt="Teh Tawar es teh" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Teh Tawar</h4>
+              <p class="card-menu__price">Rp 4.000</p>
+              <p class="card-menu__desc">Teh tawar.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Teh Tawar">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="teh-tawar" aria-label="Kurangi Teh Tawar">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="teh-tawar" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="teh-tawar" aria-label="Tambah Teh Tawar">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="fresh-orange" data-item-name="Fresh Orange">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/fresh-orange.jpg" alt="Fresh Orange jus jeruk segar" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Fresh Orange</h4>
+              <p class="card-menu__price">Rp 4.000</p>
+              <p class="card-menu__desc">Jeruk peras segar.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Fresh Orange">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="fresh-orange" aria-label="Kurangi Fresh Orange">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="fresh-orange" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="fresh-orange" aria-label="Tambah Fresh Orange">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="lemon-tea" data-item-name="Lemon Tea">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/lemon-tea.jpg" alt="Lemon Tea es teh lemon" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Lemon Tea</h4>
+              <p class="card-menu__price">Rp 5.000</p>
+              <p class="card-menu__desc">Teh lemon.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Lemon Tea">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="lemon-tea" aria-label="Kurangi Lemon Tea">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="lemon-tea" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="lemon-tea" aria-label="Tambah Lemon Tea">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="fresh-lime" data-item-name="Fresh Lime">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/fresh-lime.jpg" alt="Fresh Lime jus jeruk nipis" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Fresh Lime</h4>
+              <p class="card-menu__price">Rp 5.500</p>
+              <p class="card-menu__desc">Jeruk nipis segar.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Fresh Lime">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="fresh-lime" aria-label="Kurangi Fresh Lime">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="fresh-lime" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="fresh-lime" aria-label="Tambah Fresh Lime">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="lychee-tea" data-item-name="Lychee Tea">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/lychee-tea.jpg" alt="Lychee Tea es teh dengan leci" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Lychee Tea</h4>
+              <p class="card-menu__price">Rp 6.500</p>
+              <p class="card-menu__desc">Teh rasa leci.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Lychee Tea">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="lychee-tea" aria-label="Kurangi Lychee Tea">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="lychee-tea" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="lychee-tea" aria-label="Tambah Lychee Tea">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="tebs-teh-soda" data-item-name="Tebs Teh Soda">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/tebs-teh-soda.jpg" alt="Tebs Teh Soda minuman bersoda" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Tebs Teh Soda</h4>
+              <p class="card-menu__price">Rp 4.500</p>
+              <p class="card-menu__desc">Teh soda botol.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Tebs Teh Soda">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="tebs-teh-soda" aria-label="Kurangi Tebs Teh Soda">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="tebs-teh-soda" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="tebs-teh-soda" aria-label="Tambah Tebs Teh Soda">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="fruit-tea" data-item-name="Fruit Tea">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/fruit-tea.jpg" alt="Fruit Tea minuman buah dingin" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Fruit Tea</h4>
+              <p class="card-menu__price">Rp 4.500</p>
+              <p class="card-menu__desc">Teh rasa buah.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Fruit Tea">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="fruit-tea" aria-label="Kurangi Fruit Tea">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="fruit-tea" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="fruit-tea" aria-label="Tambah Fruit Tea">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="air-mineral" data-item-name="Air Mineral">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/air-mineral.jpg" alt="Air Mineral botol" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Air Mineral</h4>
+              <p class="card-menu__price">Rp 3.500</p>
+              <p class="card-menu__desc">Air mineral botol.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Air Mineral">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="air-mineral" aria-label="Kurangi Air Mineral">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="air-mineral" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="air-mineral" aria-label="Tambah Air Mineral">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+            <article class="card-menu" data-item-id="kopi-lampung" data-item-name="Kopi Lampung Tubruk">
+                <div class="card-menu__media">
+                  <img src="assets/img/menu/kopi-lampung.jpg" alt="Kopi Lampung Tubruk dituang dari teko" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+
+              <h4 class="card-menu__name">Kopi Lampung Tubruk</h4>
+              <p class="card-menu__price">Rp 15.000</p>
+              <p class="card-menu__desc">Kopi tubruk Lampung.</p>
+                <div class="card-menu__stepper" role="group" aria-label="Jumlah Kopi Lampung Tubruk">
+                  <button type="button" class="card-menu__step card-menu__step--dec" data-cart-action="dec" data-item-id="kopi-lampung" aria-label="Kurangi Kopi Lampung Tubruk">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="card-menu__qty" data-cart-qty="kopi-lampung" aria-hidden="true">0</span>
+                  <button type="button" class="card-menu__step card-menu__step--inc" data-cart-action="inc" data-item-id="kopi-lampung" aria-label="Tambah Kopi Lampung Tubruk">
+                    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+
+            </article>
+          </div>
+        </div>
+
+        <p class="disclaimer-box">
+          <svg class="disclaimer-box__icon" aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 21.5 19.5H2.5z"/>
+            <path d="M12 9.5v4.5"/>
+            <circle cx="12" cy="16.6" r="0.9" fill="currentColor" stroke="none"/>
+          </svg>
+          <span><strong>Catatan harga:</strong> Harga dapat berubah, konfirmasi via WhatsApp.</span>
+        </p>
+
+        <div class="menu__cta menu-cta-static">
+          <a class="btn btn--wa" href="https://wa.me/628814105501" target="_blank" rel="noopener noreferrer">
+            <svg class="btn__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/>
+            </svg>
+            Pesan via WhatsApp<span class="sr-only"> (buka di tab baru)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4b · Cara Pesan (3 langkah konversi) -->
+    <section class="section section--alt" id="cara-pesan" aria-labelledby="cara-pesan-title">
+      <div class="container">
+        <div class="section__head reveal-3d">
+          <h2 id="cara-pesan-title">Cara Pesan</h2>
+          <p class="section__lead">Tiga langkah singkat — pesan lewat WhatsApp, ketersediaan dikonfirmasi langsung.</p>
+        </div>
+
+        <ol class="steps">
+          <li class="info-card reveal-3d">
+            <h3><span class="step__num" aria-hidden="true">1</span> Pilih menu</h3>
+            <p>Lihat <a href="#menu">daftar menu</a> dan pilih favoritmu.</p>
+          </li>
+          <li class="info-card reveal-3d">
+            <h3><span class="step__num" aria-hidden="true">2</span> Atur jumlah &amp; checkout</h3>
+            <p>Atur jumlah lewat tombol <strong>+ / −</strong> di kartu menu, lalu buka <strong>Keranjang</strong> di bagian bawah layar.</p>
+          </li>
+          <li class="info-card reveal-3d">
+            <h3><span class="step__num" aria-hidden="true">3</span> Konfirmasi &amp; nikmati</h3>
+            <p>Kami balas ketersediaan, lalu siapkan pesanan (ambil di tempat atau sesuai kesepakatan via chat).</p>
+          </li>
+        </ol>
+
+        <div class="cara-pesan__cta">
+          <a class="btn btn--wa" href="https://wa.me/628814105501?text=Halo%20Pempek%20Yuk%20Titi!%20Saya%20mau%20bertanya%2Fmemesan." target="_blank" rel="noopener noreferrer">
+            <svg class="btn__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/>
+            </svg>
+            Pesan via WhatsApp<span class="sr-only"> (buka di tab baru)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Lokasi (embed Google Maps) + jam buka -->
+    <section class="section section--alt" id="lokasi" aria-labelledby="lokasi-title">
+      <div class="container">
+        <div class="section__head reveal-3d">
+          <h2 id="lokasi-title">Lokasi &amp; Jam Buka</h2>
+          <p class="section__lead">Mampir langsung ke warung kami di Kaliurang KM 14 Sleman.</p>
+        </div>
+
+        <div class="lokasi-grid">
+          <div class="lokasi__info">
+            <div class="info-card reveal-3d">
+              <h3>
+                <svg class="info-card__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/>
+                  <circle cx="12" cy="10" r="2.6"/>
+                </svg>
+                Alamat
+              </h3>
+              <address>Kaliurang St No.Km 14, Tj. Manding, Umbulmartani, Ngemplak, Sleman Regency, DIY 55584</address>
+            </div>
+
+            <div class="info-card reveal-3d">
+              <h3>
+                <svg class="info-card__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="8.5"/>
+                  <path d="M12 7v5l3.2 2"/>
+                </svg>
+                Jam Buka
+              </h3>
+              <p>Setiap hari <time datetime="15:00">15.00</time>–<time datetime="22:30">22.30</time></p>
+            </div>
+
+            <a class="btn btn--ghost lokasi__maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kaliurang+St+No.Km+14,+Tj.+Manding,+Umbulmartani,+Ngemplak,+Sleman+Regency,+DIY+55584" target="_blank" rel="noopener noreferrer">
+              Buka di Google Maps<span class="sr-only"> (buka di tab baru)</span>
+            </a>
+          </div>
+
+          <div class="map-wrapper">
+            <iframe
+              src="https://www.google.com/maps?q=Kaliurang+St+No.Km+14,+Tj.+Manding,+Umbulmartani,+Ngemplak,+Sleman+Regency,+DIY+55584&amp;output=embed"
+              title="Peta lokasi Pempek Yuk Titi di Kaliurang St No.Km 14, Umbulmartani, Ngemplak, Sleman"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · Galeri (foto stok sementara sampai aset asli terpasang) -->
+    <section class="section" id="galeri" aria-labelledby="galeri-title">
+      <div class="container">
+        <div class="section__head reveal-3d">
+          <h2 id="galeri-title">Galeri</h2>
+          <p class="section__lead">Ilustrasi pilihan menu Pempek Yuk Titi — klik foto untuk memperbesar.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <figure class="gallery-item reveal-3d">
+            <img class="gallery-item__img" src="assets/img/pempek-saus.jpg" alt="Pempek disajikan dengan cuko kental di atas piring" width="800" height="533" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="gallery-item reveal-3d">
+            <img class="gallery-item__img" src="assets/img/pempek-closeup.jpg" alt="Tampilan dekat pempek dengan saus cuko" width="800" height="571" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="gallery-item reveal-3d">
+            <img class="gallery-item__img" src="assets/img/pempek-topview.jpg" alt="Tampilan atas pempek dengan cuko, irisan cabai, dan parsley" width="800" height="531" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="gallery-item reveal-3d">
+            <img class="gallery-item__img" src="assets/img/pempek-adaon.jpg" alt="Gorengan pempek adaan lengkap dengan cuko dan ketimun" width="800" height="1067" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <!-- Kata pelanggan — kutipan ulasan Google (via direktori mirror
+             listing Maps, diakses 2026-10-10). Ejaan dirapikan seperlunya
+             tanpa mengubah makna; potongan yang dibuang hanya konteks
+             pribadi/foto. Sama seperti rating: WAJIB verifikasi ke pemilik
+             & perbarui bila berubah. Statis, tanpa JS & tanpa link nav baru. -->
+        <div class="testimoni reveal-3d">
+          <h3 class="testimoni__title">Kata pelanggan</h3>
+          <ul class="testimoni__list">
+            <li class="testimoni__item">
+              <blockquote class="testimoni__quote">
+                <p>"Enak sekali, langganan aku tiap pengen makan pempek, harganya murah tapi rasanya premium."</p>
+              </blockquote>
+              <p class="testimoni__name">Lutfi Nuraini <span>· ulasan Google, Nov 2025</span></p>
+            </li>
+            <li class="testimoni__item">
+              <blockquote class="testimoni__quote">
+                <p>"Mantap pempeknya, buat kalian cobain deh, insyaAllah puas. Harga terjangkau. Mantap Joss pokoknya."</p>
+              </blockquote>
+              <p class="testimoni__name">Shanks D Ace <span>· ulasan Google, Nov 2025</span></p>
+            </li>
+            <li class="testimoni__item">
+              <blockquote class="testimoni__quote">
+                <p>"Pempeknya enak… jam 8 udah habis-habis. Sukses selalu!"</p>
+              </blockquote>
+              <p class="testimoni__name">Yuli Puji Rahayu <span>· ulasan Google, Sep 2025</span></p>
+            </li>
+          </ul>
+          <a class="btn btn--ghost testimoni__more" href="https://www.google.com/maps/search/?api=1&query=Pempek+Yuk+Titi+UII+Jakal+Kaliurang+Sleman" target="_blank" rel="noopener noreferrer">Lihat semua ulasan di Google Maps<span class="sr-only"> (buka di tab baru)</span></a>
+        </div>
+      </div>
+    </section>
+
+<!-- 7 · Kontak / CTA -->
+    <section class="section section--alt" id="kontak" aria-labelledby="kontak-title">
+      <div class="container">
+        <div class="section__head section__head--center reveal-3d">
+          <h2 id="kontak-title">Hubungi &amp; Pesan</h2>
+          <p class="section__lead">Tanya menu atau pesan langsung lewat WhatsApp — atau intip update terbaru di Instagram.</p>
+        </div>
+
+        <div class="kontak-actions reveal-3d">
+          <a class="btn btn--wa" href="https://wa.me/628814105501" target="_blank" rel="noopener noreferrer">
+            <svg class="btn__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/>
+            </svg>
+            Chat via WhatsApp<span class="sr-only"> (buka di tab baru)</span>
+          </a>
+          <a class="btn btn--ghost" href="https://www.instagram.com/pempek_yuktiti/" target="_blank" rel="noopener noreferrer">
+            <svg class="btn__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/>
+            </svg>
+            Instagram @pempek_yuktiti<span class="sr-only"> (buka di tab baru)</span>
+          </a>
+        </div>
+
+        <p class="kontak-note">Kaliurang St No.Km 14, Umbulmartani, Ngemplak, Sleman · Setiap hari 15.00–22.30</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 8 · Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__col">
+          <p class="footer__brand">Pempek Yuk Titi - UII Jakal</p>
+          <address class="footer__text">Kaliurang St No.Km 14, Tj. Manding, Umbulmartani, Ngemplak, Sleman Regency, DIY 55584</address>
+        </div>
+        <div class="footer__col">
+          <p class="footer__label">Jam buka</p>
+          <p class="footer__text">Setiap hari <time datetime="15:00">15.00</time>–<time datetime="22:30">22.30</time></p>
+        </div>
+        <div class="footer__col">
+          <p class="footer__label">Ikuti &amp; pesan</p>
+          <p class="footer__links">
+            <a href="https://wa.me/628814105501" target="_blank" rel="noopener noreferrer">WhatsApp<span class="sr-only"> (buka di tab baru)</span></a>
+            <a href="https://www.instagram.com/pempek_yuktiti/" target="_blank" rel="noopener noreferrer">Instagram<span class="sr-only"> (buka di tab baru)</span></a>
+          </p>
+        </div>
+      </div>
+      <p class="footer__copy">© 2026 Pempek Yuk Titi - UII Jakal</p>
+    </div>
+  </footer>
+
+  <!-- FAB WhatsApp (mobile) -->
+  <a class="fab-wa" href="https://wa.me/628814105501" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp Pempek Yuk Titi">
+    <svg aria-hidden="true" focusable="false" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/>
+    </svg>
+  </a>
+
+  <!-- 9 · Keranjang (sticky bar + sheet; diperkaya js/cart.js).
+       Tanpa JS: bar/panel tak pernah tampil (state kosong default). -->
+  <div class="cart-bar" id="cart-bar" aria-hidden="true">
+    <div class="container cart-bar__inner">
+      <button type="button" class="cart-bar__summary" data-cart-open aria-controls="cart-panel" aria-expanded="false">
+        <svg class="cart-bar__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <path d="M3 6h18"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="cart-bar__label">Keranjang</span>
+        <span class="cart-bar__count" data-cart-count>0</span>
+      </button>
+      <div class="cart-bar__total">
+        <span class="cart-bar__total-label">Total</span>
+        <span class="cart-bar__total-value" data-cart-total>Rp 0</span>
+      </div>
+      <button type="button" class="btn btn--wa cart-bar__checkout" data-cart-checkout disabled>Checkout</button>
+    </div>
+  </div>
+
+  <div class="cart-backdrop" data-cart-close></div>
+  <aside class="cart-panel" id="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-panel-title" aria-hidden="true">
+    <div class="cart-panel__head">
+      <h2 id="cart-panel-title" class="cart-panel__title">Keranjang</h2>
+      <button type="button" class="cart-panel__close" data-cart-close aria-label="Tutup keranjang">
+        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-panel__body">
+      <ul class="cart-panel__items" data-cart-items></ul>
+      <p class="cart-panel__empty" data-cart-empty>Keranjang masih kosong.</p>
+    </div>
+    <div class="cart-panel__foot">
+      <div class="cart-panel__total">
+        <span class="cart-panel__total-label">Total</span>
+        <strong class="cart-panel__total-value" data-cart-total>Rp 0</strong>
+      </div>
+      <button type="button" class="btn btn--wa cart-panel__checkout" data-cart-checkout disabled>Checkout via WhatsApp</button>
+      <p class="cart-panel__note">Pesanan dikirim sebagai teks WhatsApp — ketersediaan dikonfirmasi via chat.</p>
+    </div>
+  </aside>
+
+  <p class="sr-only" data-cart-live role="status" aria-live="polite"></p>
+
+  <!-- 10 · Lightbox galeri (diperkaya js/lightbox.js).
+       PROGRESSIVE ENHANCEMENT: <dialog> tanpa atribut `open` tidak tampil
+       dan tidak dapat difokuskan, tombolnya tak terjangkau keyboard →
+       tanpa JS halaman tetap persis seperti semula (6 <img> statis, tanpa
+       tombol mati). <img> di dalam dialog dibiarkan TANPA src: JS baru
+       mengisinya saat foto dibuka (tidak ada preloading 6 gambar besar). -->
+  <dialog class="lightbox" id="lightbox" aria-label="Pratinjau foto">
+    <div class="lightbox__frame">
+      <div class="lightbox__stage">
+        <img class="lightbox__img" data-lightbox-img alt="">
+        <button type="button" class="lightbox__btn lightbox__close" data-lightbox-close aria-label="Tutup pratinjau">
+          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+        <button type="button" class="lightbox__btn lightbox__nav lightbox__nav--prev" data-lightbox-prev aria-label="Foto sebelumnya">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <button type="button" class="lightbox__btn lightbox__nav lightbox__nav--next" data-lightbox-next aria-label="Foto berikutnya">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+      <!-- Caption di-aria-hidden karena isinya persis sama dengan alt <img>
+           (pembaca layar sudah membacanya lewat gambar) — Hindari duplikat. -->
+      <div class="lightbox__meta">
+        <p class="lightbox__caption" data-lightbox-caption aria-hidden="true"></p>
+        <p class="lightbox__counter" data-lightbox-counter aria-live="polite" aria-atomic="true">1 / 4</p>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>

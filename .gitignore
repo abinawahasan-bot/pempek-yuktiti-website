@@ -1,0 +1,27 @@
+# .gitignore — Pempek Yuk Titi (situs statis)
+# Situs ini HTML/CSS/JS murni tanpa build step, jadi daftar ini minimal:
+# hanya sampah OS/editor & file sementara agar repo tetap bersih.
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editor / IDE ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Log & tmp ---
+*.log
+*.tmp
+.cache/
+
+# --- Node (bila suatu saat ada tooling) ---
+node_modules/
+npm-debug.log*
+
+# Catatan: folder .opencode/ (Project Brain + telemetry) SENGAJA
+# diikutsertakan ke version control karena merupakan memori proyek.
