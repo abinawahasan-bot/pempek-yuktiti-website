@@ -1,0 +1,31 @@
+# Kompresi + caching + header keamanan untuk Netlify & Cloudflare Pages.
+#
+# Cara pakai:
+#   - Netlify: letakkan berkas ini di root situs (nama HARUS `_headers`).
+#   - Cloudflare Pages: sama, letakkan `_headers` di root proyek.
+# Kompresi (brotli/gzip) sudah otomatis di CDN kedua platform; `_headers`
+# hanya mengatur caching & header keamanan.
+#
+# Untuk GitHub Pages: tidak perlu config (CDN sudah kompres + cache).
+# Untuk Apache/cPanel: gunakan `deploy/.htaccess`.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# HTML selalu segar
+/*.html
+  Cache-Control: no-cache, must-revalidate
+
+# Aset statis tanpa hash → masa simpan moderat + revalidate
+/css/*
+  Cache-Control: public, max-age=86400, must-revalidate
+/js/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# Gambar & font jarang berubah → lebih panjang
+/assets/img/*
+  Cache-Control: public, max-age=2592000
+/assets/fonts/*
+  Cache-Control: public, max-age=2592000

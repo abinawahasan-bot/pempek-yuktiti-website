@@ -1,7 +1,7 @@
 # INDEX
 
 > Project Brain file · Map of all Project Brain knowledge. Keep this up to date — it is the entry point for retrieval.
-> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (optimasi performa WebP + font self-host; TD-PERF-01/02/04/05 ADDRESSED).
+> Confidence markers: CONFIRMED / INFERRED / UNKNOWN per file di bawah. Init: 2026-10-08 · Last sync: 2026-10-11 (optimasi performa WebP + font self-host; kit deportime kompresi+caching).
 
 ## Project snapshot (CONFIRMED kecuali ditandai)
 
@@ -24,7 +24,7 @@ PROJECT*              identitas, tujuan, data bisnis Pempek Yuk Titi
 ├── TECHNICAL_DEBT*    TD-PERF-01..06; 01/02/04/05 ADDRESSED (WebP+font self-host, 2026-10-11); 03/06 OPEN (deploy-time)
 ├── SECURITY           (template — statis, tanpa kredensial)
 ├── TESTING            (template — belum ada automated tooling; QA manual via laporan)
-├── DEPLOYMENT         (template — hosting belum dipilih)
+├── DEPLOYMENT*        hosting belum dipilih (UNKNOWN); kit deportime siap (deploy/.htaccess, deploy/_headers); kompresi 188→35 KB brotli
 ├── DEPENDENCIES       (template — tanpa dependensi)
 ├── CHANGE_HISTORY*    init + implementasi v1 2026-10-08 … polish A/B/C + social proof + testimoni 2026-10-10
 ├── FAILURES           (template — belum ada)
@@ -56,7 +56,7 @@ snapshots/             snapshot-2026-10-08-v1-implementation.md (milestone v1+QA
 | What's owed? | TECHNICAL_DEBT | TD-PERF-01..06 (01/02/04/05 ADDRESSED 2026-10-11; 03/06 OPEN deploy-time) |
 | Security posture? | SECURITY | template (risiko rendah; situs statis) |
 | Testing in place? | TESTING | template — QA manual PASS_WITH_NOTES (laporan), tanpa automated test |
-| How to deploy? | DEPLOYMENT | template (hosting belum dipilih) |
+| How to deploy? | DEPLOYMENT, README §Deploy, deploy/README.md | CONFIRMED (tanpa build; kit kompresi siap; hosting belum dipilih) |
 | Latest state? | CURRENT_STATE, CHANGE_HISTORY, PROJECT_HEALTH | CONFIRMED |
 | Sehat proyeknya? | PROJECT_HEALTH | CONFIRMED (dinilai 2026-10-08; Performance GREEN 2026-10-11; overall YELLOW — peluncuran) |
 | Kenapa situsnya ringan? | docs/PERFORMANCE_AUDIT §8, TECHNICAL_DEBT, CURRENT_STATE | CONFIRMED (LCP 1856–2056 ms, CLS 0, −61%/−74%, 2026-10-11) |

@@ -1,0 +1,69 @@
+# Kompresi + caching + header keamanan untuk hosting **Apache / cPanel**.
+#
+# Cara pakai (cPanel / Apache):
+#   1. Salin berkas ini ke root situs: `public_html/.htaccess`
+#   2. Buka domain → respons akan ter-kompres (brotli bila tersedia, jika tidak gzip).
+#
+# Untuk Netlify / Cloudflare Pages gunakan `deploy/_headers` (kompresi otomatis di CDN).
+# Untuk GitHub Pages tidak perlu konfigurasi (CDN sudah kompres + cache).
+#
+# Semua arahan dibungkus <IfModule> agar aman bila modul tidak aktif (shared hosting).
+
+# ---------- 1) Kompresi on-the-fly ----------
+# Brotli lebih kecil dari gzip (±15%). Bila mod_brotli ada, ia diprioritaskan;
+# jika tidak, mod_deflate (gzip) dipakai. Jangan kompres berkas yang sudah
+# terkompresi (woff2, webp, jpeg, png) — kontraproduktif.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/javascript application/json image/svg+xml application/manifest+json
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml application/manifest+json
+</IfModule>
+
+# ---------- 2) MIME (bila belum dikenali) ----------
+# WAJIB: tanpa ini sebagian server menyajikan .woff2/.webp dengan tipe salah
+# sehingga font/gambar gagal di-decode.
+<IfModule mod_mime.c>
+  AddType font/woff2                .woff2
+  AddType image/webp                .webp
+  AddType image/avif                .avif
+</IfModule>
+
+# ---------- 3) Caching ----------
+# Catatan: nama berkas CSS/JS TIDAK ber-hash, jadi kita TIDAK memakai
+# `immutable`/1 tahun untuknya (agar update bisa sampai ke pengunjung).
+# Gambar & font jarang berubah → masa simpan lebih panjang.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType text/css                  "access plus 1 day"
+  ExpiresByType application/javascript    "access plus 1 day"
+  ExpiresByType image/svg+xml             "access plus 30 days"
+  ExpiresByType font/woff2                "access plus 30 days"
+  ExpiresByType image/webp                "access plus 30 days"
+  ExpiresByType image/jpeg                "access plus 30 days"
+  ExpiresByType image/png                 "access plus 30 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # HTML selalu divalidasi ulang (konten bisa berubah).
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  # Aset statis (tanpa hash) → masa simpan moderat + revalidate.
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=86400, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(woff2|webp|jpg|jpeg|png|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # Header keamanan dasar (CSP sengaja belum dipasang — situs memakai skrip/gaya
+  # inline; CSP yang benar butuh nonce/hash, dicatat sebagai pekerjaan lanjutan).
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ---------- 4) Halaman 404 (opsional) ----------
+# ErrorDocument 404 /index.html

@@ -4,6 +4,26 @@
 
 ## Changelog
 
+### 2026-10-11 (kit deportime: kompresi + caching host-agnostic)
+
+#### Added
+- `deploy/.htaccess` — Apache/cPanel: `mod_brotli`/`mod_deflate` (kompresi teks), `mod_mime` (`.woff2`/`.webp`/`.avif`), `mod_expires`/`mod_headers` (caching + header keamanan); semua dibungkus `<IfModule>` agar aman di shared hosting.
+- `deploy/_headers` — Netlify / Cloudflare Pages: caching CSS/JS (`max-age=86400, must-revalidate`) & gambar/font (`max-age=2592000`) + header keamanan dasar.
+- `deploy/README.md` — panduan per host + angka kompresi + catatan sengaja-belum-dilakukan.
+
+#### Changed
+- `README.md` §Deploy: tambah bagian **D. Kompresi & caching** (Netlify/CF → `_headers`; cPanel → `.htaccess`; GitHub Pages → otomatis).
+- Brain: `DEPLOYMENT.md` diisi (template → nyata; hosting tetap UNKNOWN) + CURRENT_STATE + TECHNICAL_DEBT (TD-PERF-03 → PARTIALLY ADDRESSED, TD-PERF-06 → catatan build) + INDEX.
+- `CHANGELOG.md` [Unreleased] Added: kit deportime.
+
+#### Tests
+- Kompresi diukur pada berkas asli via CLI sistem (`gzip -9`, `brotli -q 11`): total kode **192 723 B → gzip 42 274 B (−78%) / brotli 35 554 B (−82%)**; per berkas: index.html 73 606→11 119/8 889; style.css 73 947→18 708/16 201; fonts.css 1 662→555/498.
+- Config ditinjau manual (tak ada Apache/Netlify untuk `configtest`); cache CSS/JS sengaja tidak `immutable` karena nama berkas tanpa hash.
+
+#### Terkait
+- TD-PERF-03 kompresi → tertutup (config siap); sisa **minify** + **CSS kritis** (TD-PERF-06) tetap OPEN karena butuh build step → bertentangan DECISIONS #1 ("tanpa build step"), menunggu keputusan user.
+- Telemetry: event `2026-10-11-kit-deportime-kompresi-caching.md`.
+
 ### 2026-10-11 (optimasi performa: WebP + font self-host)
 
 #### Added

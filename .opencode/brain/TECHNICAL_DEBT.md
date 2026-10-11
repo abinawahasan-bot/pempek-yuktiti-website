@@ -36,7 +36,7 @@
 - **Priority:** HIGH
 - **Estimated complexity:** S (di sisi hosting)
 - **Recommended solution:** Aktifkan gzip/brotli di hosting + minify HTML/CSS/JS saat deploy. (CONFIRMED)
-- **Status:** OPEN (deploy-time) — membutuhkan hosting + langkah build; di luar lingkup optimasi klien 2026-10-11. Tetap berlaku sampai hosting dipilih.
+- **Status:** PARTIALLY ADDRESSED (2026-10-11) — **kompresi** ditutup via kit deportime (`deploy/.htaccess` brotli/gzip + MIME + caching; `deploy/_headers` untuk Netlify/CF; GH Pages otomatis). Terukur 188 KB → **41 KB gzip / 35 KB brotli (−78/−82%)**. Sisa **minify** butuh build step → **bertentangan DECISIONS #1** ("tanpa build step"); menunggu keputusan user.
 
 ### TD-PERF-04 · CLS ambang batas (font swap)
 - **Description:** CLS 0,091 (baseline) / 0,105 (Slow-4G); satu pergeseran tunggal dari font swap (t≈729ms) pada teks nav/brand. (CONFIRMED)
@@ -60,7 +60,7 @@
 - **Priority:** LOW
 - **Estimated complexity:** M
 - **Recommended solution:** Purge/pecah CSS kritis vs non-kritis saat build. (INFERRED)
-- **Status:** OPEN (deploy-time) — butuh langkah build; di luar lingkup optimasi klien 2026-10-11.
+- **Status:** OPEN (deploy-time, butuh build) — tidak dipasang: butuh langkah build, bertentangan DECISIONS #1. Kompresi (ditutup via kit deportime) sudah memangkas sebagian besar dampaknya (CSS 72 KB → ±18 KB gzip). Menunggu keputusan user bila ingin mengadopsi build. (2026-10-11)
 
 ## Examples worth tracking
 
