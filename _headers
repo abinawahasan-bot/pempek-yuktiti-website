@@ -1,13 +1,13 @@
 # Kompresi + caching + header keamanan untuk Netlify & Cloudflare Pages.
 #
 # Cara pakai:
-#   - Netlify: letakkan berkas ini di root situs (nama HARUS `_headers`).
-#   - Cloudflare Pages: sama, letakkan `_headers` di root proyek.
+#   - Netlify: berkas ini sudah di root situs (nama HARUS `_headers`) — dibaca otomatis.
+#   - Cloudflare Pages: sama, `_headers` di root proyek.
 # Kompresi (brotli/gzip) sudah otomatis di CDN kedua platform; `_headers`
 # hanya mengatur caching & header keamanan.
 #
 # Untuk GitHub Pages: tidak perlu config (CDN sudah kompres + cache).
-# Untuk Apache/cPanel: gunakan `deploy/.htaccess`.
+# Untuk Apache/cPanel: gunakan `.htaccess` (root).
 
 /*
   X-Content-Type-Options: nosniff

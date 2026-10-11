@@ -1,10 +1,10 @@
 # Kompresi + caching + header keamanan untuk hosting **Apache / cPanel**.
 #
 # Cara pakai (cPanel / Apache):
-#   1. Salin berkas ini ke root situs: `public_html/.htaccess`
+#   1. Unggah isi folder proyek ke `public_html/` — berkas (dotfile) ini sudah di root.
 #   2. Buka domain → respons akan ter-kompres (brotli bila tersedia, jika tidak gzip).
 #
-# Untuk Netlify / Cloudflare Pages gunakan `deploy/_headers` (kompresi otomatis di CDN).
+# Untuk Netlify / Cloudflare Pages gunakan `_headers` (root) — kompresi otomatis di CDN.
 # Untuk GitHub Pages tidak perlu konfigurasi (CDN sudah kompres + cache).
 #
 # Semua arahan dibungkus <IfModule> agar aman bila modul tidak aktif (shared hosting).
